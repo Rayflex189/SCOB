@@ -1,0 +1,481 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standard Capital Online - Bank transfer</title>
+    <link rel="icon" href="{% static 'images/web_logo.jpg' %}" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Include all existing styles from the dashboard here */
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #000e17, #2994ff);
+        }
+
+        .premier-bank-header {
+            background-color: #fff;
+            color: #003366;
+            text-align: left;
+            padding: 1rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: Arial, sans-serif;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .premier-bank-header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            padding-left: 1rem;
+            font-weight: bold;
+        }
+
+        .notification-bell {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            background-color: navy;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .open-sidebar-btn {
+            background-color: #004080;
+            color: white;
+            padding: 10px;
+            width: 4rem;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            cursor: pointer;
+        }
+
+        .open-sidebar-btn:hover {
+            background-color: #0055cc;
+        }
+
+        .main-content {
+            padding: 20px;
+        }
+
+        .settings-header {
+            padding: 10px 20px;
+            background-color: #003366;
+            color: white;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .settings-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .settings-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .settings-section {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .settings-section h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .settings-section p {
+            margin: 10px 0;
+            font-size: 1rem;
+        }
+
+        .settings-section input, .settings-section
+        .settings-section {
+            width: 95%;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="submit"]{
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            background-color: #0055cc;
+            font-weight: bolder;
+            color: #fff;
+        }
+
+         select{
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .settings-section button {
+            background-color: #004080;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .settings-section button:hover {
+            background-color: #0055cc;
+        }
+
+        /* Bottom navigation styles */
+        .bottom-navbar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #003366;
+            display: flex;
+            justify-content: space-around;
+            padding: 0.5rem 0;
+        }
+
+        .nav-item {
+            color: white;
+            text-align: center;
+        }
+
+        .nav-item a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+        }
+
+        .nav-item a:hover {
+            background-color: orange;
+            border-radius: 5px;
+        }
+        /* Sidebar styles */
+        .sidebar {
+            position: fixed;
+            right: -250px;/* Initially hidden off-screen */
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background-color: #003366;
+            color: #fff;
+            transition: right 0.3s ease;
+            z-index: 1000;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar.open {
+            right: 0;
+        }
+
+        .sidebar-header {
+            padding: 1rem;
+            background-color: #004080;
+            text-align: center;
+            border-bottom: 1px solid #004080;
+        }
+
+        .sidebar-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .sidebar-header .close-sidebar {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .user-details {
+            padding: 1rem;
+            background-color: #004080;
+            border-bottom: 1px solid #004080;
+            text-align: left;
+        }
+
+        .user-details p {
+            margin: 0.5rem 0;
+        }
+
+        .user-details button {
+            margin: 1rem 0;
+            padding: 0.5rem;
+            background-color: #ffcc00;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #003366;
+            font-weight: bold;
+        }
+
+        .user-details button:hover {
+            background-color: #ffbf00;
+        }
+
+        .account-number {
+            animation: fadeIn 1s ease;
+        }
+
+@keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar ul li {
+            padding: 1rem;
+            border-bottom: 1px solid #004080;
+        }
+
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #004080;
+            display: block;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            background-color: #003366;
+            color: white;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: navy;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            animation: slideDown 0.5s ease-in-out forwards;
+        }
+
+        .dropdown-content a,
+        .dropdown-content .close-navbar {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover,
+        .dropdown-content .close-navbar:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .close-navbar {
+            background: none;
+            border: none;
+            text-align: left;
+            width: 100%;
+            cursor: pointer;
+        }
+
+@keyframes bounceIn {
+            0% {
+                transform: scale(0.5);
+                opacity: 0.5;
+            }
+            60% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .errors {
+    color: #f00;  /* Error text color */
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;  /* Adjust margin as needed */
+    text-align: center;
+    animation: shake 0.5s ease-in-out;  /* Animation name, duration, and timing function */
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }  /* Start of animation */
+    25% { transform: translateX(-5px); }  /* Shake left */
+    50% { transform: translateX(5px); }  /* Shake right */
+    75% { transform: translateX(-3px); }  /* Shake left */
+    100% { transform: translateX(0); }  /* End of animation */
+}
+.translate-icon-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000; /* Ensure it's above other content */
+}
+
+.translate-icon {
+    width: 40px;
+    height: 40px;
+    background-image: url('path_to_google_translate_icon.png');
+    background-size: cover;
+    cursor: pointer;
+}
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-10px);
+    }
+}
+
+    </style>
+</head>
+<body>
+    <!-- Premier Bank Header -->
+    <header class="premier-bank-header">
+        <h1>Bank transfer</h1>
+        <div class="notification-bell" onclick="vibrateBell()">
+            <i class="fas fa-bell"></i>
+        </div>
+        <button id="openSidebarBtn" class="open-sidebar-btn" onclick="toggleSidebar()">&#9776;</button>
+    </header>
+
+     <!-- Sidebar -->
+     <div id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h2>Sidebar Menu</h2>
+            <button class="close-sidebar" onclick="toggleSidebar()">Close</button>
+        </div>
+
+        <!-- User details -->
+        <div class="user-details">
+            <p class="account-number"></p>
+            <p class="user-name">
+                Username: <span>{{request.user}}</span>
+            </p>
+            <p class="user-email">
+                Email: <span>{{user_profile.email}}</span>
+            </p>
+        </div>
+
+        <ul>
+            <li><a href="{% url 'profile' %}">Profile</a></li>
+            <li><a href="{% url 'reset_profile' %}">Settings</a></li>
+            <li class="">
+                <div class="top-navbar">
+                    <div class="dropdown">
+                        <button class="dropbtn">Integrated services</button>
+                        <div class="dropdown-content">
+                            <a href="{% url 'coming_soon' %}">Rates</a>
+                            <a href="{% url 'loans' %}">Loans</a>
+                            <a href="{% url 'coming_soon' %}">Savings</a>
+                            <a href="{% url 'coming_soon' %}">Investments</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li><div id="translate-icon" class="translate-icon"><div id="google_translate_element"></div> </div>
+            </li>
+            <li><a href="{% url 'analytics' %}">Analytics</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+    </div>
+
+    <!-- Main content -->
+    <div class="main-content">
+        <div class="settings-header">
+            <h2>Domestic Transfer</h2>
+        </div>
+
+        <div class="settings-container">
+            <!-- Personal Information Section -->
+           <form action="" method="post">
+            {% csrf_token %}
+            <div class="settings-section">
+        <button>{{user_profile.currency}}{{user_profile.balance|intcomma}}</button>
+        <br>
+            {{form.deposit_amount}}
+            <label for="amount">Enter amount in {{user_profile.currency}}</label>
+            <input type="text" >
+            <label for="amount">Beneficiary Account Name</label>
+            <input type="text" >
+            <label for="amount">Bank Name</label>
+            <input type="tel" >
+            <label for="amount">Beneficiary Account Number</label>
+            <br>
+            {{form.account_type}}
+            <label for="amount">Select account type</label>
+            <input type="text">
+            <label for="amount">Fund Purpose</label>
+
+            <input type="submit" value="CONTINUE">
+
+            <div class="errors">{{form.errors}}</div>
+            </div>
+           </form>
+<br><br>
+    <script>
+                // Toggle sidebar visibility
+                function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const openBtn = document.getElementById('openSidebarBtn');
+            if (sidebar.classList.contains('open')) {
+                sidebar.classList.remove('open');
+                openBtn.style.display = 'block'; // Show the open button
+            } else {
+                sidebar.classList.add('open');
+                openBtn.style.display = 'none'; // Hide the open button
+            }
+        }
+
+  </script>
+ </body>
+</html>

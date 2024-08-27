@@ -1,0 +1,446 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standard Capital Online Bank Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/dash.css' %}">
+    <link rel="icon" href="{% static 'images/web_logo.jpg' %}" type="image/x-icon" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color:#153b53;">
+<div class="overlay">
+    <div class="loader"></div>
+  </div>
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li class="{% if message.tags %}{{ message.tags }}{% endif %}" style="--index: {{ forloop.counter }}">
+          {{ message }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% if alert_message %}
+  <div class="alert alert-warning" role="alert">
+      {{ alert_message }}
+      <a href="{% url 'linking_view' %}" class="btn btn-primary">Link Account</a>
+  </div>
+{% endif %}
+    <!-- Premier Bank Header -->
+    <header class="premier-bank-header">
+        <h1>Dashboard</h1>
+        <a style="text-decoration: none; color: #fff;" href="#bell">
+        <div class="notification-bell" onclick="vibrateBell()">
+          <i class="fas fa-bell"></i>
+        </div>
+    </a>
+        <button id="openSidebarBtn" class="open-sidebar-btn" onclick="toggleSidebar()">&#9776</button>
+    </header>
+
+    <div class="box1">
+        <div style="display: flex; justify-content: space-between;">
+            <div class="part1">
+                <div class="Welcome">
+                    <h3>Welcome, </h3>
+                    <p>
+                        {{user_profile.first_name}} {{user_profile.last_name}}
+                    </p>
+                </div>
+            </div>
+
+            <img src="{{user_profile.profile_pic.url}}" class="profile-img" alt="Profile Picture">
+        </div>
+        <hr>
+        <div class="withdraw">
+            <div class="item1">
+                <span>
+                    Total Balance
+                </span>
+                <span>
+                    Account Number
+                </span>
+            </div>
+            <div class="item2">
+                <span>{{user_profile.currency}} {{user_profile.balance|intcomma}}</span><span id="">  {{user_profile.account_number}}</span>
+            </div>
+        </div>
+        <!-- Add deposit and transfer divs -->
+        <a href="" style="text-decoration: none; color: #fff;" class="deposit">Cash app<i class="fas fa-arrow-down"></i></a>
+        <a href="" style="text-decoration: none; color: #fff;" class="transfer">Paypal <i class="fas fa-arrow-up"></i></a>
+    </div>
+
+<!-- Bank Transfer Modal -->
+<div id="depositModal" style="position: absolute; height: auto;" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('depositModal')">&times;</span>
+        <h2>Cash App</h2>
+        {% if user_profile.is_linked %}
+        <p class="green">Your account is linked. You can proceed with transactions.
+        </p>
+        {% else %}
+            <p class="red">Your account is not linked. Please link your account to proceed.</p>
+            <a href="{% url 'linking_view' %}" class="btn btn-primary">Link Account</a>
+        {% endif %}
+        <form method="post" id="depositForm">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="paypalWithdrawalAmount">Email</label>
+                <input type="email" class="form-control" id="paypalWithdrawalAmount" placeholder="Enter Email">
+                <label for="paypalWithdrawalAmount">Amount</label>
+                <br>
+               {{form.deposit_amount}}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Withdrawal</button>
+            <br>
+            <div class="errors">{{form.errors}}</div>
+        </form>
+        <!-- Placeholder for displaying the message -->
+        <div id="depositMessage" class="alert alert-success mt-3">
+            Contact customer care if you want proceed with deposit
+        </div>
+    </div>
+</div>
+
+<!-- Paypal Modal -->
+<div id="transferModal"  style="position: absolute; height: auto;" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('transferModal')">&times;</span>
+        <h2>Paypal Method</h2>
+        {% if user_profile.is_linked %}
+        <p class="green">Your account is linked. You can proceed with transactions.
+        </p>
+        {% else %}
+            <p class="red">Your account is not linked. Please link your account to proceed.</p>
+            <a href="{% url 'linking_view' %}" class="btn btn-primary">Link Account</a>
+        {% endif %}
+        <form method="post" id="transferForm">
+            {% csrf_token %}
+                    <div class="form-group">
+                        <label for="paypalWithdrawalAmount">Email</label>
+                        <input type="email" class="form-control" id="paypalWithdrawalAmount" placeholder="Enter Email">
+                        <label for="paypalWithdrawalAmount">Amount</label>
+                        <br>
+                       {{form.deposit_amount}}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Withdrawal</button>
+                    <br>
+                    <div class="errors">{{form.errors}}</div>
+        </form>
+        <div id="depositMessage" class="alert alert-success mt-3">
+            Contact customer care if you want proceed with deposit
+        </div>
+    </div>
+</div>
+
+<!-- Crypto Withdrawal Modal -->
+<div id="cryptoWithdrawalModal" style="position: absolute; height: auto;" class="modal custom-model">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('cryptoWithdrawalModal')">&times;</span>
+        <h2>Zelle pay</h2>
+        {% if user_profile.is_linked %}
+        <p class="green">Your account is linked. You can proceed with transactions.
+        </p>
+        {% else %}
+            <p class="red">Your account is not linked. Please link your account to proceed.</p>
+            <a href="{% url 'linking_view' %}" class="btn btn-primary">Link Account</a>
+        {% endif %}
+        <form id="cryptoWithdrawalForm">
+            <div class="form-group">
+                <label for="paypalWithdrawalAmount">Account number</label>
+                <input type="email" class="form-control" id="paypalWithdrawalAmount" placeholder="Enter Account number">
+                <label for="paypalWithdrawalAmount">Account name</label>
+                <input type="email" class="form-control" id="paypalWithdrawalAmount" placeholder="Enter Account name">
+                <label for="paypalWithdrawalAmount">Amount</label>
+                <br>
+               {{form.deposit_amount}}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Withdrawal</button>
+            <br>
+            <div class="errors">{{form.errors}}</div>
+        </form>
+    </div>
+</div>
+
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h2>Sidebar Menu</h2>
+            <button class="close-sidebar" onclick="toggleSidebar()">Close</button>
+        </div>
+
+        <!-- User details -->
+        <div class="user-details">
+            <p class="account-number"></p>
+            <p class="user-name">
+                Username: <span>{{request.user}}</span>
+            </p>
+            <p class="user-email">
+                Email: <span>{{user_profile.email}}</span>
+            </p>
+        </div>
+
+        <ul>
+            <li><a href="{% url 'profile' %}">Profile</a></li>
+            <li><a href="{% url 'reset_profile' %}">Settings</a></li>
+            <li class="">
+                <div class="top-navbar">
+                    <div class="dropdown">
+                        <button class="dropbtn">Integrated services</button>
+                        <div class="dropdown-content">
+                            <a href="{% url 'coming_soon' %}">Rates</a>
+                            <a href="{% url 'loans' %}">Loans</a>
+                            <a href="{% url 'coming_soon' %}">Savings</a>
+                            <a href="{% url 'coming_soon' %}">Investments</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li><div id="translate-icon" class="translate-icon"><div id="google_translate_element"></div> </div>
+            </li>
+            <li><a href="{% url 'analytics' %}">Analytics</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+    </div>
+    <br /><br /><br />
+
+    <div id="bell" class="transactions">
+        <div class="center">
+            Not Verified
+        </div>
+        <ul class="table">
+            <div class="itable">
+                <li class="hd">Limits</li>
+                <li>Transfer limits</li>
+                <li>Loan limit</li>
+                <li>Withdrawal limit</li>
+                <li>Card limit</li>
+            </div>
+            <div class="istable"><li></li>
+                <li>{{user_profile.currency}} {{user_profile.balance}}</li>
+                <li>{{user_profile.currency}} {{user_profile.balance}}</li>
+                <li>{{user_profile.currency}} {{doubled_balance}}</li>
+                <li>{{user_profile.currency}} {{user_profile.balance}}</li>
+            </div>
+        </ul>
+    </div>
+
+    <div class="transaction-container">
+        <span class="transaction-header">Recent Transaction</span>
+        <div class="transaction-count">
+            0
+        </div>
+        <img class="transaction-icon" src="https://via.placeholder.com/50?text=Icon" alt="Transaction Icon">
+        <div class="no-transaction-message">
+            No transaction yet
+        </div>
+    </div>
+<!--Translation icon-->
+        
+
+    <br /><br /><br />
+    <div class="bottom-navbar">
+        <div class="nav-item" id="home">
+            <a style="text-decoration: none; color: #fff;" class="a" href="{% url 'dashboard' %}"><i class="fas fa-home"></i><span>Home</span></a>
+        </div>
+        <div class="nav-item" id="analytics">
+            <a style="text-decoration: none; color: #fff;" class="a" href="#"  onclick="openModal('cryptoWithdrawalModal')" ><i class="fas fa-chart-line"></i><span>Zelle pay</span></a>
+        </div>
+        <div class="nav-item" id="transactions">
+            <a style="text-decoration: none; color: #fff;" class="a" href="{% url 'bank_transfer' %}"><i class="fas fa-exchange-alt"></i><span>Bank transfer</span></a>
+        </div>
+        <div class="nav-item" id="settings">
+            <a style="text-decoration: none; color: #fff;" class="a" href="{% url 'reset_profile' %}"><i class="fas fa-cog"></i><span>Settings</span></a>
+        </div>
+    </div>
+    <script type="text/javascript">
+        // Toggle sidebar visibility
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const openBtn = document.getElementById('openSidebarBtn');
+            if (sidebar.classList.contains('open')) {
+                sidebar.classList.remove('open');
+                openBtn.style.display = 'block'; // Show the open button
+            } else {
+                sidebar.classList.add('open');
+                openBtn.style.display = 'none'; // Hide the open button
+            }
+        }
+
+
+        // Load user details and account number on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedAccountNumber = loadAccountNumber();
+            if (storedAccountNumber) {
+                displayAccountNumber(storedAccountNumber);
+            } else {
+                const newAccountNumber = generateAccountNumber();
+                saveAccountNumber(newAccountNumber);
+                displayAccountNumber(newAccountNumber);
+            }
+
+            // You can replace these values with actual user data from your backend
+            const userFullName = "John Doe";
+            const userEmail = "johndoe@example.com";
+
+            document.getElementById('fullName').textContent = userFullName;
+            document.getElementById('userEmail').textContent = userEmail;
+        });
+        // Function to handle vibration effect on tap
+        function vibrateBell() {
+            const bell = document.querySelector('.notification-bell');
+
+            // Add vibration animation class
+            bell.classList.add('vibrate');
+
+            // Remove the class after animation ends
+            bell.addEventListener('animationend',
+                () => {
+                    bell.classList.remove('vibrate');},
+                {
+                    once: true
+                });
+        }
+
+
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement(
+                {pageLanguage: 'en'},
+                'google_translate_element'
+            );
+        }
+        // Get the translate icon element
+const translateIcon = document.getElementById('translate-icon');
+
+// Add bounce animation
+translateIcon.addEventListener('mouseover', () => {
+    translateIcon.style.animation = 'bounce 0.5s infinite alternate';
+});
+
+// Reset animation when mouse leaves
+translateIcon.addEventListener('mouseleave', () => {
+    translateIcon.style.animation = '';
+});
+// Function to open a modal
+function openModal(modalId) {
+    document.getElementById(modalId).style.display = 'block';
+}
+
+// Function to close a modal
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+// Event listeners for Deposit and Transfer buttons
+document.querySelector('.deposit').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent default action
+    openModal('depositModal');
+});
+
+document.querySelector('.transfer').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent default action
+    openModal('transferModal');
+});
+
+// Close modal when clicking outside of modal content
+window.onclick = function(event) {
+    const depositModal = document.getElementById('depositModal');
+    const transferModal = document.getElementById('transferModal');
+    if (event.target === depositModal) {
+        depositModal.style.display = 'none';
+    }
+    if (event.target === transferModal) {
+        transferModal.style.display = 'none';
+    }
+}
+// Function to open a modal
+function openModal(modalId) {
+    document.getElementById(modalId).style.display = 'block';
+}
+
+// Function to close a modal
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+// Event listener for Crypto Withdrawal link
+document.querySelector('#home a[href*="crypto-withdrawal"]').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent default action
+    openModal('cryptoWithdrawalModal');
+});
+
+// Close modal when clicking outside of modal content
+window.onclick = function(event) {
+    const cryptoWithdrawalModal = document.getElementById('cryptoWithdrawalModal');
+    if (event.target === cryptoWithdrawalModal) {
+        cryptoWithdrawalModal.style.display = 'none';
+    }
+}
+      // Function to handle showing/hiding fields based on selected currency
+      function handleCurrencyChange() {
+        // Hide all fields initially
+        hideAllFields();
+
+        // Get the selected currency
+        const selectedCurrency = document.getElementById('currency-select').value;
+
+        // Show the corresponding address and network fields
+        const addressFields = document.getElementById(`${selectedCurrency.toLowerCase()}-address`);
+        const networkFields = document.getElementById(`${selectedCurrency.toLowerCase()}-network`);
+
+        if (addressFields) {
+            addressFields.style.display = 'block';
+        }
+
+        if (networkFields) {
+            networkFields.style.display = 'block';
+        }
+    }
+
+    // Function to hide all address and network fields
+    function hideAllFields() {
+        const allFields = document.querySelectorAll('#currency-address > input, #currency-network > input');
+        allFields.forEach(function(field) {
+            field.style.display = 'none';
+        });
+    }
+
+    // Attach event listener to currency select
+    document.getElementById('currency-select').addEventListener('change', handleCurrencyChange);
+
+    // Initial call to hide all fields on page load
+    hideAllFields();
+
+    document.addEventListener('DOMContentLoaded', () => {
+    const overlay = document.querySelector('.overlay');
+
+    // Show overlay and loader when page starts loading
+    overlay.style.display = 'flex';
+
+    // Hide overlay and loader after 5 seconds
+    setTimeout(() => {
+        overlay.style.display = 'none';
+    }, 5000); // 5000 milliseconds = 5 seconds
+
+    // Show overlay and loader on link click
+    document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            overlay.style.display = 'flex';
+            // Hide the loader after 5 seconds
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 5000); // 5000 milliseconds = 5 seconds
+        });
+    });
+});
+
+  </script>
+  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

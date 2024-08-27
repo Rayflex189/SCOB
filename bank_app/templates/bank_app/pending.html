@@ -1,0 +1,192 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'images/web_logo.jpg' %}" type="image/x-icon" />
+    <title>Pending Transaction - Standard Capital Online Bank</title>
+    <style>
+        /* Base styles and color scheme */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #000e17, #2994ff);
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .dashboard {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .loading-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .loading-container h2 {
+            color:linear-gradient(to top , #3d00a6, #000e17);
+            margin-bottom: 20px;
+        }
+
+        .message {
+            margin-top: 20px;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .message a {
+            color: linear-gradient(to top , #3d00a6, #000e17);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .message a:hover {
+            text-decoration: underline;
+        }
+
+        /* Styles for the infinity preloader */
+        * {
+            border: 0;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        .ip {
+            width: 256px;
+            height: 128px;
+        }
+
+        .ip__track {
+            stroke: hsl(var(--hue), 90%, 90%);
+            transition: stroke var(--trans-dur);
+        }
+
+        .ip__worm1,
+        .ip__worm2 {
+            animation: worm1 2s linear infinite;
+        }
+
+        .ip__worm2 {
+            animation-name: worm2;
+        }
+
+        /* Dark theme */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: hsl(var(--hue), 90%, 5%);
+                --fg: hsl(var(--hue), 90%, 95%);
+            }
+
+            .ip__track {
+                stroke: hsl(var(--hue), 90%, 15%);
+            }
+        }
+
+        /* Animation */
+        @keyframes worm1 {
+            from {
+                stroke-dashoffset: 0;
+            }
+            50% {
+                animation-timing-function: steps(1);
+                stroke-dashoffset: -358;
+            }
+            50.01% {
+                animation-timing-function: linear;
+                stroke-dashoffset: 358;
+            }
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes worm2 {
+            from {
+                stroke-dashoffset: 358;
+            }
+            50% {
+                stroke-dashoffset: 0;
+            }
+            to {
+                stroke-dashoffset: -358;
+            }
+        }
+/* Style the Telegram icon */
+.telegram-icon {
+    position: fixed;
+    bottom: 20px; /* Distance from the bottom of the page */
+    left: 20px;   /* Distance from the left of the page */
+    background: #0088cc; /* Telegram's official color */
+    color: white;
+    border-radius: 50%;
+    padding: 15px; /* Increased padding for larger icon */
+    font-size: 40px; /* Increased font size for larger icon */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    z-index: 9999; /* Ensure it's above other elements */
+}
+
+.telegram-icon:hover {
+    background: #007ab8; /* Darker color on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+    </style>
+    <!-- Link to Font Awesome CSS for the Telegram icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Link to your CSS file -->
+</head>
+<body>
+    <div class="dashboard">
+        <div class="loading-container">
+            <main>
+                <svg class="ip" viewBox="0 0 256 128" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="grad1" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%" stop-color="#5ebd3e" />
+                            <stop offset="33%" stop-color="#ffb900" />
+                            <stop offset="67%" stop-color="#f78200" />
+                            <stop offset="100%" stop-color="#e23838" />
+                        </linearGradient>
+                        <linearGradient id="grad2" x1="1" y1="0" x2="0" y2="0">
+                            <stop offset="0%" stop-color="#e23838" />
+                            <stop offset="33%" stop-color="#973999" />
+                            <stop offset="67%" stop-color="#009cdf" />
+                            <stop offset="100%" stop-color="#5ebd3e" />
+                        </linearGradient>
+                    </defs>
+                    <g fill="none" stroke-linecap="round" stroke-width="16">
+                        <g class="ip__track" stroke="#ddd">
+                            <path d="M8,64s0-56,60-56,60,112,120,112,60-56,60-56"/>
+                            <path d="M248,64s0-56-60-56-60,112-120,112S8,64,8,64"/>
+                        </g>
+                        <g stroke-dasharray="180 656">
+                            <path class="ip__worm1" stroke="url(#grad1)" stroke-dashoffset="0" d="M8,64s0-56,60-56,60,112,120,112,60-56,60-56"/>
+                            <path class="ip__worm2" stroke="url(#grad2)" stroke-dashoffset="358" d="M248,64s0-56-60-56-60,112-120,112S8,64,8,64"/>
+                        </g>
+                    </g>
+                </svg>
+            </main>
+            <h2>Transaction Pending</h2>
+            <p class="message">
+                {{request.user}}, your transaction has been placed on pending.
+                Please <a href="#">contact customer support</a> or
+                <a href="{% url 'dashboard' %}">go back to the home page</a>.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

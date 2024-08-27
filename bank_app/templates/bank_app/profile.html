@@ -1,0 +1,314 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standard Capital Online Bank Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/dash.css' %}">
+    <link rel="icon" href="{% static 'images/web_logo.jpg' %}" type="image/x-icon" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<style>
+*{
+    margin: 0;
+    padding: 0;
+    color: #fff;
+}
+body{
+    background: #153b53;
+}
+.btn-custom {
+    background-color:  #2994ff ;
+    color: #fff;
+    border: none;
+}
+.btn-custom:hover {
+    background: linear-gradient(135deg, #000e17, #2994ff);
+}
+.card{
+    background: #000e17;
+}
+.ph{
+    color: #000e17;
+}
+</style>
+<body>
+     <!-- Premier Bank Header -->
+     <header class="premier-bank-header">
+        <h1 class="ph">Profile page</h1>
+        <a style="text-decoration: none; color: #fff;" href="">
+        <div class="notification-bell" onclick="vibrateBell()">
+          <i class="fas fa-bell"></i>
+        </div>
+    </a>
+        <button id="openSidebarBtn" class="open-sidebar-btn" onclick="toggleSidebar()">&#9776</button>
+    </header>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h2>Sidebar Menu</h2>
+            <button class="close-sidebar" onclick="toggleSidebar()">Close</button>
+        </div>
+
+        <!-- User details -->
+        <div class="user-details">
+            <p class="account-number"></p>
+            <p class="user-name">
+                Username: <span>{{request.user}}</span>
+            </p>
+            <p class="user-email">
+                Email: <span>{{user_profile.email}}</span>
+            </p>
+        </div>
+
+        <ul>
+            <li><a href="{% url 'profile' %}">Profile</a></li>
+            <li><a href="{% url 'reset_profile' %}">Settings</a></li>
+            <li class="">
+                <div class="top-navbar">
+                    <div class="dropdown">
+                        <button class="dropbtn">Integrated services</button>
+                        <div class="dropdown-content">
+                            <a href="{% url 'coming_soon' %}">Rates</a>
+                            <a href="{% url 'loans' %}">Loans</a>
+                            <a href="{% url 'coming_soon' %}">Savings</a>
+                            <a href="{% url 'coming_soon' %}">Investments</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li><div id="translate-icon" class="translate-icon"><div id="google_translate_element"></div> </div>
+            </li>
+            <li><a href="{% url 'analytics' %}">Analytics</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+    </div>
+    <div class="container custom-cont">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">User Profile</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <img src="{{user_profile.profile_pic.url}}" class="profile-img" alt="Profile Picture">
+                    </div>
+                    <div class="col-md-8 details-section">
+                        <p><strong>Name:</strong> {{user_profile.first_name}} {{user_profile.middle_name}} {{user_profile.last_name}}</p>
+                        <p><strong>Email:</strong> {{user_profile.email}}</p>
+                        <p><strong>Phone:</strong> +{{user_profile.phone_number}}</p>
+                        <p><strong>Account Number:</strong> {{user_profile.account_number}}</p>
+                        <p><strong>Status:</strong> {{user_profile.status}}</p>
+                        <p><strong>Account Type:</strong> {{user_profile.account_type}}</p>
+                        <p><strong>Balance:</strong> {{user_profile.currency}}{{user_profile.balance|intcomma}}</p>
+                        <p><strong>Country:</strong> {{user_profile.country}}</p>
+                        <p><strong>Gender:</strong> {{user_profile.Gender}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Profile Edit Card -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="card-title">Profile Edit</h5>
+            </div>
+            <div class="card-body">
+                <p>You can edit your profile details here.</p>
+                <a href="{% url 'reset_profile' %}" class="btn btn-custom">Edit Profile</a>
+            </div>
+        </div>
+    
+        <!-- Logout Card -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="card-title">Logout</h5>
+            </div>
+            <div class="card-body">
+                <p>Are you sure you want to logout?</p>
+                <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+            </div>
+        </div>
+    </div>
+<br><br><br>
+    <div class="bottom-navbar">
+        <div class="nav-item" id="home">
+            <a style="text-decoration: none; color: #fff;" class="a" href="{% url 'dashboard' %}"><i class="fas fa-home"></i><span>Home</span></a>
+        </div>
+        <div class="nav-item" id="analytics">
+            <a style="text-decoration: none; color: #fff;" class="a" href="#"  onclick="openModal('cryptoWithdrawalModal')" ><i class="fas fa-chart-line"></i><span>Zelle pay</span></a>
+        </div>
+        <div class="nav-item" id="transactions">
+            <a style="text-decoration: none; color: #fff;" class="a" href="{% url 'bank_transfer' %}"><i class="fas fa-exchange-alt"></i><span>Bank transfer</span></a>
+        </div>
+        <div class="nav-item" id="settings">
+            <a style="text-decoration: none; color: #fff;" class="a" href="{% url 'reset_profile' %}"><i class="fas fa-cog"></i><span>Settings</span></a>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        // Toggle sidebar visibility
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const openBtn = document.getElementById('openSidebarBtn');
+            if (sidebar.classList.contains('open')) {
+                sidebar.classList.remove('open');
+                openBtn.style.display = 'block'; // Show the open button
+            } else {
+                sidebar.classList.add('open');
+                openBtn.style.display = 'none'; // Hide the open button
+            }
+        }
+
+
+        // Load user details and account number on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedAccountNumber = loadAccountNumber();
+            if (storedAccountNumber) {
+                displayAccountNumber(storedAccountNumber);
+            } else {
+                const newAccountNumber = generateAccountNumber();
+                saveAccountNumber(newAccountNumber);
+                displayAccountNumber(newAccountNumber);
+            }
+
+            // You can replace these values with actual user data from your backend
+            const userFullName = "John Doe";
+            const userEmail = "johndoe@example.com";
+
+            document.getElementById('fullName').textContent = userFullName;
+            document.getElementById('userEmail').textContent = userEmail;
+        });
+        // Function to handle vibration effect on tap
+        function vibrateBell() {
+            const bell = document.querySelector('.notification-bell');
+
+            // Add vibration animation class
+            bell.classList.add('vibrate');
+
+            // Remove the class after animation ends
+            bell.addEventListener('animationend',
+                () => {
+                    bell.classList.remove('vibrate');},
+                {
+                    once: true
+                });
+        }
+
+
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement(
+                {pageLanguage: 'en'},
+                'google_translate_element'
+            );
+        }
+        // Get the translate icon element
+const translateIcon = document.getElementById('translate-icon');
+
+// Add bounce animation
+translateIcon.addEventListener('mouseover', () => {
+    translateIcon.style.animation = 'bounce 0.5s infinite alternate';
+});
+
+// Reset animation when mouse leaves
+translateIcon.addEventListener('mouseleave', () => {
+    translateIcon.style.animation = '';
+});
+// Function to open a modal
+function openModal(modalId) {
+    document.getElementById(modalId).style.display = 'block';
+}
+
+// Function to close a modal
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+// Event listeners for Deposit and Transfer buttons
+document.querySelector('.deposit').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent default action
+    openModal('depositModal');
+});
+
+document.querySelector('.transfer').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent default action
+    openModal('transferModal');
+});
+
+// Close modal when clicking outside of modal content
+window.onclick = function(event) {
+    const depositModal = document.getElementById('depositModal');
+    const transferModal = document.getElementById('transferModal');
+    if (event.target === depositModal) {
+        depositModal.style.display = 'none';
+    }
+    if (event.target === transferModal) {
+        transferModal.style.display = 'none';
+    }
+}
+// Function to open a modal
+function openModal(modalId) {
+    document.getElementById(modalId).style.display = 'block';
+}
+
+// Function to close a modal
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+// Event listener for Crypto Withdrawal link
+document.querySelector('#home a[href*="crypto-withdrawal"]').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent default action
+    openModal('cryptoWithdrawalModal');
+});
+
+// Close modal when clicking outside of modal content
+window.onclick = function(event) {
+    const cryptoWithdrawalModal = document.getElementById('cryptoWithdrawalModal');
+    if (event.target === cryptoWithdrawalModal) {
+        cryptoWithdrawalModal.style.display = 'none';
+    }
+}
+      // Function to handle showing/hiding fields based on selected currency
+      function handleCurrencyChange() {
+        // Hide all fields initially
+        hideAllFields();
+
+        // Get the selected currency
+        const selectedCurrency = document.getElementById('currency-select').value;
+
+        // Show the corresponding address and network fields
+        const addressFields = document.getElementById(`${selectedCurrency.toLowerCase()}-address`);
+        const networkFields = document.getElementById(`${selectedCurrency.toLowerCase()}-network`);
+
+        if (addressFields) {
+            addressFields.style.display = 'block';
+        }
+
+        if (networkFields) {
+            networkFields.style.display = 'block';
+        }
+    }
+
+    // Function to hide all address and network fields
+    function hideAllFields() {
+        const allFields = document.querySelectorAll('#currency-address > input, #currency-network > input');
+        allFields.forEach(function(field) {
+            field.style.display = 'none';
+        });
+    }
+
+    // Attach event listener to currency select
+    document.getElementById('currency-select').addEventListener('change', handleCurrencyChange);
+
+    // Initial call to hide all fields on page load
+    hideAllFields();
+  </script>
+  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

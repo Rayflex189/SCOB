@@ -1,0 +1,179 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standard Capital Online Bank Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/dash.css' %}">
+    <link rel="icon" href="{% static 'images/web_logo.jpg' %}" type="image/x-icon" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body{
+            background: linear-gradient(135deg, #000e17, #2994ff);
+        }
+        .main-content {
+            padding: 20px;
+            margin-top: 60px; /* Adjust based on the height of the navbar */
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+        .kyc-details {
+            margin-bottom: 20px;
+        }
+        .info-message {
+            background-color: #d4edda;
+            color: #3e0b56;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: none; /* Hidden by default */
+            animation: fadeIn 0.5s ease-in-out forwards; /* Animation for showing */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<!-- Premier Bank Header -->
+<header class="premier-bank-header">
+    <h1>Loan Fee</h1>
+    <a style="text-decoration: none; color: #fff;" href="">
+    <div class="notification-bell" onclick="vibrateBell()">
+      <i class="fas fa-bell"></i>
+    </div>
+</a>
+    <button id="openSidebarBtn" class="open-sidebar-btn" onclick="toggleSidebar()">&#9776</button>
+</header>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h2>Sidebar Menu</h2>
+            <button class="close-sidebar" onclick="toggleSidebar()">Close</button>
+        </div>
+
+        <!-- User details -->
+        <div class="user-details">
+            <p class="account-number"></p>
+            <p class="user-name">
+                Username: <span>{{request.user}}</span>
+            </p>
+            <p class="user-email">
+                Email: <span>{{user_profile.email}}</span>
+            </p>
+        </div>
+
+        <ul>
+            <li><a href="{% url 'profile' %}">Profile</a></li>
+            <li><a href="{% url 'reset_profile' %}">Settings</a></li>
+            <li class="">
+                <div class="top-navbar">
+                    <div class="dropdown">
+                        <button class="dropbtn">Integrated services</button>
+                        <div class="dropdown-content">
+                            <a href="{% url 'coming_soon' %}">Rates</a>
+                            <a href="{% url 'loans' %}">Loans</a>
+                            <a href="{% url 'coming_soon' %}">Savings</a>
+                            <a href="{% url 'coming_soon' %}">Investments</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li><div id="translate-icon" class="translate-icon"><div id="google_translate_element"></div> </div>
+            </li>
+            <li><a href="{% url 'analytics' %}">Analytics</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+    </div>
+
+<div class="main-content">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">KYC - Know Your Customer</h5>
+            <div class="kyc-details">
+                <p><strong>Full Name:</strong> <span id="fullName"></span></p>
+                <p><strong>Email:</strong> <span id="email"></span></p>
+                <p><strong>Phone Number:</strong> <span id="phoneNumber"></span></p>
+                <p><strong>Loan Amount:</strong> $<span id="loanAmount"></span></p>
+                <p><strong>Loan Purpose:</strong></p>
+                <p id="loanPurpose"></p>
+            </div>
+            <div class="info-message" id="loanFeeMessage"></div>
+            <p class="lead">Thank you for submitting your details. We will review your application and contact you shortly.</p>
+        </div>
+    </div>
+</div>
+<br><br>
+<div class="bottom-navbar">
+    <div class="nav-item" id="home">
+        <a style="text-decoration: none; color: #fff;" class="a" href="{% url 'home' %}"><i class="fas fa-home"></i><span>Home</span></a>
+    </div>
+    <div class="nav-item" id="analytics">
+        <a style="text-decoration: none; color: #fff;" class="a" href="#"  onclick="openModal('cryptoWithdrawalModal')" ><i class="fas fa-chart-line"></i><span>Zelle pay</span></a>
+    </div>
+    <div class="nav-item" id="transactions">
+        <a style="text-decoration: none; color: #fff;" class="a" href="{% url 'bank_transfer' %}"><i class="fas fa-exchange-alt"></i><span>Bank transfer</span></a>
+    </div>
+    <div class="nav-item" id="settings">
+        <a style="text-decoration: none; color: #fff;" class="a" href="{% url 'reset_profile' %}"><i class="fas fa-cog"></i><span>Settings</span></a>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+// Toggle sidebar visibility
+function toggleSidebar() {
+const sidebar = document.getElementById('sidebar');
+const openBtn = document.getElementById('openSidebarBtn');
+    if (sidebar.classList.contains('open')) {
+        sidebar.classList.remove('open');
+        openBtn.style.display = 'block'; // Show the open button
+    } else {
+        sidebar.classList.add('open');
+        openBtn.style.display = 'none'; // Hide the open button
+    }
+    } 
+    document.addEventListener('DOMContentLoaded', function() {
+        // Retrieve query parameters from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const fullName = urlParams.get('fullName');
+        const email = urlParams.get('email');
+        const phoneNumber = urlParams.get('phoneNumber');
+        const loanAmount = parseFloat(urlParams.get('loanAmount'));
+        const loanPurpose = decodeURIComponent(urlParams.get('loanPurpose')); // Decode loan purpose
+
+        // Display data on KYC page
+        document.getElementById('fullName').textContent = fullName;
+        document.getElementById('email').textContent = email;
+        document.getElementById('phoneNumber').textContent = phoneNumber;
+        document.getElementById('loanAmount').textContent = loanAmount.toFixed(2);
+        document.getElementById('loanPurpose').textContent = loanPurpose;
+
+        // Calculate loan fee (5% of loan amount)
+        const loanFee = loanAmount * 0.05;
+        const totalAmountDue = loanAmount + loanFee;
+
+        // Display loan fee message
+        const loanFeeMessage = document.getElementById('loanFeeMessage');
+        loanFeeMessage.innerHTML = `
+            <strong>Loan Fee:</strong> 5% of $${loanAmount.toFixed(2)} is $${loanFee.toFixed(2)}. Total amount due: $${totalAmountDue.toFixed(2)}.
+        `;
+        loanFeeMessage.style.display = 'block'; // Show the info message
+    });
+</script>
+</body>
+</html>

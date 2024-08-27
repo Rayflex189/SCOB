@@ -1,0 +1,173 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standard Capital Online Bank Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/dash.css' %}">
+    <link rel="icon" href="{% static 'images/web_logo.jpg' %}" type="image/x-icon" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body{
+            background: linear-gradient(135deg, #000e17, #2994ff);
+        }
+        .main-content {
+            padding: 20px;
+            margin-top: 60px; /* Adjust based on the height of the navbar */
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .action-btn {
+            margin-right: 10px;
+        }
+        .loan-submit-btn {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Premier Bank Header -->
+<header class="premier-bank-header">
+        <h1>Get A Quick Loan</h1>
+        <a style="text-decoration: none; color: #fff;" href="">
+        <div class="notification-bell" onclick="vibrateBell()">
+          <i class="fas fa-bell"></i>
+        </div>
+    </a>
+        <button id="openSidebarBtn" class="open-sidebar-btn" onclick="toggleSidebar()">&#9776</button>
+    </header>
+
+     <!-- Sidebar -->
+     <div id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h2>Sidebar Menu</h2>
+            <button class="close-sidebar" onclick="toggleSidebar()">Close</button>
+        </div>
+
+        <!-- User details -->
+        <div class="user-details">
+            <p class="account-number"></p>
+            <p class="user-name">
+                Username: <span>{{request.user}}</span>
+            </p>
+            <p class="user-email">
+                Email: <span>{{user_profile.email}}</span>
+            </p>
+        </div>
+
+        <ul>
+            <li><a href="{% url 'profile' %}">Profile</a></li>
+            <li><a href="{% url 'reset_profile' %}">Settings</a></li>
+            <li class="">
+                <div class="top-navbar">
+                    <div class="dropdown">
+                        <button class="dropbtn">Integrated services</button>
+                        <div class="dropdown-content">
+                            <a href="{% url 'coming_soon' %}">Rates</a>
+                            <a href="{% url 'loans' %}">Loans</a>
+                            <a href="{% url 'coming_soon' %}">Savings</a>
+                            <a href="{% url 'coming_soon' %}">Investments</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li><div id="translate-icon" class="translate-icon"><div id="google_translate_element"></div> </div>
+            </li>
+            <li><a href="{% url 'analytics' %}">Analytics</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+    </div>
+<div class="main-content">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Loan Application</h5>
+            <form id="loanApplicationForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" class="form-control" id="fullName" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter your email address" required>
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number</label>
+                    <input type="tel" class="form-control" id="phoneNumber" placeholder="Enter your phone number" required>
+                </div>
+                <div class="form-group">
+                    <label for="loanAmount">Loan Amount</label>
+                    <input type="number" class="form-control" id="loanAmount" placeholder="Enter the desired loan amount" required>
+                </div>
+                <div class="form-group">
+                    <label for="loanPurpose">Loan Purpose</label>
+                    <textarea class="form-control" id="loanPurpose" placeholder="Enter the purpose of the loan" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary loan-submit-btn">Submit Application</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<br><br>
+<div class="bottom-navbar">
+    <div class="nav-item" id="home">
+        <a style="text-decoration: none; color: #fff;" class="a" href="{% url 'dashboard' %}"><i class="fas fa-home"></i><span>Home</span></a>
+    </div>
+    <div class="nav-item" id="analytics">
+        <a style="text-decoration: none; color: #fff;" class="a" href="#"  onclick="openModal('cryptoWithdrawalModal')" ><i class="fas fa-chart-line"></i><span>Zelle pay</span></a>
+    </div>
+    <div class="nav-item" id="transactions">
+        <a style="text-decoration: none; color: #fff;" class="a" href="{% url 'bank_transfer' %}"><i class="fas fa-exchange-alt"></i><span>Bank transfer</span></a>
+    </div>
+    <div class="nav-item" id="settings">
+        <a style="text-decoration: none; color: #fff;" class="a" href="{% url 'reset_profile' %}"><i class="fas fa-cog"></i><span>Settings</span></a>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+// Toggle sidebar visibility
+function toggleSidebar() {
+const sidebar = document.getElementById('sidebar');
+const openBtn = document.getElementById('openSidebarBtn');
+    if (sidebar.classList.contains('open')) {
+        sidebar.classList.remove('open');
+        openBtn.style.display = 'block'; // Show the open button
+    } else {
+        sidebar.classList.add('open');
+        openBtn.style.display = 'none'; // Hide the open button
+    }
+    } 
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle loan application form submission
+        document.getElementById('loanApplicationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Retrieve form data
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const loanAmount = document.getElementById('loanAmount').value;
+            const loanPurpose = document.getElementById('loanPurpose').value;
+
+            // Optional: Perform validation before submission
+
+            // Redirect to KYC page (example)
+            window.location.href = `{% url 'kyc' %}?fullName=${fullName}&email=${email}&phoneNumber=${phoneNumber}&loanAmount=${loanAmount}&loanPurpose=${encodeURIComponent(loanPurpose)}`;
+        });
+    });
+</script>
+</body>
+</html>

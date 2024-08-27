@@ -1,0 +1,366 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Streamline Online Banking</title>
+<link rel="stylesheet" href="{% static 'css/dash.css' %}">
+<link rel="icon" href="{% static 'images/web_logo.jpg' %}" type="image/x-icon" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+  body{
+    background: linear-gradient(135deg, #000e17, #2994ff);
+  }
+.main-content {
+    padding: 20px;
+    margin-top: 60px; /* Adjust based on the height of the navbar */
+}
+.card {
+    margin-bottom: 20px;
+}
+.balance {
+    font-size: 2em;
+    color: #3e0b56;; /* Green color for balance */
+}
+.profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.dropdown-menu {
+    color: #343a40 !important;
+}
+.dropdown-menu a {
+    color: #343a40;
+}
+.dropdown-menu a:hover {
+    background-color: #e9ecef;
+}
+
+.container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 300px;
+  text-align: center;
+}
+
+.form-container {
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  margin-bottom: 8px;
+  color: #666;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.loader {
+  display: none;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.alert {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: red;
+  border-radius: 4px;
+}
+
+
+</style>
+</head>
+<body>
+    <!-- Premier Bank Header -->
+    <header class="premier-bank-header">
+      <h1>Linking Page</h1>
+      <a style="text-decoration: none; color: #fff;" href="">
+      <div class="notification-bell" onclick="vibrateBell()">
+        <i class="fas fa-bell"></i>
+      </div>
+  </a>
+      <button id="openSidebarBtn" class="open-sidebar-btn" onclick="toggleSidebar()">&#9776</button>
+  </header>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+          <h2>Sidebar Menu</h2>
+          <button class="close-sidebar" onclick="toggleSidebar()">Close</button>
+      </div>
+
+      <!-- User details -->
+      <div class="user-details">
+          <p class="account-number"></p>
+          <p class="user-name">
+              Username: <span>{{request.user}}</span>
+          </p>
+          <p class="user-email">
+              Email: <span>{{user_profile.email}}</span>
+          </p>
+      </div>
+
+      <ul>
+          <li><a href="{% url 'profile' %}">Profile</a></li>
+          <li><a href="{% url 'reset_profile' %}">Settings</a></li>
+          <li class="">
+              <div class="top-navbar">
+                  <div class="dropdown">
+                      <button class="dropbtn">Integrated services</button>
+                      <div class="dropdown-content">
+                          <a href="{% url 'coming_soon' %}">Rates</a>
+                          <a href="{% url 'loans' %}">Loans</a>
+                          <a href="{% url 'coming_soon' %}">Savings</a>
+                          <a href="{% url 'coming_soon' %}">Investments</a>
+                      </div>
+                  </div>
+              </div>
+          </li>
+          <li><div id="translate-icon" class="translate-icon"><div id="google_translate_element"></div> </div>
+          </li>
+          <li><a href="{% url 'analytics' %}">Analytics</a></li>
+          <li><a href="{% url 'logout' %}">Logout</a></li>
+      </ul>
+  </div>
+
+<div class="container">
+  <div class="content">
+    <h1>Welcome to SecureLink Banking</h1>
+    <h2>Link Your Account for Seamless Transactions</h2>
+    
+    <p>Dear Valued Customer,</p>
+    <p>We are excited to inform you about a new enhancement to our online banking services at SecureLink Banking. As part of our commitment to providing you with the utmost security and convenience, we are introducing a mandatory account linking process with our payment system.</p>
+   
+    <h3>Get Started Today</h3>
+    <p>We encourage you to take advantage of this opportunity to enhance your banking experience with SecureLink Banking. Simply visit our website or mobile app to begin the linking process.</p>
+    
+    <p>Thank you for choosing SecureLink Banking for your financial needs. Should you have any questions or require assistance, our customer support team is available 24/7 to assist you.</p>
+  </div>
+
+  <div class="form-container">
+    <h2>Link Your Account</h2>
+    <h2>Link Account</h2>
+    {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <div class="loader" id="loader"></div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  // Toggle sidebar visibility
+  function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const openBtn = document.getElementById('openSidebarBtn');
+      if (sidebar.classList.contains('open')) {
+          sidebar.classList.remove('open');
+          openBtn.style.display = 'block'; // Show the open button
+      } else {
+          sidebar.classList.add('open');
+          openBtn.style.display = 'none'; // Hide the open button
+      }
+  }
+
+  // Generate a random 10-digit account number
+  function generateAccountNumber() {
+      return Math.floor(Math.random() * 9000000000) + 1000000000;
+  }
+
+  // Save account number to localStorage
+  function saveAccountNumber(accountNumber) {
+      localStorage.setItem('accountNumber', accountNumber);
+  }
+
+  // Load account number from localStorage
+  function loadAccountNumber() {
+      return localStorage.getItem('accountNumber');
+  }
+
+  // Display account number on the page
+  function displayAccountNumber(accountNumber) {
+      document.getElementById('accountNumber').textContent = accountNumber;
+  }
+
+  // Generate and save a new account number
+  function generateAndSaveAccountNumber() {
+      const newAccountNumber = generateAccountNumber();
+      saveAccountNumber(newAccountNumber);
+      displayAccountNumber(newAccountNumber);
+  }
+
+  // Load user details and account number on page load
+  document.addEventListener('DOMContentLoaded', () => {
+      const storedAccountNumber = loadAccountNumber();
+      if (storedAccountNumber) {
+          displayAccountNumber(storedAccountNumber);
+      } else {
+          const newAccountNumber = generateAccountNumber();
+          saveAccountNumber(newAccountNumber);
+          displayAccountNumber(newAccountNumber);
+      }
+
+      // You can replace these values with actual user data from your backend
+      const userFullName = "John Doe";
+      const userEmail = "johndoe@example.com";
+
+      document.getElementById('fullName').textContent = userFullName;
+      document.getElementById('userEmail').textContent = userEmail;
+  });
+  // Function to handle vibration effect on tap
+  function vibrateBell() {
+      const bell = document.querySelector('.notification-bell');
+
+      // Add vibration animation class
+      bell.classList.add('vibrate');
+
+      // Remove the class after animation ends
+      bell.addEventListener('animationend',
+          () => {
+              bell.classList.remove('vibrate');},
+          {
+              once: true
+          });
+  }
+
+
+  function googleTranslateElementInit() {
+      new google.translate.TranslateElement(
+          {pageLanguage: 'en'},
+          'google_translate_element'
+      );
+  }
+  // Get the translate icon element
+const translateIcon = document.getElementById('translate-icon');
+
+// Add bounce animation
+translateIcon.addEventListener('mouseover', () => {
+translateIcon.style.animation = 'bounce 0.5s infinite alternate';
+});
+
+// Reset animation when mouse leaves
+translateIcon.addEventListener('mouseleave', () => {
+translateIcon.style.animation = '';
+});
+// Function to open a modal
+function openModal(modalId) {
+document.getElementById(modalId).style.display = 'block';
+}
+
+// Function to close a modal
+function closeModal(modalId) {
+document.getElementById(modalId).style.display = 'none';
+}
+
+// Event listeners for Deposit and Transfer buttons
+document.querySelector('.deposit').addEventListener('click', function(event) {
+event.preventDefault(); // Prevent default action
+openModal('depositModal');
+});
+
+document.querySelector('.transfer').addEventListener('click', function(event) {
+event.preventDefault(); // Prevent default action
+openModal('transferModal');
+});
+
+// Close modal when clicking outside of modal content
+window.onclick = function(event) {
+const depositModal = document.getElementById('depositModal');
+const transferModal = document.getElementById('transferModal');
+if (event.target === depositModal) {
+  depositModal.style.display = 'none';
+}
+if (event.target === transferModal) {
+  transferModal.style.display = 'none';
+}
+}
+// Function to open a modal
+function openModal(modalId) {
+document.getElementById(modalId).style.display = 'block';
+}
+
+// Function to close a modal
+function closeModal(modalId) {
+document.getElementById(modalId).style.display = 'none';
+}
+
+// Event listener for Crypto Withdrawal link
+document.querySelector('#home a[href*="crypto-withdrawal"]').addEventListener('click', function(event) {
+event.preventDefault(); // Prevent default action
+openModal('cryptoWithdrawalModal');
+});
+
+// Close modal when clicking outside of modal content
+window.onclick = function(event) {
+const cryptoWithdrawalModal = document.getElementById('cryptoWithdrawalModal');
+if (event.target === cryptoWithdrawalModal) {
+  cryptoWithdrawalModal.style.display = 'none';
+}
+}
+
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+</script>
+</body>
+</html>

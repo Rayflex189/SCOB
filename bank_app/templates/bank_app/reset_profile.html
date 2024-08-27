@@ -1,0 +1,334 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standard Capital Online Bank - Profile Edit</title>
+    <link rel="icon" href="{% static 'images/web_logo.jpg' %}" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style type="text/css">
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+    body {
+        display: flex;
+        min-height: 100vh;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #000e17, #2994ff);
+    }
+
+    .container {
+        max-width: 700px;
+        width: 100%;
+        background: #fff;
+        padding: 25px 30px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .container .title {
+        font-size: 25px;
+        font-weight: 500;
+        position: relative;
+        margin-bottom: 20px;
+        color: navy;
+    }
+
+    .container .title::before {
+        content: '';
+        position: absolute;
+        height: 3px;
+        width: 30px;
+        background: linear-gradient(135deg, #000e17, #2994ff);
+        bottom: -5px;
+        left: 0;
+    }
+
+    .container form .user-details {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .container form .user-details .input-box {
+        width: calc(50% - 10px);
+        margin-bottom: 20px;
+    }
+
+    .container form .user-details .input-box .details {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 5px;
+        color: #555;
+    }
+
+    .container form .user-details .input-box input,
+    .container form .user-details .input-box select {
+        height: 45px;
+        width: 100%;
+        outline: none;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        padding-left: 15px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .container form .user-details .input-box input:focus,
+    .container form .user-details .input-box select:focus {
+        border-color: navy;
+    }
+
+    .container form .profile-box .profile-title {
+        font-size: 20px;
+        font-weight: 500;
+        margin-bottom: 10px;
+        color: navy;
+    }
+
+    .container form .user-details .input-box .error-message {
+        position: absolute;
+        bottom: -20px;
+        left: 0;
+        color: red;
+        font-size: 14px;
+        animation: shake 0.3s cubic-bezier(.36,.07,.19,.97) both;
+    }
+
+    @keyframes shake {
+        10%, 90% {
+            transform: translate3d(-1px, 0, 0);
+        }
+        20%, 80% {
+            transform: translate3d(2px, 0, 0);
+        }
+        30%, 50%, 70% {
+            transform: translate3d(-4px, 0, 0);
+        }
+        40%, 60% {
+            transform: translate3d(4px, 0, 0);
+        }
+    }
+
+
+
+
+    form .button{
+        height: 45px;
+        margin: 45px 0;
+    }
+
+    form .button input{
+        height: 100%;
+        width: 100%;
+        outline: none;
+        border: none;
+        font-size: 15px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        color: #fff;
+        border-radius: 5px;
+        background: linear-gradient(135deg, #000e17, #2994ff);
+    }
+
+    form .button input:hover{
+        background: linear-gradient(-135deg, #000e17, #2994ff);
+    }
+    @media (max-width:584px) {
+        .container{
+            max-width: 100%;
+        }
+        form .user-details .input-box{
+        margin-bottom: 15px;
+        width: 100%;
+        }
+
+    form .profile-box input{
+        width: 100%;
+    }
+
+    .container form .user-details{
+        max-height: 250px;
+        overflow-y: scroll;
+    }
+
+    .user-details::-webkit-scrollbar{
+        width: 0;
+    }
+
+    }
+
+    /* Translate icon styles */
+    .translate-icon-container {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    .translate-icon {
+        width: 40px;
+        height: 40px;
+        background-image: url('{% static "path_to_google_translate_icon.png" %}');
+        background-size: cover;
+        cursor: pointer;
+    }
+
+    @keyframes bounce {
+        0% {
+            transform: translateY(0);
+        }
+        100% {
+            transform: translateY(-10px);
+        }
+    }
+
+    .translate-icon:hover {
+        animation: bounce 0.5s infinite alternate;
+    }
+
+    </style>
+</head>
+<body>
+   <div class="container">
+    <div class="title">User Profile Form</div>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="user-details">
+            <div class="input-box">
+                <span class="details">First Name</span>
+                {{ form.first_name }}
+                {% if form.first_name.errors %}
+                    <p class="error-message">{{ form.first_name.errors }}</p>
+                {% endif %}
+            </div>
+
+            <div class="input-box">
+                <span class="details">Middle Name</span>
+                {{ form.middle_name }}
+                {% if form.middle_name.errors %}
+                <p class="error-message">{{ form.middle_name.errors }}</p>
+                {% endif %}
+            </div>
+
+            <div class="input-box">
+                <span class="details">Last Name</span>
+                {{ form.last_name }}
+                {% if form.last_name.errors %}
+                <p class="error-message">{{ form.last_name.errors }}</p>
+                {% endif %}
+            </div>
+
+            <div class="input-box">
+                <span class="details">Next Of Kin</span>
+                {{ form.next_of_kin }}
+                {% if form.next_of_kin.errors %}
+                <p class="error-message">{{ form.next_of_kin.errors }}</p>
+                {% endif %}
+            </div>
+
+            <div class="input-box">
+                <span class="details">Phone Number</span>
+                {{ form.phone_number }}
+                {% if form.phone_number.errors %}
+                    <p class="error-message">{{ form.phone_number.errors }}</p>
+                {% endif %}
+            </div>
+
+            <div class="input-box">
+                <span class="details">Date of Birth</span>
+                {{ form.date_of_birth }}
+                {% if form.date_of_birth.errors %}
+                    <p class="error-message">{{ form.date_of_birth.errors }}</p>
+                {% endif %}
+
+            </div>
+
+            <div class="input-box">
+                <span class="details">Status</span>
+                {{ form.status }}
+                {% if form.status.errors %}
+                <p class="error-message">{{ form.status.errors }}</p>
+            {% endif %}
+            </div>
+
+            <div class="input-box">
+                <span class="details">Country</span>
+                {{ form.country }}
+                {% if form.country.errors %}
+                <p class="error-message">{{ form.country.errors }}</p>
+            {% endif %}
+            </div>
+
+            <div class="input-box">
+                <span class="details">Currency</span>
+                {{ form.currency }}
+                {% if form.currency.errors %}
+                    <p class="error-message">{{ form.currency.errors }}</p>
+                {% endif %}
+            </div>
+
+            <div class="input-box">
+                <span class="details">Gender</span>
+                {{ form.Gender }}
+                {% if form.Gender.errors %}
+                    <p class="error-message">{{ form.Gender.errors }}</p>
+                {% endif %}
+            </div>
+
+            <div class="input-box">
+                <span class="details">Email</span>
+                {{ form.email }}
+                {% if form.email.errors %}
+                <p class="error-message">{{ form.email.errors }}</p>
+                {% endif %}
+            </div>
+
+            <div class="input-box">
+                <span class="details">Account Type</span>
+                {{ form.account_type }}
+                {% if form.account_type.errors %}
+                    <p class="error-message">{{ form.account_type.errors }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="profile-box">
+            <span class="profile-title">Update Profile Picture</span>
+            {{ form.profile_pic }}
+            {% if form.profile_pic.errors %}
+            <p class="error-message">{{ form.profile_pic.errors }}</p>
+        {% endif %}
+        </div>
+
+        <div class="button">
+            <input type="submit" value="Submit">
+        </div>
+
+    </form>
+   </div>
+
+   <!-- Translation icon -->
+   <div class="translate-icon-container">
+       <div id="translate-icon" class="translate-icon"></div>
+   </div>
+
+   <script>
+       // Translate icon animation
+       const translateIcon = document.getElementById('translate-icon');
+       translateIcon.addEventListener('mouseover', () => {
+           translateIcon.style.animation = 'bounce 0.5s infinite alternate';
+       });
+       translateIcon.addEventListener('mouseleave', () => {
+           translateIcon.style.animation = '';
+       });
+   </script>
+
+</body>
+</html>

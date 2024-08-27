@@ -1,0 +1,278 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Statistics - Standard Capital Online</title>
+    <link rel="icon" href="{% static 'images/web_logo.jpg' %}" type="image/x-icon" />
+    <style>
+        /* Base styles and color scheme */
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #000e17, #2994ff);
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            background: linear-gradient(to top, #3d00a6, #000e17);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        /* Charts */
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        td {
+            color: #666;
+        }
+
+        /* Navigation bar styles */
+        .navbar {
+            background: linear-gradient(to top, #3d00a6, #000e17);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: #fff;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .navbar a:hover {
+            background-color: #0056b3;
+        }
+
+        /* Back button */
+        .back-button {
+            cursor: pointer;
+            color: #fff;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+
+        /* Footer styles */
+        .footer {
+            margin-top: 20px;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 20px;
+            }
+        }
+
+        /* Style the Telegram icon */
+        .telegram-icon {
+            position: fixed;
+            bottom: 18px; /* Distance from the bottom of the page */
+            left: 10px;   /* Distance from the left of the page */
+            background: #0088cc; /* Telegram's official color */
+            color: white;
+            border-radius: 50%;
+            padding: 8px; /* Increased padding for larger icon */
+            font-size: 40px; /* Increased font size for larger icon */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            z-index: 9999; /* Ensure it's above other elements */
+        }
+
+        .telegram-icon:hover {
+            background: #007ab8; /* Darker color on hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+    </style>
+    <!-- Link to Font Awesome CSS for the Telegram icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Link to your CSS file -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <!-- Telegram icon with a link -->
+    <a href="https://t.me/PINNACLE_BANKING" class="telegram-icon" target="_blank" aria-label="Telegram">
+        <i class="fab fa-telegram-plane"></i>
+    </a>
+
+    <!-- Top navigation bar -->
+    <div class="navbar">
+        <!-- Back button -->
+        <div class="back-button" onclick="goBack()" aria-label="Go Back">
+            &larr; Back
+        </div>
+        <a href="#balance-section">Balance Trend</a>
+        <a href="#transactions-section">Recent Transactions</a>
+        <a href="#metrics-section">Account Metrics</a>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Account Statistics</h1>
+            <!-- Add any additional header content if needed -->
+        </header>
+
+        <!-- Balance Trend Section -->
+        <section id="balance-section" class="section">
+            <h2>Balance Trend</h2>
+            <canvas id="balance-chart"></canvas>
+        </section>
+
+        <!-- Recent Transactions Section -->
+        <section id="transactions-section" class="section">
+            <h2>Recent Transactions</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>payment week</td>
+                        <td>Salary</td>
+                        <td>- {{user_profile.currency}}{{user_profile.balance}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Metrics Section -->
+        <section id="metrics-section" class="section">
+            <h2>Account Metrics</h2>
+            <div class="metrics-container">
+                <canvas id="metrics-chart"></canvas>
+            </div>
+        </section>
+    </div>
+
+    <!-- Bottom navigation bar (footer) -->
+    <div class="footer">
+        <p>&copy; 2003 Standard Capital Online. All rights reserved.</p>
+    </div>
+
+    <script>
+        // Example data for charts
+        const balanceData = {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'Balance',
+                data: [3000, 3200, 2800, 3500, 4000, 3800],
+                fill: false,
+                borderColor: '#007bff',
+                tension: 0.4
+            }]
+        };
+
+        const metricsData = {
+            labels: ['Expenses', 'Income', 'Savings'],
+            datasets: [{
+                label: 'Metrics',
+                data: [50, 30, 20],
+                backgroundColor: ['#007bff', '#28a745', '#ffc107']
+            }]
+        };
+
+        // Chart.js setup
+        const balanceCtx = document.getElementById('balance-chart').getContext('2d');
+        new Chart(balanceCtx, {
+            type: 'line',
+            data: balanceData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const metricsCtx = document.getElementById('metrics-chart').getContext('2d');
+        new Chart(metricsCtx, {
+            type: 'doughnut',
+            data: metricsData,
+            options: {
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            boxWidth: 15,
+                            usePointStyle: true
+                        }
+                    }
+                }
+            }
+        });
+
+        // Function to go back to the previous page
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+
+</html>
