@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-1fw)(+*&**t4_r@=-a%9)hstji&^ueabvfx)4=csjoafvzhnwg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -50,7 +50,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-]
 ]
 
 ROOT_URLCONF = 'SCOB.urls'
