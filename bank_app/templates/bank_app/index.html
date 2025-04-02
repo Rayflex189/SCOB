@@ -4,393 +4,1398 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Standard Capital Online Bank">
-    <meta name="keywords" content="Online banking system,SIMPLE, QUICK, SECURED, Mobile banking, US Banks">
-    <meta name="author" content="Standard Capital Online Bank">
-    <title>Standard Capital Online Bank</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <!-- Google Fonts - Roboto -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Swiper CSS-->
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="icon" href="{% static 'images/web_logo.jpg' %}" type="image/x-icon" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<!-- Begin of Chaport Live Chat code -->
+<script type="text/javascript">
+    (function(w,d,v3){
+    w.chaportConfig = {
+      appId : '67b6119d231c0cb58482e5d6'
+    };
+    
+    if(w.chaport)return;v3=w.chaport={};v3._q=[];v3._l={};v3.q=function(){v3._q.push(arguments)};v3.on=function(e,fn){if(!v3._l[e])v3._l[e]=[];v3._l[e].push(fn)};var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://app.chaport.com/javascripts/insert.js';var ss=d.getElementsByTagName('script')[0];ss.parentNode.insertBefore(s,ss)})(window, document);
+    </script>
+    <!-- End of Chaport Live Chat code -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sofadi+One&display=swap');
+
+:root {
+    --nav-color: #0a039c;
+    --majority: #295f6c;
+    --rare-color: #0fbad3;
+    --percent: #b28d07;
+    --blur-color:#798487;
+    --bg-color: #daced7;
+    --hero-font:"Sofadi One", system-ui;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    overflow-x: hidden;
+    color: #fff;
+    max-width: 100%;
+    font-family: "SUSE", system-ui;
+    font-optical-sizing: auto;
+    font-weight: 100;
+    font-style: normal;
+    transition: transform 0.3s ease-in-out;
+}
+/* 
+header{
+    position: fixed;
+    width: 100%;
+} */
+
+.top_nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    height: 6rem;
+    background-color: var(--nav-color);
+}
+
+.login {
+    padding: 2rem;
+    margin-top: 1rem;
+    background: var(--majority);
+    border: none;
+    font-weight: bold;
+    text-decoration: underline;
+    text-decoration-thickness: 0.2rem;
+    color: #fff;
+}
+
+.logins {
+    padding: 2rem;
+    background: var(--majority);
+    border: none;
+    width: 50%;
+    font-weight: bold;
+    text-decoration: underline;
+    text-decoration-thickness: 0.2rem;
+    color: #fff;
+}
+
+.login:nth-child(2) {
+    background-color: var(--nav-color);
+}
+
+.text {
+    margin-bottom: 0.5rem;
+}
+
+.underline {
+    background-color: #fff;
+}
+
+.fa-lock, .fa-arrow-down, .rates {
+    color: var(--rare-color);
+}
+
+.translate {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Adjusted gap for a better look */
+    position: relative;
+}
+
+.dropdown-icon {
+    color: var(--rare-color);
+    display: none;
+    transition: transform 0.3s ease;
+}
+
+.side {
+    display: flex;
+    justify-content: space-between;
+    gap: 4rem;
+}
+
+/* Hiding the "Powered by Google" text */
+body .skiptranslate > iframe {
+    display: none !important; /* Hides the powered by text */
+}
+
+@media (max-width: 768px) {
+    .account_opening {
+        display: none; /* Hide translate element on mobile */
+    }
+
+    .bottom_nav {
+        display: flex; /* Show bottom navbar on mobile */
+    }
+}
+
+.bottom_nav{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--nav-color);
+    display: flex;
+    justify-content: space-around;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.popup {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.popup-content {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);/* White background with 80% opacity */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+    animation: bounceIn 1s ease-in-out; /* Larger shadow for a more pronounced effect */
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+    position: relative;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    position: relative;
+}
+.input-group input {
+    width: calc(100% - 22px); /* Adjusted width to fit properly */
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+.input-group input:focus {
+    outline: none;
+    border-color: #2994ff;
+}
+
+.hidden {
+    display: none;
+}
+
+.popup.visible {
+    display: flex;
+    opacity: 1;
+}
+
+.input-group .fa {
+    color: var(--nav-color);
+}
+.login-btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #003366;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.login-btn:hover {
+    background-color: #2994ff;
+}
+.login-footer {
+    margin-top: 20px;
+    color:var(--majority);
+}
+.login-footer a {
+    color: #2994ff;
+    text-decoration: none;
+}
+.login-footer a:hover {
+    text-decoration: underline;
+}
+/* Applying animation to each message */
+.messages li {
+    animation: slideIn 0.5s ease forwards;
+    animation-delay: calc(0.1s * var(--index)); /* Delay each message */
+}
+/* Optional: Different classes for different message tags */
+.success {
+    background-color: #28a745;
+    color: white;
+}
+.error {
+    background-color: #dc3545;
+    color: white;
+}
+.info {
+    background-color: #17a2b8;
+    color: white;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-10px);
+    }
+}
+.profile-img {
+    width: 5rem;
+    height: 5rem;
+    border: 3px solid #000e17;
+    border-radius: 50%;
+    position: relative;
+}
+
+nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 1rem;
+    background: var(--majority);    
+}
+
+nav a{
+    text-decoration: none;
+    color: var(--bg-color);
+}
+
+.bottom_nav{
+    display: none;
+}
+
+@media (max-width: 768px) {
+        #navbar {
+            display: flex; /* Keep flex to use flex properties */
+            flex-direction: column; /* Stack items vertically */
+            background: var(--majority);
+            align-items: baseline;
+            position: absolute; /* Positioning for slide effect */
+            top: 6rem; /* Adjust based on your top nav height */
+            left: 0;
+            right: 0;
+            max-height: 0; /* Initially collapsed */
+            overflow: hidden; /* Hide overflowing items */
+            transition: max-height 0.3s ease, opacity 0.3s ease; /* Add opacity transition */
+            opacity: 0; /* Start hidden */
+            z-index: 9999;
+        }
+
+        .hero_image p{
+            font-size: x-large;
+        }
+
+        .hero_image{
+            background-position: center;
+        }
+
+        footer{
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .dropdown-icon{
+            display: block;
+        }
+    
+        #navbar.active {
+            max-height: 500px; /* Set a max-height to allow slide-down effect */
+            opacity: 1; /* Fade in */
+        }
+
+        .contact{
+            flex-direction: column;
+        }
+
+        .logos{
+            height: 10rem;
+        }
+
+        .routing{
+            flex-direction: column;
+            margin-bottom: 5rem;
+        }
+
+        .first_row{
+            flex-direction: column;
+        }
+
+        .rate_chart{
+            flex-direction: column;
+        }
+
+        .testimony-slider{
+            flex-direction: column;
+        }
+
+        .charts{
+            align-items: center;
+        }
+
+        .rates_cart{
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .r_container{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .major{
+            flex-direction: column;
+        }
+
+    .account_opening {
+        display: none; /* Hide account opening section on mobile */
+    }
+
+    .bottom_nav {
+        display: flex; /* Show bottom navbar on mobile */
+    }
+}
+
+.nav_links{
+    padding: 1rem;
+}
+
+.r_container{
+    align-items: center;
+}
+
+.hero_image{
+    height: 100vh;
+    background-image: url("static/images/feature.jpg");
+    background-size: cover;
+    padding: 2rem;
+}
+
+.wallpaper_image{
+    filter: blur(0.5px);
+    height: 100vh;
+    background-image: url("static/images/wallpaper.jpg");
+    background-size: cover;
+    padding: 2rem;
+}
+
+.blog_post{
+    height: 60vh;
+    background-image: url("static/images/unsplash.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 2rem;
+    position: relative;
+}
+
+.blog_post_one{
+    height: 60vh;
+    background-image: url("static/images/image.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 2rem;
+    position: relative;
+}
+
+.blog_post_two{
+    height: 60vh;
+    background-image: url("static/images/images.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 2rem;
+    position: relative;
+}
+
+#time{
+    color: #fff;
+}
+
+.blog_post_three{
+    height: 60vh;
+    background-image: url("static/images/wallpapers.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 2rem;
+    position: relative;
+}
+
+.hero_image p{
+    font-weight: bold;
+    color: #fff;
+    font-family: "Sofadi One", system-ui;
+    font-size: larger;
+}
+
+.hero_image h1{
+    color: #fff;
+    font-size: xx-large;
+    font-family: "Sofadi One", system-ui;
+    font-weight: bold;
+}
+
+.routing{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rout{
+    padding: 2rem;
+    display: flex;
+    align-items: baseline;
+    width: 100%;
+    justify-content: space-between;
+    color: #dedadd;
+}
+
+.rout:nth-child(1){
+    background-color: #000e17;
+}
+
+.rout:nth-child(2){
+    background-color: #003366;
+}
+
+.rates_container{
+    background: transparent;
+    box-shadow: 2px 2px 2px 2px #000;
+    margin: 0.5rem;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    padding: 1rem;
+}
+
+.rates{
+    width: 100%;
+    padding: 1.5rem;
+    background-color: #000e17;
+    border: none;
+}
+
+.rates_cart{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.carts{
+    text-decoration: none;
+    padding: 1rem;
+    display: block;
+    color: #000;
+}
+
+.carts:hover{
+    background: transparent;
+    color: #000e17;
+}
+
+.major{
+    display: flex;
+    align-items: center;
+    margin-top: 8rem;
+    justify-content: space-around;
+}
+
+.news{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.news:hover{
+    padding-top: 1rem;
+    transition: 1s ease-in-out;
+}
+
+.animate{
+    height: 5rem;
+    background-color: #333; /* Dark color for the line */
+    flex-grow: 1; /* Allow hr to grow between links */
+    margin: 0;
+}
+
+.animate_flex{
+    display: flex;
+    align-items: baseline;
+    justify-content: baseline;
+    margin: 2rem;
+    background: transparent;
+    flex-direction: column;
+}
+
+.straight{
+    font-size: 1rem;
+    color: var(--bg-color);
+    font-family: "Roboto", sans-serif;
+}
+
+.user-ip {
+    color: #fff; /* Set the color to white for all spans */
+}
+
+#user-ip, #user-ip-cast {
+    color: #fff; /* Ensure the specific element also has white text */
+}
+
+
+#typed-text {
+    color: #fff;
+    font-size: 18px;
+    text-align: left;
+    white-space: pre-wrap;
+    border-right: 2px solid black; /* Optional: to replicate a typing cursor */
+    width: fit-content;
+    font-family: "SUSE", system-ui;
+    overflow: hidden;
+}
+
+/* Optional: Apply to individual spans created dynamically */
+#typed-text span {
+    color: #fff; /* Ensures each character is white */
+}
+
+
+/* Added animation class */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.3s forwards; /* Duration of fade-in animation */
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+
+.rate_chart{
+    display: flex;
+    gap: 6rem;
+}
+
+.rates_text{
+    font-weight: bolder;
+    color: #000e17;
+}
+
+.percent{
+    color: var(--percent);
+    font-size: xx-large;
+    font-weight: bolder;
+}
+
+.charts{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.charts p{
+    font-size: small;
+    color: #798487;
+}
+
+.percent_text{
+    color: #0a039c;
+    font-weight: bolder;
+}
+
+.rates_margin{
+    margin: 0.5rem;
+}
+
+.help{
+    padding: 1rem;
+    background: #1b1760;
+}
+
+.help, p{
+    text-align: center;
+    line-height: 2rem;
+    color: var(--bg-color);
+}
+
+.carts_row{
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.first_row{
+    display: flex;
+    align-items: center;
+    gap: 6.5rem;
+    justify-content: space-between;
+}
+
+aside{
+    display: flex;
+    padding-bottom: 2rem;
+    justify-content: space-between;
+}
+
+.carts_text{
+    color: var(--bg-color);
+    font-weight: bolder;
+}
+
+.wallpaper_text{
+    padding: 1rem;
+    border-top-left-radius: 1rem;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    margin: 1rem;
+    background-color: #17a2b8;
+}
+
+.wallpaper_text, h1{
+    font-family: "SUSE", system-ui;
+}
+
+.wallpaper_text, p{
+    text-align: left;
+    font-family: var(--hero-font);
+    color: #000e17;
+}
+
+.h2{
+    text-align: center;
+    color: #0a039c;
+    font-family: "SUSE", system-ui;
+}
+
+.start{
+   margin-top: 15rem;
+   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+   z-index: 1;
+   color: var(--bg-color);
+   border: none;
+   padding: 0.5rem;
+   cursor: pointer;
+   background:  #003366;
+   border-radius: 0.5rem;
+}
+
+.start:hover{
+    background:transparent ;
+    color:  #003366;
+    font-weight: bolder;
+}
+
+.post_header{
+    color: #003366;
+}
+
+.blog_post_text{
+    margin: 1rem;
+}
+
+.blog_post_text, p{
+    word-spacing: 5px;
+}
+
+.blog_post_one, span{
+    color: #003366;
+    font-weight: 500;
+}
+
+.testimony h1{
+    color: #003366;
+    text-align: center;
+    font-family: var(--hero-font);
+}
+
+.testimony{
+    display: flex;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    background: transparent;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: 1rem;
+    padding: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.testimony-slider{
+    display: flex;
+}
+
+.testimony p{
+    font-family:"SUSE", system-ui ;
+    font-weight: 400;
+    color: #000;
+}
+
+.testimony, i{
+    color: #003366;
+    font-weight: bold;
+}
+
+.contact{
+    background:  #0e8371;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contact_list{
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.inner_cn_list{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/****FOOTER PART *****/
+
+footer{
+    background: #003366;
+    display: flex;
+    padding: 2rem;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.footer_left{
+    display: flex;
+    flex-direction: column;
+}
+
+.bio_text{
+    color: #fff;
+    font-size: 3rem;
+    word-spacing: 5px;
+}
+
+#bio_text{
+    text-align: left;
+    color: #fff;
+}
+
+.footer_text{
+    color: var(--rare-color);
+    font-weight: 900;
+}
+
+.footer_content{
+    display: flex;
+    line-height: 2rem;
+    flex-direction: column;
+}
+
+.footer_content, span{
+    color: #fff;
+    font-weight: 700;
+}
+
+.footer_content_aside{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.li_header{
+    font-size: xx-large;
+    font-weight: 900;
+}
+
+.footer_list, li{
+   font-weight: 400;
+   line-height: 3rem;
+}
+
+.footer img{
+    height: 2.5rem;
+}
+
+.footer{
+    display: flex;
+    flex-direction: column;
+    background: #003366;
+    padding: 1rem;
+    line-height: 1rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Dark overlay */
+    z-index: 9998; /* Below the loader */
+    display: none; /* Initially hidden */
+}
+
+.loader {
+    width: fit-content;
+    font-weight: bold;
+    font-family: monospace;
+    font-size: 30px;
+    background: radial-gradient(circle closest-side, #000 94%, #0000) right/calc(200% - 1em) 100%;
+    animation: l24 1s infinite alternate linear;
+    position: fixed;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust position */
+    z-index: 9999; /* On top of overlay */
+}
+
+.loader::before {
+    content: "Loading...";
+    line-height: 1em;
+    color: #0000;
+    background: inherit;
+    background-image: radial-gradient(circle closest-side, #fff 94%, #000);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+@keyframes l24 {
+    100% {
+        background-position: left;
+    }
+}
+
+.certify_imgs{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: space-between;
+}
+    </style>
+    
+<link rel="icon" href="{% static 'images/logo_image.jpg' %}" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Coast Capital Savings Bank</title>
 </head>
 <body>
-    <div class="overlay">
-        <div class="loader"></div>
-      </div>
+<div class="overlay"></div>
+<div class="loader"></div>
     <header>
-        <nav>
-            <div class="logo"><img class="logo" src="{% static 'images/web_logo_title.png' %}" alt=""></div>
-            <ul class="nav-links">
-                <li><a href="">Home</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="{% url 'loginview' %}">Login</a></li>
-                <li><a href="">Register</a></li>
-                <li> <div id="google_translate_element"></div></li>
-            </ul>
-        <div class="curve">
-            <div class="menu-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+        <div class="top_nav">
+            <img class="logo" style="height: 6rem;" src="{% static 'images/logo.png' %}" alt="logo">
+            
+            <div class="side">
+                <div class="account_opening">
+                   <a href="{% url 'loginview' %}"> <button class="login"><span style="color: #fff;" class="text">LOGIN</span></button></a>
+                    <a href="{% url 'register' %}"><button class="login" id="register">OPEN ACCOUNT</button></a>
+                </div>
+    
+                <div class="translate">
+                    <i class="fa fa-lock" id="register" aria-hidden="true"></i>
+                    <div id="google_translate_element"></div>
+                    <i class="fa fa-bars dropdown-icon" id="hamburger-icon"></i>
+                </div>
             </div>
         </div>
-        </nav>
+    
+        <div id="nav-container">
+            <nav id="navbar">
+                <a href="" class="nav_links">HOME</a>
+                <a href="" class="nav_links">BANK</a>
+                <a href="" class="nav_links">SAVE</a>
+                <a href="" class="nav_links">BORROW</a>
+                <a href="" class="nav_links">WEALTH AND RETIRE</a>
+                <a href="" class="nav_links">INSURE</a>
+                <a href="" class="nav_links">LEARN & PLAN</a>
+                <a href="" class="nav_links">PAYMENTS</a>
+            </nav>
+        </div>
     </header>
-  <br><br><br>
 
-  <div class="color_change">
-    <br><br><br><br><br><br>
-    <section class="grid_one">
-        <div class="sect1">
-            <span class="space">SIMPLE, QUICK, SECURED</span>
-            <h2 class="bold_header">Secured & Easy Banking Solution</h2>
-            <p>Standard Capital Online Bank is a leading bank in the <br> worldzone and a prominent international banking institution. <br> Your money's at hand with Everyday Checking facilities.Bank with one of the largest bank.</p>
-            <div class="youtube">
-              <a style="text-decoration: none; color: aliceblue;" href="https://youtu.be/uvMLw0xLzwk?si=g-b2rFuoPkGbXkb-"> <span class="youtube_icon"> Watch video <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fff"><path d="M616-242q-27 1-51.5 1.5t-43.5.5h-41q-71 0-133-2-53-2-104.5-5.5T168-257q-26-7-45-26t-26-45q-6-23-9.5-56T82-447q-2-36-2-73t2-73q2-30 5.5-63t9.5-56q7-26 26-45t45-26q23-6 74.5-9.5T347-798q62-2 133-2t133 2q53 2 104.5 5.5T792-783q26 7 45 26t26 45q6 23 9.5 56t5.5 63q2 36 2 73v17q-19-8-39-12.5t-41-4.5q-83 0-141.5 58.5T600-320q0 21 4 40.5t12 37.5ZM400-400l208-120-208-120v240Zm360 200v-80h-80v-80h80v-80h80v80h80v80h-80v80h-80Z"/></svg></span></a>
+<div class="hero_image">
+    <h1 class="header">Coast Capital Savings Bank</h1>
+    <span id="typed-text" class="typed-text"></span>
+
+
+    <section class="major">
+        <div class="news">
+            <hr class="animate">
+        <span class="animate_flex">
+        <span class="straight">LATEST NEWS</span>
+        <p class="animate_text">Acquisition of CAPZA a leading European <br> Private Debt and Private Equity Firm</p>
+        </span>
             </div>
-            <div class="details">
-                <a href="{% url 'register' %}" class="register_btn"><span class="youtube_icon">Register <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fff"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/></svg></span> </a>
-                <a href="{% url 'loginview' %}" class="login_btn"><span class="youtube_icon">Login <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fff"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/></svg></span></a>
-            </div>
-        </div>
-        <section class="grid_two">
-            <div class="sect2">
-                <img class="image1" src="{% static 'images/hero-img-2.jpg' %}" alt="">
-                <img class="image1" src="{% static 'images/hero-img-3.jpg' %}" alt="">
-            </div>
-            <div class="sect2">
-                <img class="image1" src="{% static 'images/hero-shape-4.png' %}" alt="">
-                <img class="image1" src="{% static 'images/hero-shape-6.png' %}" alt="">
-            </div>
-        </section>
+    
+            <div class="news">
+                <hr class="animate">
+               <span class="animate_flex">
+                <span class="straight">PODCAST</span>
+                <p class="animate_text">Electoral outcomes, and a way <br> forward for France</p>
+               </span>
+                </div>
+    
+                <div class="news">
+                <hr class="animate">
+                <span class="animate_flex">
+                <span class="straight">LATEST NEWS</span>
+                <p class="animate_text">We acheived EDGE move and <br> EDGEplus Certifications</p>
+                </span>
+                </div>
     </section>
+</div>
     
-    <div class="customer_care">
-    <img class="img_cc" src="{% static 'images/avt-1.jpg' %}" alt="">
-    <p>
-        Need Help? Contact our <br>
-        <a href="" class="cc">Standard Capital Online Bank</a> and <br>
-        Tell us about your query
-    </p>
+<section class="routing">
+    <div class="rout">
+        <span class="user-ip">ROUTING#</span>
+        <span id="user-ip">Loading...</span>
     </div>
-   <br> 
-  </div>
+    <div class="rout">
+        <i class="fas fa-clock" style="color: #fff;"></i> 
+        <span class="hours">BRANCH HOURS</span>
+        <i class="fas fa-plus" id="time"></i>
+    </div>
+</section>
 
-<div class="scroll-content">
-    <img src="{% static 'images/partner-1.png' %}" alt="">
-    <img src="{% static 'images/partner-2.png' %}" alt="">
-    <img src="{% static 'images/partner-3.png' %}" alt="">
-    <img src="{% static 'images/partner-4.png' %}" alt="">
-    <img src="{% static 'images/partner-5.png' %}" alt="">
-    <img src="{% static 'images/partner-6.png' %}" alt="">
+<section class="rates_container">
+    <button class="rates">RATES <i class="fa fa-arrow-down" aria-hidden="true"></i> </button>
+    <br><br>
+<div class="r_container">
+    <section class="rates_cart">
+        <a href="#" class="carts">
+           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 94.17 98.49"><defs><style>.cls-1,.cls-3,.cls-5{fill:none;}.cls-2{fill:#000e17;}.cls-3,.cls-5{stroke:#000e17;stroke-miterlimit:10;}.cls-3{stroke-linecap:round;stroke-width:4px;}.cls-4{clip-path:url(#clip-path);}.cls-5{stroke-width:5px;}</style><clipPath id="clip-path" transform="translate(-0.87 -1.41)"><polygon class="cls-1" points="12.9 79.76 32.94 91.49 60.5 88.11 70.37 87.89 87.4 70.45 91.52 53.95 92.79 48.85 94.65 41.41 95.83 34.5 90.45 26.61 48.49 0 4.7 24.27 0 37.66 3.59 43.58 3.28 56.46 6.05 75.72 12.9 79.76"/></clipPath></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-2" d="M11.65,33.15l.1-.2.09-.15.15-.27h0l.13-.18a11.2,11.2,0,0,1,3.77-3.57L41.28,14.18,44.2,8.35a14.58,14.58,0,0,0-3.29,1.37l-27,15.54a15.14,15.14,0,0,0-5.1,4.8c-.09.13-.16.24-.23.36l-.2.34L8.2,31A16.09,16.09,0,0,0,7,33.8Z" transform="translate(-0.87 -1.41)"/><path class="cls-2" d="M55,14.34,80.12,28.76a11.24,11.24,0,0,1,3.74,3.51l.21.34.11.19.06.1c.14.25.27.51.39.76l4.55.7A15.27,15.27,0,0,0,87.82,31l-.13-.23-.19-.31-.14-.23-.07-.1a15.32,15.32,0,0,0-5.15-4.88L55.46,9.93l-.37-.22a14.36,14.36,0,0,0-2.94-1.25Z" transform="translate(-0.87 -1.41)"/><path class="cls-2" d="M85.78,44.93V70.41c0,.21-.06.41-.1.62l0,.2a10.24,10.24,0,0,1-5,7.59l-2.24,1.29-2.83,1.63.7,4.26c1.31-.74,2.69-1.54,4.15-2.38l2.24-1.29a14.28,14.28,0,0,0,7-10.54c.06-.37.12-.74.16-1.15,0-.06,0-2.33,0-2.39V41Z" transform="translate(-0.87 -1.41)"/><path class="cls-2" d="M67.63,86.28c-9.3,5.34-14.15,8.13-14.76,8.47-.39.18-.75.33-1.16.48a11.16,11.16,0,0,1-3.06.61H47.5a11.09,11.09,0,0,1-3.21-.62,10.74,10.74,0,0,1-1.17-.49c-.25-.11-.49-.24-.69-.35L27.8,86l-2.87,1.49-1.4.72,16.9,9.72c.3.17.62.33.93.48A13.67,13.67,0,0,0,43,99a15,15,0,0,0,4.27.84h1.63a15,15,0,0,0,4.2-.83,14.61,14.61,0,0,0,1.59-.66c.15-.08,1.71-1,17.21-9.86Z" transform="translate(-0.87 -1.41)"/><path class="cls-2" d="M19.83,81.38l-4.44-2.56a10.2,10.2,0,0,1-5-7.59l0-.15c0-.22-.08-.45-.11-.68V44.59l-4.05-4V70.46c0,.08,0,.15,0,.22,0,.34.09.7.17,1.08a14.27,14.27,0,0,0,7,10.57l5.71,3.29Z" transform="translate(-0.87 -1.41)"/><path class="cls-2" d="M85.77,70.45c0,.2,0,.39-.09.58l0,.2a10.24,10.24,0,0,1-5,7.59l-2.24,1.29L52.87,94.75c-.39.18-.75.33-1.16.48a11.16,11.16,0,0,1-3.06.61H47.5a11.09,11.09,0,0,1-3.21-.62,10.74,10.74,0,0,1-1.17-.49c-.25-.11-.49-.24-.69-.35l-27-15.56a10.2,10.2,0,0,1-5-7.59l0-.15a6.17,6.17,0,0,1-.1-.62H6.18c0,.08,0,.15,0,.22,0,.34.09.7.17,1.08a14.27,14.27,0,0,0,7,10.57L40.43,97.9c.3.17.62.33.93.48A13.67,13.67,0,0,0,43,99a15,15,0,0,0,4.27.84h1.63a15,15,0,0,0,4.2-.83,14.61,14.61,0,0,0,1.59-.66c.18-.09,2.23-1.25,25.76-14.77l2.24-1.29a14.28,14.28,0,0,0,7-10.54c.06-.37.12-.74.16-1.15a1.21,1.21,0,0,0,0-.19Z" transform="translate(-0.87 -1.41)"/><line class="cls-3" x1="29.35" y1="45.17" x2="59.36" y2="25.37"/><line class="cls-3" x1="43.42" y1="45.17" x2="66.13" y2="30.18"/><line class="cls-3" x1="58.53" y1="44.1" x2="77.04" y2="31.88"/><g class="cls-4"><path class="cls-5" d="M24.9,87.58l-3.4,1.77c-1.87,1-2.89-1.13-2.26-4.65l3.56-20a13.93,13.93,0,0,0-3.48-11L4.85,39.43c-2.54-2.51-1.73-5,1.82-5.46l20.13-2.8a13.91,13.91,0,0,0,9.36-6.7L45.28,6.3c1.6-3.2,4.19-3.18,5.75,0l8.88,18.28a13.91,13.91,0,0,0,9.27,6.83l20.1,3.05c3.54.54,4.32,3,1.74,5.49L76.38,54.08A13.87,13.87,0,0,0,72.75,65l3.3,20.06c.59,3.53-1.52,5-4.68,3.35L53.44,78.85a13.89,13.89,0,0,0-11.51-.08l-17,8.81" transform="translate(-0.87 -1.41)"/></g></g></g></svg>
+           <span class="rates_text">FEATURED</span>
+        </a>
+        <a href="#" class="carts">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 83.65 101.58"><defs><style>.cls-1{fill:#000e17;}.cls-2,.cls-3{fill:none;}.cls-3{stroke:#000e17;stroke-miterlimit:10;stroke-width:4px;}</style></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M72.72,51.31c-1.33,0-2.65,0-4,0a1.17,1.17,0,0,1-1.23-.75,21.27,21.27,0,0,0-7.94-9,1.54,1.54,0,0,1-.64-1.15v-.54c0-1.76-.07-3.57,0-5.37A2.25,2.25,0,0,0,57.52,32h-.79L54,33.47c-2.27,1.22-4.62,2.48-6.89,3.78a8.12,8.12,0,0,1-4.38,1.12c-2.79-.07-5.65,0-8.41,0H32.21A21.25,21.25,0,0,0,11.55,54.16a19.16,19.16,0,0,0-.43,2.26l-.18,1.11-.12.6V61.2c.07.33.14.75.21,1.18.15.88.3,1.79.52,2.65a20.7,20.7,0,0,0,7.59,11.38,1.55,1.55,0,0,1,.65,1.35c0,1.71,0,3.42,0,5.13v.61a1.85,1.85,0,0,0,2.07,2.1q5,0,10,0a1.85,1.85,0,0,0,2-2V80.85H46.46v2.71a1.83,1.83,0,0,0,2,2q4.74,0,9.48,0a1.82,1.82,0,0,0,2-2q0-2.72,0-5.43a1.41,1.41,0,0,1,.65-1.3,21,21,0,0,0,8-11A1.16,1.16,0,0,1,69.8,65c.93,0,1.85,0,2.88,0a1.8,1.8,0,0,0,1.88-1.9q0-5,0-9.92A1.79,1.79,0,0,0,72.72,51.31Zm-1.86,10H69.48c-.61,0-1.21,0-1.81,0a1.89,1.89,0,0,0-2.15,1.71,17.57,17.57,0,0,1-8.25,11.62,2,2,0,0,0-1,1.84v5.38H50.15V79.4a2.38,2.38,0,0,0-.55-1.73,2.29,2.29,0,0,0-1.69-.54H32.43a1.92,1.92,0,0,0-2.2,2.18c0,.47,0,.93,0,1.42v1.15H23.52l0-.65c0-.15,0-.3,0-.45V79.57c0-1.06,0-2.11,0-3.17a2.4,2.4,0,0,0-1.19-2.27A17.53,17.53,0,0,1,28.52,42.4,20.69,20.69,0,0,1,32.37,42c2.17,0,4.33,0,6.5,0s4.18,0,6.27,0a3.79,3.79,0,0,0,1.63-.42c1.67-.87,3.32-1.79,5-2.7L55.14,37l.08,1c0,.15,0,.29,0,.42v.92c0,.84,0,1.67,0,2.51a2.24,2.24,0,0,0,1.36,2.28,17,17,0,0,1,7.19,7.21,21.25,21.25,0,0,1,.91,2l.09.21a1.91,1.91,0,0,0,2,1.4h4.06Z"/><path class="cls-1" d="M51.9,50.15c0,1-1.23,1.66-2.91,1.67H30.42a2.8,2.8,0,0,1-2.55-1.19c-.36-.7,0-1.43.94-1.79a5.55,5.55,0,0,1,1.82-.36c6.48,0,12.93,0,18.39,0a4.16,4.16,0,0,1,2.06.5A1.44,1.44,0,0,1,51.9,50.15Z"/><path class="cls-2" d="M41.34,32.9a15.45,15.45,0,0,1-15.05-12L9.71,30.45A11.2,11.2,0,0,0,5.94,34l-.13.18h0l-.15.27-.09.15a10.93,10.93,0,0,0-1.31,3.76s0,.11,0,.15,0,.38-.07.61a2,2,0,0,1-.08.42l0,.11v32.4c0,.23.06.46.11.68l0,.15a10.2,10.2,0,0,0,5,7.59l27,15.56c.2.11.44.24.69.35a10.74,10.74,0,0,0,1.17.49,11.09,11.09,0,0,0,3.21.62h1.15a11.16,11.16,0,0,0,3.06-.61c.41-.15.77-.3,1.16-.48L72.2,81.79l2.24-1.29a10.24,10.24,0,0,0,5-7.59l0-.2c0-.21.07-.41.1-.62V39.77l0-.21a1.89,1.89,0,0,1-.08-.4c0-.22,0-.44-.09-.72a10.85,10.85,0,0,0-1.34-3.86l-.06-.1-.11-.19L77.68,34a11.24,11.24,0,0,0-3.74-3.51l-17.45-10A15.44,15.44,0,0,1,41.34,32.9Z"/><path class="cls-1" d="M83.52,38.64l0-.11c0-.18,0-.35-.07-.53a15.29,15.29,0,0,0-1.79-5.32l-.13-.23-.19-.31-.14-.23.56-.51-.63.41A15.32,15.32,0,0,0,76,26.93l-19.25-11c0,.51.08,1,.08,1.57a15.26,15.26,0,0,1-.3,3l17.45,10A11.24,11.24,0,0,1,77.68,34l.21.34.11.19.06.1a10.85,10.85,0,0,1,1.34,3.86c0,.28.07.5.09.72a1.89,1.89,0,0,0,.08.4l0,.21V72.09c0,.21-.06.41-.1.62l0,.2a10.24,10.24,0,0,1-5,7.59L72.2,81.79,46.69,96.43c-.39.18-.75.33-1.16.48a11.16,11.16,0,0,1-3.06.61H41.32a11.09,11.09,0,0,1-3.21-.62,10.74,10.74,0,0,1-1.17-.49c-.25-.11-.49-.24-.69-.35L9.21,80.5a10.2,10.2,0,0,1-5-7.59l0-.15c0-.22-.08-.45-.11-.68V39.68l0-.11a2,2,0,0,0,.08-.42c0-.23,0-.42.07-.61s0-.1,0-.15a10.93,10.93,0,0,1,1.31-3.76l.09-.15.15-.27h0L5.94,34a11.2,11.2,0,0,1,3.77-3.57l16.58-9.53a15.77,15.77,0,0,1-.4-3.47c0-.34,0-.66.05-1L7.69,26.94a15.14,15.14,0,0,0-5.1,4.8c-.09.13-.16.24-.23.36l-.2.34L2,32.67A15.43,15.43,0,0,0,.23,37.92v.13c0,.19,0,.33-.06.48l0,.11A4.45,4.45,0,0,0,0,39.72V72.14c0,.08,0,.15,0,.22,0,.34.09.7.17,1.08A14.27,14.27,0,0,0,7.19,84L34.25,99.58c.3.17.62.33.93.48a13.67,13.67,0,0,0,1.59.66,15,15,0,0,0,4.27.84h1.63a15,15,0,0,0,4.2-.83,14.61,14.61,0,0,0,1.59-.66c.18-.09,2.23-1.25,25.76-14.77L76.46,84a14.28,14.28,0,0,0,7-10.54c.06-.37.12-.74.16-1.15a1.21,1.21,0,0,0,0-.19V39.72A4.84,4.84,0,0,0,83.52,38.64Z"/><path class="cls-3" d="M26.29,20.92a15.44,15.44,0,0,0,30.2-.5,15.26,15.26,0,0,0,.3-3c0-.53,0-1.06-.08-1.57a15.44,15.44,0,0,0-30.77.58c0,.33-.05.65-.05,1A15.77,15.77,0,0,0,26.29,20.92Z"/><path class="cls-1" d="M45.88,20.63a3.79,3.79,0,0,1-3,3.51l-.33.09v1.39a1.24,1.24,0,0,1-2.47,0V24.23l-.33-.1a3.79,3.79,0,0,1-3-3.47,1.24,1.24,0,0,1,2.48,0c0,.59.86,1.24,2.07,1.24s2.06-.66,2.06-1.25c0-.42-.42-.85-1.06-1.08a.9.9,0,0,1-.24-.12l-3.24-2,0,0a3.61,3.61,0,0,1-2.05-3.12,3.8,3.8,0,0,1,3-3.51l.33-.09V9.28a1.24,1.24,0,0,1,2.47,0v1.37l.33.09a3.8,3.8,0,0,1,3,3.51,1.24,1.24,0,0,1-2.48,0c0-.59-.88-1.25-2.06-1.25s-2.07.66-2.07,1.25a1.21,1.21,0,0,0,.76.95.21.21,0,0,1,.1.06l3.15,2,.08,0A3.75,3.75,0,0,1,45.88,20.63Z"/></g></g></svg>
+            <span class="rates_text">SAVINGS</span>
+         </a>
+         <a href="#" class="carts">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 83.64 92.06"><defs><style>.cls-1{fill:#000e17;}</style></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M83.51,29.12l0-.1c0-.2,0-.4-.08-.61a15,15,0,0,0-1.78-5.23l-.13-.24-.36-.59A15.47,15.47,0,0,0,76,17.42L67.8,12.79l-.76-3a2,2,0,0,0-2.47-1.46l-3,.77L61.27,9l-12-6.9-.35-.21A14.25,14.25,0,0,0,42,0h-.35a14.4,14.4,0,0,0-6.93,1.89l-27,15.54a15.08,15.08,0,0,0-5.11,4.8c-.09.13-.16.24-.23.36s-.14.22-.2.33a2,2,0,0,0-.13.24,14.88,14.88,0,0,0-1.78,5.2c0,.23-.07.44-.09.66l0,.11A4.41,4.41,0,0,0,0,30.2V62.63a1.48,1.48,0,0,0,0,.21c0,.35.09.71.16,1.1a14.27,14.27,0,0,0,7,10.56L34.25,90.07q.45.25.93.48a13.53,13.53,0,0,0,1.58.66,15.41,15.41,0,0,0,4.27.84h1.63a15,15,0,0,0,4.2-.84,12.85,12.85,0,0,0,1.59-.65c.18-.09,2.18-1.22,25.68-14.73l2.32-1.33a14.28,14.28,0,0,0,7-10.54c.06-.37.13-.74.16-1.17a1,1,0,0,0,0-.17V30.2A4.43,4.43,0,0,0,83.51,29.12ZM63.61,12.79l3.47,13.58H20l-.59-2.3ZM70,30.42V62.23H14V30.42Zm9.64,32.15c0,.21-.06.42-.1.63l0,.2a10.22,10.22,0,0,1-5,7.59l-2.33,1.33L46.68,86.92c-.39.18-.76.33-1.16.48a11.16,11.16,0,0,1-3.06.61H41.32a11.23,11.23,0,0,1-3.22-.62,10.74,10.74,0,0,1-1.17-.49,6.31,6.31,0,0,1-.69-.36L9.2,71a10.2,10.2,0,0,1-5-7.59.68.68,0,0,0,0-.14c0-.23-.08-.46-.11-.69V30.17l0-.11a2,2,0,0,0,.08-.42c0-.22,0-.42.08-.67a11,11,0,0,1,1.25-3.73l.85-1.33a11.46,11.46,0,0,1,3.37-3l27-15.53a10.16,10.16,0,0,1,4.95-1.35h.18a10.28,10.28,0,0,1,5,1.33l.37.22,8.67,5L16.45,20.65a2,2,0,0,0-1.24.93A2,2,0,0,0,15,23.11l.83,3.26H12a2,2,0,0,0-2,2V64.26a2,2,0,0,0,2,2H72a2,2,0,0,0,2-2V28.39a2,2,0,0,0-2-2h-.72L69.17,18.2l4.76,2.73a11.33,11.33,0,0,1,3.78,3.57l.12.2-.57.5.63-.4A1,1,0,0,1,78,25l.06.09A11,11,0,0,1,79.4,29c0,.23.06.45.08.68a2,2,0,0,0,.08.4l0,.21Z"/><path class="cls-1" d="M23.3,47.51a2,2,0,0,1-2,2h-.39a2,2,0,1,1,0-4.05h.39A2,2,0,0,1,23.3,47.51Z"/><path class="cls-1" d="M44.58,47.51a2,2,0,0,1-2,2h-.71a2,2,0,1,1,0-4.05h.71A2,2,0,0,1,44.58,47.51Z"/><path class="cls-1" d="M55.23,47.51a2,2,0,0,1-2,2h-.71a2,2,0,0,1,0-4.05h.71A2,2,0,0,1,55.23,47.51Z"/><path class="cls-1" d="M33.94,47.51a2,2,0,0,1-2,2h-.71a2,2,0,1,1,0-4.05h.71A2,2,0,0,1,33.94,47.51Z"/><path class="cls-1" d="M65.56,47.51a2,2,0,0,1-2,2h-.39a2,2,0,1,1,0-4.05h.39A2,2,0,0,1,65.56,47.51Z"/><path class="cls-1" d="M32.8,37.2a2,2,0,0,1-2,2H21.21a2,2,0,1,1,0-4h9.56A2,2,0,0,1,32.8,37.2Z"/></g></g></svg>
+            <span class="rates_text">CREDIT CARDS</span>
+         </a>
+         <a href="#" class="carts">
+           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 93.34 99.25"><defs><style>.cls-1{fill:#000e17;}</style></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M93.21,35.57l0-.1c0-.2,0-.4-.07-.62a15.15,15.15,0,0,0-1.78-5.24l-.13-.22-.2-.33-.15-.24.57-.5-.62.41a15.33,15.33,0,0,0-5.16-4.87L62.82,10.74l2.59-8.1A2,2,0,0,0,63.48,0H39.37a2,2,0,0,0-1.65.85,2.07,2.07,0,0,0-.26,1.85l2.81,8L17.39,23.87a15,15,0,0,0-5.1,4.8,3.21,3.21,0,0,0-.24.36l-.19.33-.14.24a14.88,14.88,0,0,0-1.78,5.2c0,.23-.06.45-.08.66l0,.11a4.45,4.45,0,0,0-.14,1.08v20.2H2.21a2,2,0,1,0,0,4H14.12V84.7l-.06.14a2.06,2.06,0,0,0,0,1.59l.06.14V88H2a2,2,0,0,0,0,4H16.14a2,2,0,0,0,2-2V87.66h10.4L44,96.51q.45.26.93.48a13.53,13.53,0,0,0,1.58.66,15.06,15.06,0,0,0,4.28.84H51l.14.75,0-.75h1.16a15.13,15.13,0,0,0,4.21-.83A15.3,15.3,0,0,0,58.15,97c.18-.08,2.23-1.25,25.77-14.77l2.23-1.29a14.29,14.29,0,0,0,6.73-9l0-.11a1.89,1.89,0,0,0,.14-.66c0-.34.09-.58.12-.82s.13-.74.17-1.17V36.65A4.32,4.32,0,0,0,93.21,35.57ZM60.71,4.05,56.33,17.7H47L42.23,4.05ZM59,21.75v3.47H44.49V21.75ZM88.84,71.38a10.28,10.28,0,0,1-4.7,6.05l-.31.17L81.9,78.71c-16.6,9.55-24.71,14.2-25.52,14.65a11.79,11.79,0,0,1-1.16.48,11.16,11.16,0,0,1-3.06.61H51a11.09,11.09,0,0,1-3.21-.62,10.89,10.89,0,0,1-1.18-.49c-.24-.11-.49-.24-.69-.35L30.12,83.88a2,2,0,0,0-1-.27H18.17V64.88H32.28l12.2,5.78a2,2,0,0,0,.87.2H58.13A2.89,2.89,0,0,1,61,73.75v.93A2.31,2.31,0,0,1,58.71,77H39.81a2,2,0,0,0,0,4h18.9a6.29,6.29,0,0,0,4-1.39l.2-.16h.24a2,2,0,0,0,.75-.16l21.68-9.57a2.6,2.6,0,0,1,3.22,1.05l.17.28ZM89.3,66l-1-.27a6.54,6.54,0,0,0-4.43.31L65.12,74.33l-.07-1.07a7,7,0,0,0-6.92-6.45H45.8L33.6,61a2,2,0,0,0-.86-.2H18.17V58.88a2,2,0,0,0-2-2H13.75l0-20.35a1.86,1.86,0,0,0,.08-.41c0-.25,0-.44.08-.67a11,11,0,0,1,1.33-3.86l.09-.16.16-.28.11-.18a11.3,11.3,0,0,1,3.78-3.56L41.64,14.6l1,3-.77.22a2,2,0,0,0-1.47,1.93V27l-.48.19A25.88,25.88,0,0,0,23.19,51.36v4.2a2,2,0,0,0,4,0v-4.2a21.73,21.73,0,0,1,21.7-21.71h5A21.74,21.74,0,0,1,75.62,51.36V63.08a2,2,0,0,0,4,0V51.36A25.67,25.67,0,0,0,63.54,27.48l-.46-.19V19.72a2,2,0,0,0-1.63-2l-.82-.17.92-2.88L83.63,27.37a11.18,11.18,0,0,1,3.75,3.51l.2.34.11.18.07.12a11,11,0,0,1,1.35,3.89c0,.23,0,.45.08.68a1.87,1.87,0,0,0,.07.4l0,.21Z"/><path class="cls-1" d="M59.54,53.46c0,2.61-1.91,4.86-4.87,5.73l-.54.15v2.27a2,2,0,0,1-4,0V59.34l-.54-.16c-2.94-.86-4.84-3.09-4.87-5.68a2,2,0,0,1,4,0c0,1,1.4,2,3.38,2s3.38-1.08,3.38-2c0-.69-.7-1.4-1.74-1.77a1.79,1.79,0,0,1-.39-.2l-5.3-3.34,0,0A5.88,5.88,0,0,1,44.68,43c0-2.61,1.91-4.86,4.87-5.73l.54-.16V34.9a2,2,0,0,1,4,0v2.23l.54.16c3,.87,4.87,3.12,4.87,5.73a2,2,0,0,1-4,0c0-1-1.45-2.05-3.38-2.05S48.73,42.05,48.73,43A2,2,0,0,0,50,44.58l.16.09,5.15,3.26.12.06A6.13,6.13,0,0,1,59.54,53.46Z"/></g></g></svg>
+            <span class="rates_text">LOANS</span>
+         </a>
+         <a href="#" class="carts">
+         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 83.65 92.07"><defs><style>.cls-1{fill:#000e17;}</style></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M83.51,29.12V29c0-.19,0-.4-.08-.61a15.15,15.15,0,0,0-1.78-5.24l-.13-.23-.35-.56.58-.5-.63.41A15.39,15.39,0,0,0,76,17.42L65.74,11.55,49.28,2.1l-.37-.22A14.25,14.25,0,0,0,42,0h-.35a14.47,14.47,0,0,0-6.94,1.89l-27,15.54a15,15,0,0,0-5.1,4.8,2.15,2.15,0,0,0-.23.36l-.2.33L2,23.16a15.09,15.09,0,0,0-1.78,5.2c0,.23-.06.45-.08.66l0,.11A4.45,4.45,0,0,0,0,30.21V62.63a1.48,1.48,0,0,0,0,.21c0,.35.09.71.16,1.09a14.42,14.42,0,0,0,3.72,7.94l.34.36-.2.45a2,2,0,0,0-.18.81v8.35a2,2,0,0,0,2,2H23.46l10.79,6.21c.3.17.62.33.93.48a16.1,16.1,0,0,0,1.58.66,15.55,15.55,0,0,0,4.28.84h1.62a14.72,14.72,0,0,0,4.21-.84,14.27,14.27,0,0,0,1.59-.65c.14-.07,1-.56,11.53-6.6l.17-.1H78.25a2,2,0,0,0,2-2V73.49a2,2,0,0,0-.31-1L79.68,72l.36-.42A14.21,14.21,0,0,0,83.48,64c.06-.37.12-.75.16-1.17a1,1,0,0,0,0-.17V30.21A4.46,4.46,0,0,0,83.51,29.12ZM49.58,85.26l-2.9,1.66,0,0a11.61,11.61,0,0,1-1.11.46,11.16,11.16,0,0,1-3.06.61H41.32a11.09,11.09,0,0,1-3.21-.62,11.79,11.79,0,0,1-1.18-.49l-.69-.36-4.66-2.68H52Zm26.65-5.45H60.15a1.84,1.84,0,0,0-.81,0H24.27a1.8,1.8,0,0,0-.73,0H7.9V75.52H76.23ZM79.6,62.49c0,.29-.07.51-.1.72l0,.19a10.2,10.2,0,0,1-5,7.59l-.29.17-.15.08-.4.23H10L9.2,71a10.21,10.21,0,0,1-5-7.59s0-.09,0-.14a5.5,5.5,0,0,1-.11-.69V30.17l0-.11a2.84,2.84,0,0,0,.09-.42A5.78,5.78,0,0,1,4.25,29a10.75,10.75,0,0,1,1.32-3.85L5.66,25c0-.1.1-.18.16-.28l.12-.18a11.17,11.17,0,0,1,3.77-3.56l27-15.54a10.23,10.23,0,0,1,5-1.35h.18a10.27,10.27,0,0,1,5,1.33l.37.22,26.7,15.33a11.14,11.14,0,0,1,3.74,3.51l.42.71A10.71,10.71,0,0,1,79.41,29c0,.23.06.45.08.68a1.69,1.69,0,0,0,.08.39l0,.22Z"/><path class="cls-1" d="M69.41,26.05l-.92-.53-19.21-11-.37-.21A14.38,14.38,0,0,0,42,12.39h-.36a14.32,14.32,0,0,0-6.93,1.89L14.44,25.94a2,2,0,0,0,1,3.78l53,.11a2,2,0,0,0,1-3.78ZM23,25.69l13.75-7.9a10.16,10.16,0,0,1,5-1.35h.18a10.17,10.17,0,0,1,5,1.33l.37.22c.14.07,4.21,2.41,9.13,5.24l4.41,2.53Z"/><path class="cls-1" d="M66.4,33.8H17.73a2,2,0,0,0-2,2v30a2,2,0,0,0,2,2H66.4a2,2,0,0,0,2-2v-30A2,2,0,0,0,66.4,33.8ZM46.24,63.45H37.89V48.09h8.35Zm18.13.34H50.29V46.06a2,2,0,0,0-2-2H35.86a2,2,0,0,0-2,2V63.79H19.75V37.85H64.37Z"/></g></g></svg>
+            <span class="rates_text">MORTAGES</span>
+         </a>
+    </section>
+    <section class="rate_chart">
+        <div class="charts">
+            <span class="percent">3.75%</span>
+            <p>High Yield Savings Account</p>
+            <span class="percent_text">High Yield Savings Rate</span>
+        </div>
+
+        <div class="charts">
+            <span class="percent">3.65%</span>
+            <p>18 MONTH CERTIFICATE</p>
+            <span class="percent_text">StarLink Standard Certificate Rates</span>
+        </div>
+
+        <div class="charts">
+            <span class="percent">4.00%</span>
+            <p>36 MONTH CERTIFICATE</p>
+            <span class="percent_text">StarLink Standard Certificate Rates</span>
+        </div>
+
+        <div class="charts">
+            <span class="percent">15.49%</span>
+            <p>CASH REWARDS MASTERCARD</p>
+            <span class="percent_text">Mastercard</span>
+        </div>
+
+        <div class="charts">
+            <span class="percent">5.00%</span>
+            <p>LOANS AND INVESTMENT</p>
+            <span class="percent_text">Get an affordable loan with a nice payback date</span>
+        </div>
+
+    </section>
+</div>
+</section>
+
+<button class="rates rates_margin">MEMBER CARE <i class="fa fa-arrow-down" aria-hidden="true"></i> </button>
+
+<section class="help">
+    <h1>How Can We Help You Today</h1>
+<br><br>
+<aside>
+    <div class="first_row">
+        <a href="#" class="carts_row">
+            <svg width="77" height="86" viewBox="0 0 77 86" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>icon-Checking Account</title><defs><path id="a" d="M2.92414411e-15 0L77 0 77 86 2.92414411e-15 86z"/></defs><g fill="none" fill-rule="evenodd"><g><mask id="b" fill="#fff"><use xlink:href="#a"/></mask><path d="M39.0900863,86.0000015 C37.1817634,86.0009256 35.2706601,85.5593968 33.7896013,84.6809674 L5.64670469,67.9935851 C2.74575734,66.2728261 0.440755395,62.2870335 0.399048484,58.9177152 L2.92414411e-15,26.2334758 C-0.0393374905,22.8363883 2.23507938,18.8450419 5.17866047,17.1474238 L32.7432213,1.25423802 C35.6914365,-0.444305718 40.287538,-0.412834063 43.2098023,1.31810696 L62.3560548,12.6691924 L60.3782204,15.9959315 L41.2328947,4.6439204 C39.4951067,3.61368651 36.4319658,3.59424814 34.6793488,4.60504364 L7.11571478,20.4973038 C5.36495134,21.5071737 3.85052706,24.1656029 3.87369757,26.1871939 L4.27315709,58.8695821 C4.29818124,60.9133884 5.86450745,63.6227276 7.62361227,64.6668461 L35.7674357,81.3542283 C37.5052237,82.3853879 40.5683646,82.4048262 42.319128,81.3940307 L69.8836888,65.5008449 C71.6353791,64.4900494 73.1507302,61.8325458 73.125706,59.8128061 L72.7262465,27.1267154 C72.7095637,25.7299293 71.9681075,23.9601115 70.8373868,22.6170123 L73.801358,20.1261234 C75.5002195,22.1430862 76.5725505,24.8079949 76.6003551,27.0804335 L77.0003789,59.7655986 C77.0415215,63.1608348 74.7661779,67.1521812 71.8207431,68.8507249 L44.2561823,84.7448363 C42.8029282,85.5825378 40.9474341,86.0000015 39.0900863,86.0000015" fill="#3AC1CC" mask="url(#b)"/></g><path d="M65.623867,62 L11.376133,62 C10.616441,62 10,61.3816325 10,60.6184221 L10,29.3815779 C10,28.6183675 10.616441,28 11.376133,28 L52.5140981,28 C53.2747142,28 53.890231,28.6183675 53.890231,29.3815779 C53.890231,30.1447882 53.2747142,30.7631557 52.5140981,30.7631557 L12.7522659,30.7631557 L12.7522659,59.2359158 L64.2477341,59.2359158 L64.2477341,41.2837598 C64.2477341,40.5205494 64.8641751,39.9021819 65.623867,39.9021819 C66.383559,39.9021819 67,40.5205494 67,41.2837598 L67,60.6184221 C67,61.3816325 66.383559,62 65.623867,62" fill="#3AC1CC"/><path d="M41.8691684 37L18.1308316 37C17.5047215 37 17 36.5536723 17 36 17 35.4479419 17.5047215 35 18.1308316 35L41.8691684 35C42.4934532 35 43 35.4479419 43 36 43 36.5536723 42.4934532 37 41.8691684 37M31.8568133 44L18.1431867 44C17.5120812 44 17 43.5536723 17 43 17 42.4479419 17.5120812 42 18.1431867 42L31.8568133 42C32.4879188 42 33 42.4479419 33 43 33 43.5536723 32.4879188 44 31.8568133 44M22.7996125 54L19.2003875 54C18.536735 54 18 53.5536723 18 53 18 52.4479419 18.536735 52 19.2003875 52L22.7996125 52C23.4622961 52 24 52.4479419 24 53 24 53.5536723 23.4622961 54 22.7996125 54M30.7996125 54L27.2003875 54C26.536735 54 26 53.5536723 26 53 26 52.4479419 26.536735 52 27.2003875 52L30.7996125 52C31.4622961 52 32 52.4479419 32 53 32 53.5536723 31.4622961 54 30.7996125 54M59.9715182 41.8311549L62.2233629 42.8895005 66.6071751 33.4182827 71.9878112 14.2983721 65.2544085 11.137273 54.3326853 27.6461641 49.9451846 37.1192403 51.1024594 37.6628155C51.1319676 37.6739658 51.1605536 37.6869744 51.1900618 37.7009123L59.9337108 41.8125711C59.9466207 41.8181463 59.9586084 41.8246506 59.9715182 41.8311549L59.9715182 41.8311549zM51.2417012 40.781172L47.1280734 49.1336469 56.3724398 45.7430383 57.4577883 43.7025404 51.2417012 40.781172zM44.3727451 53C43.9891385 53 43.6147532 52.8383212 43.3491794 52.5381933 42.9757162 52.1163418 42.8936465 51.5086525 43.1426219 51.0013157L48.7528688 39.6113237 47.5402661 39.040802C47.2101431 38.8865567 46.9547128 38.6050126 46.8311472 38.2602837 46.7066594 37.9155548 46.7223357 37.5355167 46.8763316 37.2028673L51.8890374 26.3815386C51.9185456 26.319283 51.9526644 26.2570274 51.9904718 26.2003469L63.6240803 8.6145264C64.0003099 8.04679226 64.73156 7.8423708 65.3466216 8.12856084L74.2073813 12.2885375C74.8178322 12.5756567 75.1313569 13.2669729 74.9478527 13.9201924L69.2186509 34.2805696C69.198364 34.3511879 69.1734665 34.4208771 69.142114 34.4877786L64.1312525 45.3118948C63.8103508 46.0041402 62.9942646 46.3051973 62.3063547 45.9809105L59.9493871 44.8733179 58.544059 47.5150006C58.3845303 47.8151285 58.1208007 48.044638 57.8035875 48.1607866L44.8421099 52.916373C44.6890361 52.9721243 44.5304296 53 44.3727451 53L44.3727451 53z" fill="#3AC1CC"/></g></svg>
+            <span class="carts_text">INSTANT ACCOUNTS</span>
+         </a>
+
+         <a href="#" class="carts_row">
+             <svg width="77" height="86" viewBox="0 0 77 86" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>icon-Checking Account</title><defs><path id="a" d="M2.92414411e-15 0L77 0 77 86 2.92414411e-15 86z"/></defs><g fill="none" fill-rule="evenodd"><g><mask id="b" fill="#fff"><use xlink:href="#a"/></mask><path d="M39.0900863,86.0000015 C37.1817634,86.0009256 35.2706601,85.5593968 33.7896013,84.6809674 L5.64670469,67.9935851 C2.74575734,66.2728261 0.440755395,62.2870335 0.399048484,58.9177152 L2.92414411e-15,26.2334758 C-0.0393374905,22.8363883 2.23507938,18.8450419 5.17866047,17.1474238 L32.7432213,1.25423802 C35.6914365,-0.444305718 40.287538,-0.412834063 43.2098023,1.31810696 L62.3560548,12.6691924 L60.3782204,15.9959315 L41.2328947,4.6439204 C39.4951067,3.61368651 36.4319658,3.59424814 34.6793488,4.60504364 L7.11571478,20.4973038 C5.36495134,21.5071737 3.85052706,24.1656029 3.87369757,26.1871939 L4.27315709,58.8695821 C4.29818124,60.9133884 5.86450745,63.6227276 7.62361227,64.6668461 L35.7674357,81.3542283 C37.5052237,82.3853879 40.5683646,82.4048262 42.319128,81.3940307 L69.8836888,65.5008449 C71.6353791,64.4900494 73.1507302,61.8325458 73.125706,59.8128061 L72.7262465,27.1267154 C72.7095637,25.7299293 71.9681075,23.9601115 70.8373868,22.6170123 L73.801358,20.1261234 C75.5002195,22.1430862 76.5725505,24.8079949 76.6003551,27.0804335 L77.0003789,59.7655986 C77.0415215,63.1608348 74.7661779,67.1521812 71.8207431,68.8507249 L44.2561823,84.7448363 C42.8029282,85.5825378 40.9474341,86.0000015 39.0900863,86.0000015" fill="#3AC1CC" mask="url(#b)"/></g><path d="M65.623867,62 L11.376133,62 C10.616441,62 10,61.3816325 10,60.6184221 L10,29.3815779 C10,28.6183675 10.616441,28 11.376133,28 L52.5140981,28 C53.2747142,28 53.890231,28.6183675 53.890231,29.3815779 C53.890231,30.1447882 53.2747142,30.7631557 52.5140981,30.7631557 L12.7522659,30.7631557 L12.7522659,59.2359158 L64.2477341,59.2359158 L64.2477341,41.2837598 C64.2477341,40.5205494 64.8641751,39.9021819 65.623867,39.9021819 C66.383559,39.9021819 67,40.5205494 67,41.2837598 L67,60.6184221 C67,61.3816325 66.383559,62 65.623867,62" fill="#3AC1CC"/><path d="M41.8691684 37L18.1308316 37C17.5047215 37 17 36.5536723 17 36 17 35.4479419 17.5047215 35 18.1308316 35L41.8691684 35C42.4934532 35 43 35.4479419 43 36 43 36.5536723 42.4934532 37 41.8691684 37M31.8568133 44L18.1431867 44C17.5120812 44 17 43.5536723 17 43 17 42.4479419 17.5120812 42 18.1431867 42L31.8568133 42C32.4879188 42 33 42.4479419 33 43 33 43.5536723 32.4879188 44 31.8568133 44M22.7996125 54L19.2003875 54C18.536735 54 18 53.5536723 18 53 18 52.4479419 18.536735 52 19.2003875 52L22.7996125 52C23.4622961 52 24 52.4479419 24 53 24 53.5536723 23.4622961 54 22.7996125 54M30.7996125 54L27.2003875 54C26.536735 54 26 53.5536723 26 53 26 52.4479419 26.536735 52 27.2003875 52L30.7996125 52C31.4622961 52 32 52.4479419 32 53 32 53.5536723 31.4622961 54 30.7996125 54M59.9715182 41.8311549L62.2233629 42.8895005 66.6071751 33.4182827 71.9878112 14.2983721 65.2544085 11.137273 54.3326853 27.6461641 49.9451846 37.1192403 51.1024594 37.6628155C51.1319676 37.6739658 51.1605536 37.6869744 51.1900618 37.7009123L59.9337108 41.8125711C59.9466207 41.8181463 59.9586084 41.8246506 59.9715182 41.8311549L59.9715182 41.8311549zM51.2417012 40.781172L47.1280734 49.1336469 56.3724398 45.7430383 57.4577883 43.7025404 51.2417012 40.781172zM44.3727451 53C43.9891385 53 43.6147532 52.8383212 43.3491794 52.5381933 42.9757162 52.1163418 42.8936465 51.5086525 43.1426219 51.0013157L48.7528688 39.6113237 47.5402661 39.040802C47.2101431 38.8865567 46.9547128 38.6050126 46.8311472 38.2602837 46.7066594 37.9155548 46.7223357 37.5355167 46.8763316 37.2028673L51.8890374 26.3815386C51.9185456 26.319283 51.9526644 26.2570274 51.9904718 26.2003469L63.6240803 8.6145264C64.0003099 8.04679226 64.73156 7.8423708 65.3466216 8.12856084L74.2073813 12.2885375C74.8178322 12.5756567 75.1313569 13.2669729 74.9478527 13.9201924L69.2186509 34.2805696C69.198364 34.3511879 69.1734665 34.4208771 69.142114 34.4877786L64.1312525 45.3118948C63.8103508 46.0041402 62.9942646 46.3051973 62.3063547 45.9809105L59.9493871 44.8733179 58.544059 47.5150006C58.3845303 47.8151285 58.1208007 48.044638 57.8035875 48.1607866L44.8421099 52.916373C44.6890361 52.9721243 44.5304296 53 44.3727451 53L44.3727451 53z" fill="#3AC1CC"/></g></svg>
+            <span class="carts_text">LOANS</span>
+         </a>
+
+         <a href="#" class="carts_row">
+            <svg width="77" height="86" viewBox="0 0 77 86" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>icon-Checking Account</title><defs><path id="a" d="M2.92414411e-15 0L77 0 77 86 2.92414411e-15 86z"/></defs><g fill="none" fill-rule="evenodd"><g><mask id="b" fill="#fff"><use xlink:href="#a"/></mask><path d="M39.0900863,86.0000015 C37.1817634,86.0009256 35.2706601,85.5593968 33.7896013,84.6809674 L5.64670469,67.9935851 C2.74575734,66.2728261 0.440755395,62.2870335 0.399048484,58.9177152 L2.92414411e-15,26.2334758 C-0.0393374905,22.8363883 2.23507938,18.8450419 5.17866047,17.1474238 L32.7432213,1.25423802 C35.6914365,-0.444305718 40.287538,-0.412834063 43.2098023,1.31810696 L62.3560548,12.6691924 L60.3782204,15.9959315 L41.2328947,4.6439204 C39.4951067,3.61368651 36.4319658,3.59424814 34.6793488,4.60504364 L7.11571478,20.4973038 C5.36495134,21.5071737 3.85052706,24.1656029 3.87369757,26.1871939 L4.27315709,58.8695821 C4.29818124,60.9133884 5.86450745,63.6227276 7.62361227,64.6668461 L35.7674357,81.3542283 C37.5052237,82.3853879 40.5683646,82.4048262 42.319128,81.3940307 L69.8836888,65.5008449 C71.6353791,64.4900494 73.1507302,61.8325458 73.125706,59.8128061 L72.7262465,27.1267154 C72.7095637,25.7299293 71.9681075,23.9601115 70.8373868,22.6170123 L73.801358,20.1261234 C75.5002195,22.1430862 76.5725505,24.8079949 76.6003551,27.0804335 L77.0003789,59.7655986 C77.0415215,63.1608348 74.7661779,67.1521812 71.8207431,68.8507249 L44.2561823,84.7448363 C42.8029282,85.5825378 40.9474341,86.0000015 39.0900863,86.0000015" fill="#3AC1CC" mask="url(#b)"/></g><path d="M65.623867,62 L11.376133,62 C10.616441,62 10,61.3816325 10,60.6184221 L10,29.3815779 C10,28.6183675 10.616441,28 11.376133,28 L52.5140981,28 C53.2747142,28 53.890231,28.6183675 53.890231,29.3815779 C53.890231,30.1447882 53.2747142,30.7631557 52.5140981,30.7631557 L12.7522659,30.7631557 L12.7522659,59.2359158 L64.2477341,59.2359158 L64.2477341,41.2837598 C64.2477341,40.5205494 64.8641751,39.9021819 65.623867,39.9021819 C66.383559,39.9021819 67,40.5205494 67,41.2837598 L67,60.6184221 C67,61.3816325 66.383559,62 65.623867,62" fill="#3AC1CC"/><path d="M41.8691684 37L18.1308316 37C17.5047215 37 17 36.5536723 17 36 17 35.4479419 17.5047215 35 18.1308316 35L41.8691684 35C42.4934532 35 43 35.4479419 43 36 43 36.5536723 42.4934532 37 41.8691684 37M31.8568133 44L18.1431867 44C17.5120812 44 17 43.5536723 17 43 17 42.4479419 17.5120812 42 18.1431867 42L31.8568133 42C32.4879188 42 33 42.4479419 33 43 33 43.5536723 32.4879188 44 31.8568133 44M22.7996125 54L19.2003875 54C18.536735 54 18 53.5536723 18 53 18 52.4479419 18.536735 52 19.2003875 52L22.7996125 52C23.4622961 52 24 52.4479419 24 53 24 53.5536723 23.4622961 54 22.7996125 54M30.7996125 54L27.2003875 54C26.536735 54 26 53.5536723 26 53 26 52.4479419 26.536735 52 27.2003875 52L30.7996125 52C31.4622961 52 32 52.4479419 32 53 32 53.5536723 31.4622961 54 30.7996125 54M59.9715182 41.8311549L62.2233629 42.8895005 66.6071751 33.4182827 71.9878112 14.2983721 65.2544085 11.137273 54.3326853 27.6461641 49.9451846 37.1192403 51.1024594 37.6628155C51.1319676 37.6739658 51.1605536 37.6869744 51.1900618 37.7009123L59.9337108 41.8125711C59.9466207 41.8181463 59.9586084 41.8246506 59.9715182 41.8311549L59.9715182 41.8311549zM51.2417012 40.781172L47.1280734 49.1336469 56.3724398 45.7430383 57.4577883 43.7025404 51.2417012 40.781172zM44.3727451 53C43.9891385 53 43.6147532 52.8383212 43.3491794 52.5381933 42.9757162 52.1163418 42.8936465 51.5086525 43.1426219 51.0013157L48.7528688 39.6113237 47.5402661 39.040802C47.2101431 38.8865567 46.9547128 38.6050126 46.8311472 38.2602837 46.7066594 37.9155548 46.7223357 37.5355167 46.8763316 37.2028673L51.8890374 26.3815386C51.9185456 26.319283 51.9526644 26.2570274 51.9904718 26.2003469L63.6240803 8.6145264C64.0003099 8.04679226 64.73156 7.8423708 65.3466216 8.12856084L74.2073813 12.2885375C74.8178322 12.5756567 75.1313569 13.2669729 74.9478527 13.9201924L69.2186509 34.2805696C69.198364 34.3511879 69.1734665 34.4208771 69.142114 34.4877786L64.1312525 45.3118948C63.8103508 46.0041402 62.9942646 46.3051973 62.3063547 45.9809105L59.9493871 44.8733179 58.544059 47.5150006C58.3845303 47.8151285 58.1208007 48.044638 57.8035875 48.1607866L44.8421099 52.916373C44.6890361 52.9721243 44.5304296 53 44.3727451 53L44.3727451 53z" fill="#3AC1CC"/></g></svg>
+           <span class="carts_text">WEALTH & RETIRE</span>
+        </a>
+    </div>
+    <div class="first_row">
+        <a href="#" class="carts_row">
+            <svg width="77" height="86" viewBox="0 0 77 86" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>icon-Checking Account</title><defs><path id="a" d="M2.92414411e-15 0L77 0 77 86 2.92414411e-15 86z"/></defs><g fill="none" fill-rule="evenodd"><g><mask id="b" fill="#fff"><use xlink:href="#a"/></mask><path d="M39.0900863,86.0000015 C37.1817634,86.0009256 35.2706601,85.5593968 33.7896013,84.6809674 L5.64670469,67.9935851 C2.74575734,66.2728261 0.440755395,62.2870335 0.399048484,58.9177152 L2.92414411e-15,26.2334758 C-0.0393374905,22.8363883 2.23507938,18.8450419 5.17866047,17.1474238 L32.7432213,1.25423802 C35.6914365,-0.444305718 40.287538,-0.412834063 43.2098023,1.31810696 L62.3560548,12.6691924 L60.3782204,15.9959315 L41.2328947,4.6439204 C39.4951067,3.61368651 36.4319658,3.59424814 34.6793488,4.60504364 L7.11571478,20.4973038 C5.36495134,21.5071737 3.85052706,24.1656029 3.87369757,26.1871939 L4.27315709,58.8695821 C4.29818124,60.9133884 5.86450745,63.6227276 7.62361227,64.6668461 L35.7674357,81.3542283 C37.5052237,82.3853879 40.5683646,82.4048262 42.319128,81.3940307 L69.8836888,65.5008449 C71.6353791,64.4900494 73.1507302,61.8325458 73.125706,59.8128061 L72.7262465,27.1267154 C72.7095637,25.7299293 71.9681075,23.9601115 70.8373868,22.6170123 L73.801358,20.1261234 C75.5002195,22.1430862 76.5725505,24.8079949 76.6003551,27.0804335 L77.0003789,59.7655986 C77.0415215,63.1608348 74.7661779,67.1521812 71.8207431,68.8507249 L44.2561823,84.7448363 C42.8029282,85.5825378 40.9474341,86.0000015 39.0900863,86.0000015" fill="#3AC1CC" mask="url(#b)"/></g><path d="M65.623867,62 L11.376133,62 C10.616441,62 10,61.3816325 10,60.6184221 L10,29.3815779 C10,28.6183675 10.616441,28 11.376133,28 L52.5140981,28 C53.2747142,28 53.890231,28.6183675 53.890231,29.3815779 C53.890231,30.1447882 53.2747142,30.7631557 52.5140981,30.7631557 L12.7522659,30.7631557 L12.7522659,59.2359158 L64.2477341,59.2359158 L64.2477341,41.2837598 C64.2477341,40.5205494 64.8641751,39.9021819 65.623867,39.9021819 C66.383559,39.9021819 67,40.5205494 67,41.2837598 L67,60.6184221 C67,61.3816325 66.383559,62 65.623867,62" fill="#3AC1CC"/><path d="M41.8691684 37L18.1308316 37C17.5047215 37 17 36.5536723 17 36 17 35.4479419 17.5047215 35 18.1308316 35L41.8691684 35C42.4934532 35 43 35.4479419 43 36 43 36.5536723 42.4934532 37 41.8691684 37M31.8568133 44L18.1431867 44C17.5120812 44 17 43.5536723 17 43 17 42.4479419 17.5120812 42 18.1431867 42L31.8568133 42C32.4879188 42 33 42.4479419 33 43 33 43.5536723 32.4879188 44 31.8568133 44M22.7996125 54L19.2003875 54C18.536735 54 18 53.5536723 18 53 18 52.4479419 18.536735 52 19.2003875 52L22.7996125 52C23.4622961 52 24 52.4479419 24 53 24 53.5536723 23.4622961 54 22.7996125 54M30.7996125 54L27.2003875 54C26.536735 54 26 53.5536723 26 53 26 52.4479419 26.536735 52 27.2003875 52L30.7996125 52C31.4622961 52 32 52.4479419 32 53 32 53.5536723 31.4622961 54 30.7996125 54M59.9715182 41.8311549L62.2233629 42.8895005 66.6071751 33.4182827 71.9878112 14.2983721 65.2544085 11.137273 54.3326853 27.6461641 49.9451846 37.1192403 51.1024594 37.6628155C51.1319676 37.6739658 51.1605536 37.6869744 51.1900618 37.7009123L59.9337108 41.8125711C59.9466207 41.8181463 59.9586084 41.8246506 59.9715182 41.8311549L59.9715182 41.8311549zM51.2417012 40.781172L47.1280734 49.1336469 56.3724398 45.7430383 57.4577883 43.7025404 51.2417012 40.781172zM44.3727451 53C43.9891385 53 43.6147532 52.8383212 43.3491794 52.5381933 42.9757162 52.1163418 42.8936465 51.5086525 43.1426219 51.0013157L48.7528688 39.6113237 47.5402661 39.040802C47.2101431 38.8865567 46.9547128 38.6050126 46.8311472 38.2602837 46.7066594 37.9155548 46.7223357 37.5355167 46.8763316 37.2028673L51.8890374 26.3815386C51.9185456 26.319283 51.9526644 26.2570274 51.9904718 26.2003469L63.6240803 8.6145264C64.0003099 8.04679226 64.73156 7.8423708 65.3466216 8.12856084L74.2073813 12.2885375C74.8178322 12.5756567 75.1313569 13.2669729 74.9478527 13.9201924L69.2186509 34.2805696C69.198364 34.3511879 69.1734665 34.4208771 69.142114 34.4877786L64.1312525 45.3118948C63.8103508 46.0041402 62.9942646 46.3051973 62.3063547 45.9809105L59.9493871 44.8733179 58.544059 47.5150006C58.3845303 47.8151285 58.1208007 48.044638 57.8035875 48.1607866L44.8421099 52.916373C44.6890361 52.9721243 44.5304296 53 44.3727451 53L44.3727451 53z" fill="#3AC1CC"/></g></svg>
+           <span class="carts_text">CREDIT CARDS</span>
+        </a>
+
+        <a href="#" class="carts_row">
+            <svg width="77" height="86" viewBox="0 0 77 86" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>icon-Checking Account</title><defs><path id="a" d="M2.92414411e-15 0L77 0 77 86 2.92414411e-15 86z"/></defs><g fill="none" fill-rule="evenodd"><g><mask id="b" fill="#fff"><use xlink:href="#a"/></mask><path d="M39.0900863,86.0000015 C37.1817634,86.0009256 35.2706601,85.5593968 33.7896013,84.6809674 L5.64670469,67.9935851 C2.74575734,66.2728261 0.440755395,62.2870335 0.399048484,58.9177152 L2.92414411e-15,26.2334758 C-0.0393374905,22.8363883 2.23507938,18.8450419 5.17866047,17.1474238 L32.7432213,1.25423802 C35.6914365,-0.444305718 40.287538,-0.412834063 43.2098023,1.31810696 L62.3560548,12.6691924 L60.3782204,15.9959315 L41.2328947,4.6439204 C39.4951067,3.61368651 36.4319658,3.59424814 34.6793488,4.60504364 L7.11571478,20.4973038 C5.36495134,21.5071737 3.85052706,24.1656029 3.87369757,26.1871939 L4.27315709,58.8695821 C4.29818124,60.9133884 5.86450745,63.6227276 7.62361227,64.6668461 L35.7674357,81.3542283 C37.5052237,82.3853879 40.5683646,82.4048262 42.319128,81.3940307 L69.8836888,65.5008449 C71.6353791,64.4900494 73.1507302,61.8325458 73.125706,59.8128061 L72.7262465,27.1267154 C72.7095637,25.7299293 71.9681075,23.9601115 70.8373868,22.6170123 L73.801358,20.1261234 C75.5002195,22.1430862 76.5725505,24.8079949 76.6003551,27.0804335 L77.0003789,59.7655986 C77.0415215,63.1608348 74.7661779,67.1521812 71.8207431,68.8507249 L44.2561823,84.7448363 C42.8029282,85.5825378 40.9474341,86.0000015 39.0900863,86.0000015" fill="#3AC1CC" mask="url(#b)"/></g><path d="M65.623867,62 L11.376133,62 C10.616441,62 10,61.3816325 10,60.6184221 L10,29.3815779 C10,28.6183675 10.616441,28 11.376133,28 L52.5140981,28 C53.2747142,28 53.890231,28.6183675 53.890231,29.3815779 C53.890231,30.1447882 53.2747142,30.7631557 52.5140981,30.7631557 L12.7522659,30.7631557 L12.7522659,59.2359158 L64.2477341,59.2359158 L64.2477341,41.2837598 C64.2477341,40.5205494 64.8641751,39.9021819 65.623867,39.9021819 C66.383559,39.9021819 67,40.5205494 67,41.2837598 L67,60.6184221 C67,61.3816325 66.383559,62 65.623867,62" fill="#3AC1CC"/><path d="M41.8691684 37L18.1308316 37C17.5047215 37 17 36.5536723 17 36 17 35.4479419 17.5047215 35 18.1308316 35L41.8691684 35C42.4934532 35 43 35.4479419 43 36 43 36.5536723 42.4934532 37 41.8691684 37M31.8568133 44L18.1431867 44C17.5120812 44 17 43.5536723 17 43 17 42.4479419 17.5120812 42 18.1431867 42L31.8568133 42C32.4879188 42 33 42.4479419 33 43 33 43.5536723 32.4879188 44 31.8568133 44M22.7996125 54L19.2003875 54C18.536735 54 18 53.5536723 18 53 18 52.4479419 18.536735 52 19.2003875 52L22.7996125 52C23.4622961 52 24 52.4479419 24 53 24 53.5536723 23.4622961 54 22.7996125 54M30.7996125 54L27.2003875 54C26.536735 54 26 53.5536723 26 53 26 52.4479419 26.536735 52 27.2003875 52L30.7996125 52C31.4622961 52 32 52.4479419 32 53 32 53.5536723 31.4622961 54 30.7996125 54M59.9715182 41.8311549L62.2233629 42.8895005 66.6071751 33.4182827 71.9878112 14.2983721 65.2544085 11.137273 54.3326853 27.6461641 49.9451846 37.1192403 51.1024594 37.6628155C51.1319676 37.6739658 51.1605536 37.6869744 51.1900618 37.7009123L59.9337108 41.8125711C59.9466207 41.8181463 59.9586084 41.8246506 59.9715182 41.8311549L59.9715182 41.8311549zM51.2417012 40.781172L47.1280734 49.1336469 56.3724398 45.7430383 57.4577883 43.7025404 51.2417012 40.781172zM44.3727451 53C43.9891385 53 43.6147532 52.8383212 43.3491794 52.5381933 42.9757162 52.1163418 42.8936465 51.5086525 43.1426219 51.0013157L48.7528688 39.6113237 47.5402661 39.040802C47.2101431 38.8865567 46.9547128 38.6050126 46.8311472 38.2602837 46.7066594 37.9155548 46.7223357 37.5355167 46.8763316 37.2028673L51.8890374 26.3815386C51.9185456 26.319283 51.9526644 26.2570274 51.9904718 26.2003469L63.6240803 8.6145264C64.0003099 8.04679226 64.73156 7.8423708 65.3466216 8.12856084L74.2073813 12.2885375C74.8178322 12.5756567 75.1313569 13.2669729 74.9478527 13.9201924L69.2186509 34.2805696C69.198364 34.3511879 69.1734665 34.4208771 69.142114 34.4877786L64.1312525 45.3118948C63.8103508 46.0041402 62.9942646 46.3051973 62.3063547 45.9809105L59.9493871 44.8733179 58.544059 47.5150006C58.3845303 47.8151285 58.1208007 48.044638 57.8035875 48.1607866L44.8421099 52.916373C44.6890361 52.9721243 44.5304296 53 44.3727451 53L44.3727451 53z" fill="#3AC1CC"/></g></svg>
+           <span class="carts_text">BUSINESS BANKING</span>
+        </a>
+
+        <a href="#" class="carts_row">
+            <svg width="77" height="86" viewBox="0 0 77 86" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>icon-Checking Account</title><defs><path id="a" d="M2.92414411e-15 0L77 0 77 86 2.92414411e-15 86z"/></defs><g fill="none" fill-rule="evenodd"><g><mask id="b" fill="#fff"><use xlink:href="#a"/></mask><path d="M39.0900863,86.0000015 C37.1817634,86.0009256 35.2706601,85.5593968 33.7896013,84.6809674 L5.64670469,67.9935851 C2.74575734,66.2728261 0.440755395,62.2870335 0.399048484,58.9177152 L2.92414411e-15,26.2334758 C-0.0393374905,22.8363883 2.23507938,18.8450419 5.17866047,17.1474238 L32.7432213,1.25423802 C35.6914365,-0.444305718 40.287538,-0.412834063 43.2098023,1.31810696 L62.3560548,12.6691924 L60.3782204,15.9959315 L41.2328947,4.6439204 C39.4951067,3.61368651 36.4319658,3.59424814 34.6793488,4.60504364 L7.11571478,20.4973038 C5.36495134,21.5071737 3.85052706,24.1656029 3.87369757,26.1871939 L4.27315709,58.8695821 C4.29818124,60.9133884 5.86450745,63.6227276 7.62361227,64.6668461 L35.7674357,81.3542283 C37.5052237,82.3853879 40.5683646,82.4048262 42.319128,81.3940307 L69.8836888,65.5008449 C71.6353791,64.4900494 73.1507302,61.8325458 73.125706,59.8128061 L72.7262465,27.1267154 C72.7095637,25.7299293 71.9681075,23.9601115 70.8373868,22.6170123 L73.801358,20.1261234 C75.5002195,22.1430862 76.5725505,24.8079949 76.6003551,27.0804335 L77.0003789,59.7655986 C77.0415215,63.1608348 74.7661779,67.1521812 71.8207431,68.8507249 L44.2561823,84.7448363 C42.8029282,85.5825378 40.9474341,86.0000015 39.0900863,86.0000015" fill="#3AC1CC" mask="url(#b)"/></g><path d="M65.623867,62 L11.376133,62 C10.616441,62 10,61.3816325 10,60.6184221 L10,29.3815779 C10,28.6183675 10.616441,28 11.376133,28 L52.5140981,28 C53.2747142,28 53.890231,28.6183675 53.890231,29.3815779 C53.890231,30.1447882 53.2747142,30.7631557 52.5140981,30.7631557 L12.7522659,30.7631557 L12.7522659,59.2359158 L64.2477341,59.2359158 L64.2477341,41.2837598 C64.2477341,40.5205494 64.8641751,39.9021819 65.623867,39.9021819 C66.383559,39.9021819 67,40.5205494 67,41.2837598 L67,60.6184221 C67,61.3816325 66.383559,62 65.623867,62" fill="#3AC1CC"/><path d="M41.8691684 37L18.1308316 37C17.5047215 37 17 36.5536723 17 36 17 35.4479419 17.5047215 35 18.1308316 35L41.8691684 35C42.4934532 35 43 35.4479419 43 36 43 36.5536723 42.4934532 37 41.8691684 37M31.8568133 44L18.1431867 44C17.5120812 44 17 43.5536723 17 43 17 42.4479419 17.5120812 42 18.1431867 42L31.8568133 42C32.4879188 42 33 42.4479419 33 43 33 43.5536723 32.4879188 44 31.8568133 44M22.7996125 54L19.2003875 54C18.536735 54 18 53.5536723 18 53 18 52.4479419 18.536735 52 19.2003875 52L22.7996125 52C23.4622961 52 24 52.4479419 24 53 24 53.5536723 23.4622961 54 22.7996125 54M30.7996125 54L27.2003875 54C26.536735 54 26 53.5536723 26 53 26 52.4479419 26.536735 52 27.2003875 52L30.7996125 52C31.4622961 52 32 52.4479419 32 53 32 53.5536723 31.4622961 54 30.7996125 54M59.9715182 41.8311549L62.2233629 42.8895005 66.6071751 33.4182827 71.9878112 14.2983721 65.2544085 11.137273 54.3326853 27.6461641 49.9451846 37.1192403 51.1024594 37.6628155C51.1319676 37.6739658 51.1605536 37.6869744 51.1900618 37.7009123L59.9337108 41.8125711C59.9466207 41.8181463 59.9586084 41.8246506 59.9715182 41.8311549L59.9715182 41.8311549zM51.2417012 40.781172L47.1280734 49.1336469 56.3724398 45.7430383 57.4577883 43.7025404 51.2417012 40.781172zM44.3727451 53C43.9891385 53 43.6147532 52.8383212 43.3491794 52.5381933 42.9757162 52.1163418 42.8936465 51.5086525 43.1426219 51.0013157L48.7528688 39.6113237 47.5402661 39.040802C47.2101431 38.8865567 46.9547128 38.6050126 46.8311472 38.2602837 46.7066594 37.9155548 46.7223357 37.5355167 46.8763316 37.2028673L51.8890374 26.3815386C51.9185456 26.319283 51.9526644 26.2570274 51.9904718 26.2003469L63.6240803 8.6145264C64.0003099 8.04679226 64.73156 7.8423708 65.3466216 8.12856084L74.2073813 12.2885375C74.8178322 12.5756567 75.1313569 13.2669729 74.9478527 13.9201924L69.2186509 34.2805696C69.198364 34.3511879 69.1734665 34.4208771 69.142114 34.4877786L64.1312525 45.3118948C63.8103508 46.0041402 62.9942646 46.3051973 62.3063547 45.9809105L59.9493871 44.8733179 58.544059 47.5150006C58.3845303 47.8151285 58.1208007 48.044638 57.8035875 48.1607866L44.8421099 52.916373C44.6890361 52.9721243 44.5304296 53 44.3727451 53L44.3727451 53z" fill="#3AC1CC"/></g></svg>
+           <span class="carts_text">ABOUT Coast Capital Savings Bank</span>
+        </a>
+    </div>
+</aside>
+</section>
+<br><br>
+<div class="wallpaper_image"></div>
+
+<article class="wallpaper_text">
+<h1>Get $300 With a Checking Account Built for You</h1>
+<p>For a limited time, get a $300 <br> when you open any new checking account! Select <br> "Learn More" to see important offer details</p>
+</article>
+
+<h2 class="h2">START BUILDING YOUR FINACIAL STRENGTH</h2>
+<br>
+<article class="blog_post">
+    <button class="start">STARTING OUT</button>
+</article>
+
+<article class="blog_post_text">
+   <h2 class="post_header"> Tax Checklist: 5 Things to Remember</h2>
+   <p>Tax season is quickly approaching--do you know what you need to claim, and what forms you need to submit? This 
+    tax checklist makes filing simple. Learn more today!
+   </p>
+</article>
+
+<article class="blog_post_one">
+    <button class="start">STARTING OUT</button>
+    <br>
+    <span>Ways to generate funds for summer vacation  </span>
+</article>
+
+<article class="blog_post_two">
+    <button class="start">STARTING OUT</button>
+    <br>
+    <span>How to manage your checkings</span>
+</article>
+
+<article class="blog_post_three">
+    <button class="start">STARTING OUT</button>
+    <br>
+    <span>How rising Rates and Inflation Impact Businesses</span>
+</article>
+
+<div class="testimony-slider">
+    <article class="testimony">
+        <h1>Hear From Our Customers</h1>
+        <p>I am impressed with the customer service and speed of payout</p>
+        <i>Ralph</i>
+    </article>
+
+    <article class="testimony">
+        <h1>Hear From Our Customers</h1>
+        <p>The platform is easy to use and efficient</p>
+        <i>Jessica</i>
+    </article>
+
+    <article class="testimony">
+        <h1>Hear From Our Customers</h1>
+        <p>Outstanding support and fast transfers</p>
+        <i>Michael</i>
+    </article>
+
+    <article class="testimony">
+        <h1>Hear From Our Customers</h1>
+        <p>Great experience overall, highly recommend!</p>
+        <i>Linda</i>
+    </article>
 </div>
 
-<!-- ABOUT US -->
+<section class="contact">
+<article>
+    <div class="contact_list">
+        <img src="{% static 'images/icoclock.png' %}" alt="">
+       <div class="inner_cn_list">
+        <h3>ROUTING#</h3>
+        <span style="color: #fff;" id="user-ip-cast">Loading...</span>
+       </div>
+    </div>
 
-<div id="about_us" class="about_grid">
-    <div class="grid_two">
-        <div class="sect2">
-            <img class="image2" src="{% static 'images/about-img-5.jpg' %}" alt="">
-            <img class="image2" src="{% static 'images/about-img-6.jpg' %}" alt="">
+    <div class="contact_list">
+        <img src="{% static 'images/icoclock.png' %}" alt="">
+        <div class="inner_cn_list">
+         <h3>support@ccsbank.com</h3>
+         <span id="user-ip">Customer Service</span>
         </div>
     </div>
-    <div class="about">
-        <span class="thin">ABOUT US</span>
-        <h2 class="h2">
-            Get World Class & Fastest Digital Banking Service
-        </h2>
-        <p>Standard Capital Online Bank operates under a single brand name and logo all over the world. Since the bank was founded in 2013, we have experienced many highs and lows, from rapid expansion to revolutions, economic crises and new technologies. But throughout our history we have continued to build long-lasting relationships with our customers, connecting them to opportunities and helping them to thrive.</p>
-        <div class="mk_app">
-            <span class="sbimg"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000e17"><path d="M280-40q-33 0-56.5-23.5T200-120v-720q0-33 23.5-56.5T280-920h400q33 0 56.5 23.5T760-840v720q0 33-23.5 56.5T680-40H280Zm0-120v40h400v-40H280Zm0-80h400v-480H280v480Zm0-560h400v-40H280v40Zm0 0v-40 40Zm0 640v40-40Z"/></svg></span>
-            <div class="ab_content">
-                <h3>Powerful Mobile & Online App</h3>
-                <p>Open a new account, deposit a check, check balances, make bill payments and more - all on your smartphone or tablet</p>
-            </div>
-        </div>
-
-        <div class="mk_app">
-            <span class="sbimg"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000e17"><path d="M80-160v-120h80v-440q0-33 23.5-56.5T240-800h600v80H240v440h240v120H80Zm520 0q-17 0-28.5-11.5T560-200v-400q0-17 11.5-28.5T600-640h240q17 0 28.5 11.5T880-600v400q0 17-11.5 28.5T840-160H600Zm40-120h160v-280H640v280Zm0 0h160-160Z"/></svg></span>
-            <div class="ab_content">
-                <h3>Account Security</h3>
-                <p>We always have your security in mind. Rest easy knowing your data is protected with 128-bit encryption.</p>
-            </div>
-        </div>
-
-       <a style="text-decoration: none; color: aliceblue;" href="{% url 'register' %}"> <div class="mk_app"><button class="read_more">READ MORE</button></div></a>
-    </div>
-</div>
-
-<!-- SHOPING PART -->
- <section class="shop_grid">
-    <div class="shop">
-        <div class="image_flex">
-            <img class="ting" src="{% static 'images/shopping-shape-1.png' %}" alt="">
-            <img class="ting" src="{% static 'images/shopping-shape-2.png' %}" alt="">
-        </div>
-        <span class="thin">Online Shopping</span>
-        <h2 class="h2">Shop Online Make In Online <br> Banking Payments</h2>
-        <p>Earn $200 with the Standard Capital Online Bank Cash Rewards Visa Credit <br> Card.</p>
-
-        <div class="mk_app">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
-               <p>Cards that work all across the world.</p>
-        </div>
-
-        <div class="mk_app">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
-               <p>Highest Returns on your investments.</p>
-        </div>
-
-        <div class="mk_app">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
-               <p>No ATM fees. No minimum balance. No overdrafts.</p>
-        </div>
-
-       <a style="text-decoration: none; color: aliceblue;" href="{% url 'register' %}"> <div class="mk_app"><button class="read_more">Signup Today</button></div></a>
-    </div>
+</article>
+<article>
     
-    <img class="ting" src="{% static 'images/shopping-shape-3.png' %}" alt="">
-    <img src="{% static 'images/shopping-1.png' %}" alt="">
+    <div class="contact_list">
+        <img src="{% static 'images/icoclock.png' %}" alt="">
+        <div class="inner_cn_list">
+         <h3>Branch Hours</h3>
+         <span id="user-ip">Mon - Sun, 24/7 Banking</span>
+        </div>
+    </div>
+
+    <div class="contact_list">
+        <img style="height: 4.5rem;" src="{% static 'images/live-video-call.png' %}" alt="">
+        <div class="inner_cn_list">
+         <h3>Video Connect</h3>
+         <span id="user-ip">Chat Virtually</span>
+        </div>
+    </div>
+</article>
+</section>
+
+<footer>
+ <section class="footer_left">
+<article class="bio">
+<h3 class="bio_text">Building Trust Together</h3>
+<p id="bio_text">Coast Capital Savings Bank is a not-for-profit credit union bank built on <br> the unshakeable promise to serve those who work every day to build a better <br> future for us all. For over 80 years, we’ve delivered a breadth of financial services, <br> expert guidance, and innovative tools to help strengthen and grow businesses, <br> families, and our local communities. <br> We are your Dana, and we are Building Strength Together.</p>   
+</article>
+<br>
+<hr>
+<br>
+<article class="footer_content_aside">
+   <div class="footer_content">
+    <span class="footer_text">ABOUT STARLINK</span>
+    <span>Who are we</span>
+    <span>Contact Us</span>
+   </div>
+
+   <div class="footer_content">
+    <span class="footer_text">GIVING BACK</span>
+    <span>Starlink charity</span>
+   </div>
+</article>
+
+<article class="footer_content_aside">
+    <div class="footer_content">
+     <span class="footer_text">CAREERS</span>
+     <span>Get started</span>
+    </div>
+ 
+    <div class="footer_content">
+     <span class="footer_text">News & EVENTS</span>
+     <span>Latest News</span>
+    </div>
+ </article>
  </section>
 
- <section class="color_change">
-<br><br>
-<section>
-<aside>
-<span class="thiner">YOUR BENIFITS</span>
-<p class="greg">The Most Trusted Currency Exchange Is Here <br> For Giving Services</p>
-</aside>
-<br>
-<div class="top_sect">
-    <div class="container_benefit">
-        <div class="circle"></div>
-        <span class="h3">Global Coverage</span>
-    </div>
-
-    <div class="container_benefit">
-        <div class="circle"></div>
-        <span class="h3">Easy Transfer Method</span>
-    </div>
-
-    <div class="container_benefit">
-        <div class="circle"></div>
-        <span class="h3">Global 24/7 Support</span>
-    </div>
-</div>
-<br>
-<div class="top_sect">
-    <div class="container_benefit">
-        <div class="circle"></div>
-        <span class="h3">Lowest Fee</span>
-    </div>
-
-    <div class="container_benefit">
-        <div class="circle"></div>
-        <span class="h3">Instant Processing</span>
-    </div>
-
-    <div class="container_benefit">
-        <div class="circle"></div>
-        <span class="h3">Bank Lavel Security</span>
-    </div>
-</div>
-
-</section>
-<br><br><br><br><br><br>
-    <aside>
-    <span class="thiner">GLOBAL PROFILE</span>
-    <p class="greg">Standard Capital Online Bank is available <br> in the following Locations <br> Worldwide..</p>
-    </aside>
-    <br>
-    <div class="top_sect">
-        <div class="container_currency">
-           <img src="{% static 'images/usa.png' %}" class="country_logo" alt="">
-            <span class="h3">United States</span>
-        </div>
-    
-        <div class="container_currency">
-           <img src="{% static 'images/eu.png' %}" class="country_logo" alt="">
-            <span class="h3">Europe</span>
-        </div>
-    
-        <div class="container_currency">
-           <img src="{% static 'images/uk.png' %}" class="country_logo" alt="">
-            <span class="h3">United Kingdom</span>
-        </div>
-    </div>
-    <br>
-    <div class="top_sect">
-        <div class="container_currency">
-           <img src="{% static 'images/canada.png' %}" class="country_logo" alt="">
-            <span class="h3">Canada</span>
-        </div>
-    
-        <div class="container_currency">
-           <img src="{% static 'images/australia.png' %}" class="country_logo" alt="">
-            <span class="h3">Australia</span>
-        </div>
-    
-        <div class="container_currency">
-           <img src="{% static 'images/japan.png' %}" class="country_logo" alt="">
-            <span class="h3">Japan</span>
-        </div>
-    </div>
-<br>
-    <div class="top_sect">
-        <div class="container_currency">
-           <img src="{% static 'images/india.png' %}" class="country_logo" alt="">
-            <span class="h3">India</span>
-        </div>
-    
-        <div class="container_currency">
-           <img src="{% static 'images/newzland.png' %}" class="country_logo" alt="">
-            <span class="h3">New Zealand</span>
-        </div>
-    
-        <div class="container_currency">
-           <img src="{% static 'images/france.png' %}" class="country_logo" alt="">
-            <span class="h3">France</span>
-        </div>
-    </div>
-    <p class="more">Amongst others not mentioned, we have managed to attain a global presence in <br> almost every world countries...</p>
-  <br>
-</section>
-<!--GOALS-->
-    <section id="service" class="grid_one">
-        <div class="Goals">
-            <div class="image_flex">
-                <img class="ting" src="{% static 'images/goal-shape-3.png' %}" alt="">
-                <img class="ting" src="{% static 'images/goal-shape-1.png' %}" alt="">
-        <img class="ting" src="{% static 'images/goal-shape-2.png' %}" alt="">
-            </div>
-            <span class="thin">Goal Setting</span>
-            <h2 class="h2">Manage Your Money With Online Banking Solution</h2>
-            <p>Enjoy top financial bloggers and videos as Prestige Online Banco Insights brings you the scoop on savings. <br> Topics include college, emergencies, military deployment and more..</p>
-    
-            <div class="mk_app">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
-                   <p>Learn To Budget</p>
-            </div>
-    
-            <div class="mk_app">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
-                   <p>Create An Emergency Fund</p>
-            </div>
-    
-            <div class="mk_app">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
-                   <p>Get Out Of Debt</p>
-            </div>
-
-            <div class="mk_app">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
-            <p>Save And Invest Your Money</p>
-        </div>
-
-    
-           <a style="text-decoration: none; color: aliceblue;" href="{% url 'register' %}"> <div class="mk_app"><button class="read_more">Signup Today</button></div></a>
-        </div>
-        
-        <img class="goals_img" src="{% static 'images/goal-1.jpg' %}" alt="">
-    </section>
-
-  <span class="rating">Our Overal Ratings</span>
-
-  <div class="cust">
-      <div class="cus">
-          <h1 class="gridstuff">18K</h1>
-          <h1 class="gridstuff">20K</h1>
-      </div>
-      <div class="cus2">
-          <h1 class="gridstuff">5000+</h1>
-          <h1 class="gridstuff">70+</h1>
-      </div>
-  </div>
-
-<button class="scroll-to-top" onclick="scrollToTop()"><i class="fa-solid fa-angle-up"></i></button>
-<!-- Footer -->
-<footer class="footer" id="contact">
-  <div class="container">
-      <div class="footer-content">
-          <div class="footer-section">
-              <h2>About Standard Capital Online Bank</h2>
-              <p>Standard Capital Online Bank is dedicated to providing a seamless and secure banking experience through innovative technology. Our user-friendly platform offers a comprehensive range of financial services, from everyday transactions to advanced investment solutions, all accessible from the convenience of your device</p>
-              <div class="contact">
-                  <span><i class="fas fa-phone"></i> +123 456 789</span>
-              </div>
-              <div class="socials">
-                  <a href="www.facebook.com"><i class="fab fa-facebook"></i></a>
-                  <a href="www.x.com"><i class="fab fa-twitter"></i></a>
-                  <a href="ww.intagram.com"><i class="fab fa-instagram"></i></a>
-              </div>
-          </div>
-          <div class="footer-section links">
-              <h2>Quick Links</h2>
-              <ul>
-                  <li><a href="{% url 'home' %}">Home</a></li>
-                  <li><a href="#service">Services</a></li>
-                  <li><a href="#about_us">About Us</a></li>
-                  <li><a href="#contact">Contact</a></li>
-              </ul>
-          </div>
-          <div class="footer-section contact-form">
-              <h2>Contact Us</h2>
-              <form action="#">
-                  <input type="text" name="email" class="text-input contact-input" placeholder="Your email address...">
-                  <textarea name="message" class="text-input contact-input" placeholder="Your message..."></textarea>
-                  <button type="submit" class="btn btn-big contact-btn">
-                      <i class="fas fa-envelope"></i>
-                      Send
-                  </button>
-              </form>
-          </div>
-      </div>
-      <div class="footer-bottom">
-          <p>&copy; 2024 Standard Capital Online Bank. All rights reserved.</p>
-          <div class="terms">
-              <a href="">Terms & Conditions</a>
-              <a href="">Privacy Policy</a>
-              <a href="">Company Standards</a>
-          </div>
-      </div>
-  </div>
+ <section>
+    <hr>
+    <ul class="footer_list">
+        <li class="li_header">Member Services</li>
+        <li>Loan Payments</li>
+        <li>Referral Services</li>
+        <li>Starlink Security</li>
+        <li>Email Us</li>
+    </ul>
+    <img class="logos" src="{% static 'images/logo.png' %}" alt="logo">
+    <hr>
+    <ul class="footer_list">
+        <li class="footer_text">LOCATION</li>
+        <li>5th Floor</li>
+        <li>Fruit & Wool Exchange</li>
+        <li>Duval Square</li>
+        <li>London E1 6PW, UK</li>
+    </ul>
+ </section>
 </footer>
+<section class="footer">
+    <article class="certify_imgs">
+        <img src="{% static 'images/blue-seal-200-42-bbb-80015515.png' %}" alt="certificate of honor">
+        <img src="{% static 'images/ncua-cert.png' %}" alt="certificate of honor">
+        <img src="{% static 'images/ncua-lender.png' %}" alt="certificate of honor">
+    </article>
+    <span><i style="color: #fff;">Federally Insured by NCUA</i></span>
+    </section>
+<!-- Bottom Navbar for Mobile -->
+<div class="bottom_nav">
+    <a href="{% url 'loginview' %}"><button class="login">LOGIN</button></a>
+    <a href="{% url 'register' %}"><button class="login" id="register">OPEN ACCOUNT</button></a>
+</div>
 
-
-<button class="scroll-to-top" onclick="scrollToTop()"><i class="fa-solid fa-angle-up"></i></button>
-<script src="{% static 'js/script.js' %}"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-    const overlay = document.querySelector('.overlay');
+document.addEventListener('DOMContentLoaded', () => {
+    const loginButtons = document.querySelectorAll('.login, .logins');
+    const registerButton = document.getElementById('register');
+    const loginPopup = document.getElementById('loginPopup');
+    const registerPopup = document.getElementById('registerPopup');
+    const closeButtons = document.querySelectorAll('.close');
+    const navbar = document.getElementById('navbar');
+    const hamburgerIcon = document.getElementById('hamburger-icon');
 
-    // Show overlay and loader when page starts loading
-    overlay.style.display = 'flex';
-
-    // Hide overlay and loader after 5 seconds
-    setTimeout(() => {
-      overlay.style.display = 'none';
-    }, 5000); // 5000 milliseconds = 5 seconds
-
-    // Show overlay and loader on link click
-    document.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        overlay.style.display = 'flex';
-        // Hide the loader after 5 seconds
-        setTimeout(() => {
-          overlay.style.display = 'none';
-        }, 5000); // 5000 milliseconds = 5 seconds
-      });
+    loginButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            loginPopup.classList.add('visible');
+        });
     });
-  });
-</script>
 
+    registerButton.addEventListener('click', () => {
+        registerPopup.classList.add('visible');
+    });
+
+    closeButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            event.target.closest('.popup').classList.remove('visible');
+        });
+    });
+
+    // Toggle the navbar on hamburger click
+    hamburgerIcon.addEventListener('click', () => {
+        navbar.classList.toggle('active');
+    });
+
+    // Close the popup when clicking outside of it
+    window.addEventListener('click', (event) => {
+        if (event.target === loginPopup) {
+            loginPopup.classList.remove('visible');
+        }
+        if (event.target === registerPopup) {
+            registerPopup.classList.remove('visible');
+        }
+    });
+});
+
+
+function generateRandomIP() {
+    // Generate four random numbers between 0 and 255
+    let ip = [];
+    for (let i = 0; i < 4; i++) {
+        ip.push(Math.floor(Math.random() * 256));
+    }
+    // Join the numbers with dots to mimic an IP address
+    return ip.join('.');
+}
+
+// Display the generated random IP address
+document.getElementById("user-ip").textContent = generateRandomIP();
+
+function generateRandomIP() {
+    // Generate four random numbers between 0 and 255
+    let ip = [];
+    for (let i = 0; i < 4; i++) {
+        ip.push(Math.floor(Math.random() * 256));
+    }
+    // Join the numbers with dots to mimic an IP address
+    return ip.join('.');
+}
+
+// Display the generated random IP address
+document.getElementById("user-ip-cast").textContent = generateRandomIP();
+
+function updateTime() {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    const timeString = `${hours}:${minutes}:${seconds}`;
+    document.getElementById("time").textContent = timeString;
+}
+
+// Update the clock every second
+setInterval(updateTime, 1000);
+// Initialize the clock immediately
+updateTime();
+
+const text = "We do banking differently. We believe that people come first, \nand that everyone deserves a great experience \nevery step of the way – whether it’s face to face, \nover the phone, online or on our app.";
+let index = 0;
+const speed = 50; // Adjust typing speed (milliseconds)
+
+function typeWriter() {
+    if (index < text.length) {
+        // Create a span to hold each character
+        const span = document.createElement("span");
+        span.classList.add("fade-in");
+        span.textContent = text.charAt(index);
+        document.getElementById("typed-text").appendChild(span);
+        index++;
+        setTimeout(typeWriter, speed);
+    }
+}
+
+window.onload = function() {
+    typeWriter();
+};
+
+    window.addEventListener("beforeunload", function () {
+        document.querySelector(".overlay").style.display = "block";
+        document.querySelector(".loader").style.display = "block";
+    });
+
+    window.addEventListener("load", function () {
+        // Display loader and overlay for 10 seconds
+        setTimeout(() => {
+            document.querySelector(".overlay").style.display = "none";
+            document.querySelector(".loader").style.display = "none";
+        }, 10000); // 10000 milliseconds = 10 seconds
+    });
+
+    // Handle AJAX link clicks (if applicable)
+    document.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", function () {
+            document.querySelector(".overlay").style.display = "block";
+            document.querySelector(".loader").style.display = "block";
+        });
+    });
+
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+            {
+                pageLanguage: 'en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false,
+                defaultLanguage: 'en'
+            },
+            'google_translate_element'
+        );
+    }
+</script>
 <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-<!--Swiper JS-->
 </body>
 </html>
