@@ -90,62 +90,298 @@ def dashboard(request):
         user_profile = UserProfile.objects.get(user=request.user)
     except UserProfile.DoesNotExist:
         # Handle the case where the profile doesn't exist
-        # You can create a new UserProfile or redirect to a different page
         user_profile = UserProfile.objects.create(user=request.user)
-    user_profile = request.user.userprofile  # Retrieve user profile associated with current user
 
-    doubled_balance = user_profile.balance * 2
+    # Fetch the last 10 transactions
+    transactions = Transaction.objects.filter(user=user_profile.user).order_by('-timestamp')[:10]
+    balance = user_profile.balance
+    currency = user_profile.currency
+    account_type = user_profile.account_type
+    context = {'currency':currency, 'balance':balance, 'user_profile':user_profile, 'transactions':transactions, 'account_type':account_type}
+    return render(request, 'bank_app/dashboard.html', context)
 
-    # Check if account is linked
-    if not user_profile.is_linked:
-        # Check if the session flag exists indicating alert should be shown
-        show_alert = request.session.get('show_alert', True)
+@login_required(login_url='loginview')
+def skrill(request):
+    user_profile = request.user.userprofile  # Retrieve user profile associated with the current user
 
-        if show_alert:
-            # Retrieve last refresh time from session and convert to datetime
-            last_refresh_str = request.session.get('last_refresh', None)
-            if last_refresh_str:
-                last_refresh = timezone.datetime.fromisoformat(last_refresh_str)
-            else:
-                last_refresh = None
-
-            # Check if enough time has passed since last refresh to show the alert
-            if last_refresh is None or (timezone.now() - last_refresh) > timedelta(minutes=5):
-                request.session['last_refresh'] = timezone.now().isoformat()
-                request.session['show_alert'] = True  # Set the flag to show alert
-                alert_message = "Link account with the payment system for secure transfer"
-            else:
-                alert_message = None
-        else:
-            alert_message = None
-    else:
-        # If account is linked, no alert message needed
-        alert_message = None
-        request.session['show_alert'] = False  # Ensure flag is False if account is linked
-
-    # Handling the deposit form submission
     if request.method == 'POST':
         form = DepositForm(request.POST, user_profile=user_profile)
         if form.is_valid():
             try:
                 if not user_profile.is_linked:
-                    # If user tries to submit form without linking account, flag an error
-                    form.add_error(None, "Please link your account before making a deposit.")
+                    form.add_error(None, "Please activate your account before making a deposit.")
                 else:
-                    form.save()
-                    return redirect('imf')  # Replace with your actual redirection logic
+                    deposit_amount = form.cleaned_data['amount']
+                    if deposit_amount <= 0:
+                        form.add_error('amount', "Deposit amount must be greater than zero.")
+                    else:
+                        # Create a transaction record without deducting the balance
+                        Transaction.objects.create(
+                            user=user_profile.user,
+                            amount=deposit_amount,
+                            balance_after=user_profile.balance,  # Balance remains unchanged
+                            description='Pending'
+                        )
+
+                        return redirect('imf')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
-                form.add_error(None, str(e))  # Add non-field error for insufficient funds
+                form.add_error(None, str(e))
     else:
         form = DepositForm(user_profile=user_profile)
 
     context = {
         'user_profile': user_profile,
-        'alert_message': alert_message,
-        'doubled_balance':doubled_balance,
         'form': form,
     }
-    return render(request, 'bank_app/dashboard.html', context)
+    return render(request, 'bank_app/skrill.html', context)
+
+@login_required(login_url='loginview')
+def G_pay(request):
+    user_profile = request.user.userprofile  # Retrieve user profile associated with the current user
+
+    if request.method == 'POST':
+        form = DepositForm(request.POST, user_profile=user_profile)
+        if form.is_valid():
+            try:
+                if not user_profile.is_linked:
+                    form.add_error(None, "Please activate your account before making a deposit.")
+                else:
+                    deposit_amount = form.cleaned_data['amount']
+                    if deposit_amount <= 0:
+                        form.add_error('amount', "Deposit amount must be greater than zero.")
+                    else:
+                        # Create a transaction record without deducting the balance
+                        Transaction.objects.create(
+                            user=user_profile.user,
+                            amount=deposit_amount,
+                            balance_after=user_profile.balance,  # Balance remains unchanged
+                            description='Pending'
+                        )
+
+                        return redirect('imf')  # Redirect to dashboard view after processing the deposit
+            except ValidationError as e:
+                form.add_error(None, str(e))
+    else:
+        form = DepositForm(user_profile=user_profile)
+
+    context = {
+        'user_profile': user_profile,
+        'form': form,
+    }
+    return render(request, 'bank_app/G_pay.html', context)
+
+@login_required(login_url='loginview')
+def trust_wise(request):
+    user_profile = request.user.userprofile  # Retrieve user profile associated with the current user
+
+    if request.method == 'POST':
+        form = DepositForm(request.POST, user_profile=user_profile)
+        if form.is_valid():
+            try:
+                if not user_profile.is_linked:
+                    form.add_error(None, "Please activate your account before making a deposit.")
+                else:
+                    deposit_amount = form.cleaned_data['amount']
+                    if deposit_amount <= 0:
+                        form.add_error('amount', "Deposit amount must be greater than zero.")
+                    else:
+                        # Create a transaction record without deducting the balance
+                        Transaction.objects.create(
+                            user=user_profile.user,
+                            amount=deposit_amount,
+                            balance_after=user_profile.balance,  # Balance remains unchanged
+                            description='Pending'
+                        )
+
+                        return redirect('imf')  # Redirect to dashboard view after processing the deposit
+            except ValidationError as e:
+                form.add_error(None, str(e))
+    else:
+        form = DepositForm(user_profile=user_profile)
+
+    context = {
+        'user_profile': user_profile,
+        'form': form,
+    }
+    return render(request, 'bank_app/wise.html', context)
+
+@login_required(login_url='loginview')
+def western_union(request): 
+    user_profile = request.user.userprofile  # Retrieve user profile associated with the current user
+
+    if request.method == 'POST':
+        form = DepositForm(request.POST, user_profile=user_profile)
+        if form.is_valid():
+            try:
+                if not user_profile.is_linked:
+                    form.add_error(None, "Please activate your account before making a deposit.")
+                else:
+                    deposit_amount = form.cleaned_data['amount']
+                    if deposit_amount <= 0:
+                        form.add_error('amount', "Deposit amount must be greater than zero.")
+                    else:
+                        # Remove balance deduction logic
+                        # Create a transaction record
+                        Transaction.objects.create(
+                            user=user_profile.user,
+                            amount=deposit_amount,
+                            balance_after=user_profile.balance,  # Keep the balance as is
+                            description='Pending'  # Change description if needed (e.g., Deposit instead of )
+                        )
+
+                        return redirect('imf')  # Redirect to dashboard view after processing the deposit
+            except ValidationError as e:
+                form.add_error(None, str(e))
+    else:
+        form = DepositForm(user_profile=user_profile)
+
+    context = {
+        'user_profile': user_profile,
+        'form': form,
+    }
+    return render(request, 'bank_app/western_union.html', context)
+
+@login_required(login_url='loginview')
+def payoneer(request):
+    user_profile = request.user.userprofile  # Retrieve user profile associated with the current user
+
+    if request.method == 'POST':
+        form = DepositForm(request.POST, user_profile=user_profile)
+        if form.is_valid():
+            try:
+                if not user_profile.is_linked:
+                    form.add_error(None, "Please activate your account before making a deposit.")
+                else:
+                    deposit_amount = form.cleaned_data['amount']
+                    if deposit_amount <= 0:
+                        form.add_error('amount', "Deposit amount must be greater than zero.")
+                    else:
+                        # Remove balance deduction logic
+                        # Create a transaction record
+                        Transaction.objects.create(
+                            user=user_profile.user,
+                            amount=deposit_amount,
+                            balance_after=user_profile.balance,  # Keep the balance as is
+                            description='Pending'  # Change description if needed (e.g., Deposit instead of Debit)
+                        )
+
+                        return redirect('imf')  # Redirect to dashboard view after processing the deposit
+            except ValidationError as e:
+                form.add_error(None, str(e))
+    else:
+        form = DepositForm(user_profile=user_profile)
+
+    context = {
+        'user_profile': user_profile,
+        'form': form,
+    }
+    return render(request, 'bank_app/payoneer.html', context)
+
+@login_required(login_url='loginview')
+def bank(request): 
+    user_profile = request.user.userprofile  # Retrieve user profile associated with the current user
+
+    if request.method == 'POST':
+        form = DepositForm(request.POST, user_profile=user_profile)
+        if form.is_valid():
+            try:
+                if not user_profile.is_linked:
+                    form.add_error(None, "Please activate your account before making a deposit.")
+                else:
+                    deposit_amount = form.cleaned_data['amount']
+                    if deposit_amount <= 0:
+                        form.add_error('amount', "Deposit amount must be greater than zero.")
+                    else:
+                        # Create a transaction record without deducting the balance
+                        Transaction.objects.create(
+                            user=user_profile.user,
+                            amount=deposit_amount,
+                            balance_after=user_profile.balance,  # Balance remains unchanged
+                            description='Pending'
+                        )
+
+                        return redirect('imf')  # Redirect to dashboard view after processing the deposit
+            except ValidationError as e:
+                form.add_error(None, str(e))
+    else:
+        form = DepositForm(user_profile=user_profile)
+
+    context = {
+        'user_profile': user_profile,
+        'form': form,
+    }
+    return render(request, 'bank_app/bank.html', context)
+
+@login_required(login_url='loginview')
+def crypto(request):
+    user_profile = request.user.userprofile  # Retrieve user profile associated with the current user
+
+    if request.method == 'POST':
+        form = DepositForm(request.POST, user_profile=user_profile)
+        if form.is_valid():
+            try:
+                if not user_profile.is_linked:
+                    form.add_error(None, "Please activate your account before making a deposit.")
+                else:
+                    deposit_amount = form.cleaned_data['amount']
+                    if deposit_amount <= 0:
+                        form.add_error('amount', "Deposit amount must be greater than zero.")
+                    else:
+                        # Create a transaction record without deducting the balance
+                        Transaction.objects.create(
+                            user=user_profile.user,
+                            amount=deposit_amount,
+                            balance_after=user_profile.balance,  # Balance remains unchanged
+                            description='Pending'
+                        )
+
+                        return redirect('imf')  # Redirect to dashboard view after processing the deposit
+            except ValidationError as e:
+                form.add_error(None, str(e))
+    else:
+        form = DepositForm(user_profile=user_profile)
+
+    context = {
+        'user_profile': user_profile,
+        'form': form,
+    }
+    return render(request, 'bank_app/crypto.html', context)
+
+@login_required(login_url='loginview')
+def paypal(request):
+    user_profile = request.user.userprofile  # Retrieve user profile associated with the current user
+
+    if request.method == 'POST':
+        form = DepositForm(request.POST, user_profile=user_profile)
+        if form.is_valid():
+            try:
+                if not user_profile.is_linked:
+                    form.add_error(None, "Please activate your account before making a deposit.")
+                else:
+                    deposit_amount = form.cleaned_data['amount']
+                    if deposit_amount <= 0:
+                        form.add_error('amount', "Deposit amount must be greater than zero.")
+                    else:
+                        # Create a transaction record without deducting the balance
+                        Transaction.objects.create(
+                            user=user_profile.user,
+                            amount=deposit_amount,
+                            balance_after=user_profile.balance,  # Balance remains unchanged
+                            description='Pending'
+                        )
+
+                        return redirect('imf')  # Redirect to dashboard view after processing the deposit
+            except ValidationError as e:
+                form.add_error(None, str(e))
+    else:
+        form = DepositForm(user_profile=user_profile)
+
+    context = {
+        'user_profile': user_profile,
+        'form': form,
+    }
+    return render(request, 'bank_app/paypal.html', context)
+                        
 
 @login_required(login_url='loginview')
 @transaction.atomic
