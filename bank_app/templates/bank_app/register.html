@@ -1,227 +1,296 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Standard Capital Online Bank - Registration</title>
-    <link rel="icon" href="{% static 'images/web_logo.jpg' %}" type="image/x-icon" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style type="text/css">
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #000e17, #2994ff);
-        }
-
-        .premier-bank-header {
-            background-color: #fff;
-            color: #003366;
-            text-align: center;
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: Arial, sans-serif;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .premier-bank-header h1 {
-            margin: 0;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .registration-container {
-            max-width: 400px;
-            margin: 50px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .registration-container h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #003366;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #003366;
-        }
-
-        .form-group input {
-            width: 90%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .form-group input:focus {
-            border-color: #003366;
-            outline: none;
-        }
-
-        .error {
-            color: red;
-            font-size: 0.875em;
-        }
-
-        .form-group .success {
-            color: green;
-            font-size: 0.875em;
-        }
-
-        .form-group input[type="submit"] {
-            background-color: #003366;
-            color: white;
-            border: none;
-            width: 97%;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .form-group input[type="submit"]:hover {
-            background-color: #0055cc;
-        }
-
-        .bottom-navbar {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: #003366;
-            display: flex;
-            justify-content: space-around;
-            padding: 0.5rem 0;
-        }
-
-        .nav-item {
-            color: white;
-            text-align: center;
-        }
-
-        .nav-item a {
-            color: white;
-            text-decoration: none;
-            padding: 10px;
-            display: block;
-        }
-
-        .nav-item a:hover {
-            background-color: orange;
-            border-radius: 5px;
-        }
-        .login-footer {
-        margin-top: 20px;
-        color: #777;
-    }
-    .login-footer a {
-        color: #2994ff;
-        text-decoration: none;
-    }
-    .login-footer a:hover {
-        text-decoration: underline;
-    }
-    .translate-icon-container {
+    <!-- FontAwesome CDN for Telegram Icon -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <title>Heritage Bank - Register Page</title>
+    <link rel="icon" href="{% static 'images/logos.webp' %}" type="image/x-icon" />
+    <style type="text/css" media="all">
+        
+/* Telegram Icon */
+.telegram-icon {
     position: fixed;
     bottom: 20px;
     left: 20px;
-    z-index: 1000; /* Ensure it's above other content */
+    background-color: #0088cc;
+    color: white;
+    font-size: 30px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
 }
 
-.translate-icon {
-    width: 40px;
-    height: 40px;
-    background-image: url('path_to_google_translate_icon.png');
-    background-size: cover;
-    cursor: pointer;
+.telegram-icon:hover {
+    transform: scale(1.1);
 }
-@keyframes bounce {
-    0% {
-        transform: translateY(0);
-    }
-    100% {
-        transform: translateY(-10px);
-    }
-}
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.5);
+                opacity: 0.5;
+            }
+            60% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
 
+        body {
+            font-family: Arial, sans-serif;
+            background-size: cover;
+            background-position: center;
+            background-repeat:no-repeat;
+            background-image: url("{% static 'images/bg.jpg' %}");
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+            animation: bounceIn 1s ease-in-out;
+        }
+
+        .login-image {
+            display: none;
+        }
+
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .login-header {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .login-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin-bottom: 5px;
+            display: block;
+            color: #fff;
+        }
+
+        .input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-container i {
+            position: absolute;
+            left: 10px;
+            color: #aaa;
+        }
+
+        input{
+            width: 100%;
+            padding: 10px 10px 10px 30px;
+            border: none;
+            border-bottom: 2px solid #ccc;
+            background: transparent;
+            color: #fff;
+            outline: none;
+            transition: border-bottom-color 0.3s;
+        }
+
+        input:focus {
+            border-bottom-color: #007BFF;
+        }
+
+        #toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        #toggle-password:hover {
+            color: #fff;
+        }
+
+        .login-button {
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007BFF;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-button:hover {
+            background-color: #0056b3;
+        }
+
+        @media (min-width: 768px) {
+            .login-wrapper {
+                flex-direction: row;
+                padding: 0;
+            }
+
+            .login-image {
+                display: block;
+                flex: 1;
+                border-top-left-radius: 8px;
+                border-bottom-left-radius: 8px;
+                overflow: hidden;
+            }
+
+            .login-container {
+                flex: 1;
+                padding: 30px;
+            }
+
+            .login-header {
+                text-align: left;
+                margin-bottom: 20px;
+            }
+
+            .login-header h1 {
+                margin: 0;
+            }
+        }
+        .log{
+            height: 5rem;
+            border-radius: 5rem;
+        }
+        .cpp{
+            display: flex;
+            justify-content:space-between ;
+            align-items: center;
+        }
+
+        .reg{
+            text-decoration: none;
+            color: #fff;
+        }
+
+        a{
+            text-decoration: none;
+            color: blue;
+        }
+
+        .success-message, .error-message {
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+            animation: bounceIn 0.5s ease-in-out; /* Animation for both success and error messages */
+        }
+
+        .error-message {
+            color: #dc3545; /* Red color for error messages */
+        }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
 </head>
 <body>
-    <!-- Premier Bank Header -->
-    <header class="premier-bank-header">
-        <h1>Standard Capital Online Bank - Registration</h1>
-    </header>
+       <a href="https://t.me/CREDITRUST_Customersupport" class="telegram-icon" target="_blank">
+        <i class="fab fa-telegram"></i>
+       </a>
+    
+    <div class="login-wrapper">
+        <div class="login-image">
+            <img src="{% static 'images/logo_image.png' %}" alt="Login Image" style="width: 33rem; height: 115%; object-fit: cover;">
+        </div>
+        <div class="login-container">
+            <div class="login-header">
+                <img class="log" src="{% static 'images/logo_image.png' %}" alt="" />
+                <h1>Register</h1>
+            </div>
+            <form method="post" class="login-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <div class="input-container">
+                        {{form.username}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-container">
+                        {{form.password1}}
+                        <i id="toggle-password" class="fas fa-eye"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Confirm Password</label>
+                    <div class="input-container">
+                        {{form.password2}}
+                        <i id="toggle-password" class="fas fa-eye"></i>
+                    </div>
+                </div>
+                <button type="submit" class="login-button">Register</button>
+                <br />
+                <div class="cpp">
+                    <a href="">Forgotten password</a>
+                    <a class="reg" href="{% url 'linking_view' %}">Login</a>
+                </div>
 
-    <!-- Registration Form Container -->
-    <div class="registration-container">
-        <h2>Create Your Account</h2>
-        <form id="registrationForm" method="post" onsubmit="return validateForm()">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="username">Username</label>
-                {{form.username}}
-                <span id="usernameError" class="error"></span>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                {{form.password1}}
-                <span id="passwordError" class="error"></span>
-            </div>
-            <div class="form-group">
-                <label for="confirmPassword">Confirm Password</label>
-                {{form.password2}}
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Register">
-            </div>
-            <div class="login-footer">
-                <p>Have an account? <a href="{% url 'loginview' %}">Login</a></p>
-            </div>
-
-            <span id="confirmPasswordError" class="error">{{form.errors}}</span>
-        </form>
+                 <div id="" class="error-message">
+                    {{form.errors}}
+                  </div>
+            </form>
+        </div>
     </div>
-    <script type="text/javascript">
-        // Form validation function
-        function validateForm() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
+    <script type="text/javascript" charset="utf-8">
+        document.addEventListener('DOMContentLoaded', function() {
+            const togglePassword = document.getElementById('toggle-password');
+            const passwordInput = document.getElementById('password');
 
-            let isValid = true;
-
-            if (username.length < 3) {
-                document.getElementById('usernameError').textContent = 'Username must be at least 3 characters long.';
-                isValid = false;
-            } else {
-                document.getElementById('usernameError').textContent = '';
-            }
-
-            if (password.length < 6) {
-                document.getElementById('passwordError').textContent = 'Password must be at least 6 characters long.';
-                isValid = false;
-            } else {
-                document.getElementById('passwordError').textContent = '';
-            }
-
-            if (password !== confirmPassword) {
-                document.getElementById('confirmPasswordError').textContent = 'Passwords do not match.';
-                isValid = false;
-            } else {
-                document.getElementById('confirmPasswordError').textContent = '';
-            }
-
-            return isValid;
-        }
-  </script>
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
+        });
+    </script>
 </body>
 </html>
+
+
+
