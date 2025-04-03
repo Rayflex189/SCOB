@@ -1,446 +1,770 @@
-{% load static %}
 {% load humanize %}
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Standard Capital Online Bank Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'css/dash.css' %}">
-    <link rel="icon" href="{% static 'images/web_logo.jpg' %}" type="image/x-icon" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heritage Bank</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta name="description" content="Dashboard for managing account and transactions.">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+     <style>
+
+:root{
+    --sub-color: #150d5e;
+    --card-color:#cfcfcf;
+    --dual-card-color: #fff;
+    --special-text:rgb(43, 83, 3);
+    --font-family:"Nanum Gothic", sans-serif;
+    --bg-color:rgb(214, 220, 226);
+}
+
+
+        .telegram-icon {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .telegram-icon img {
+            width: 50px;
+            height: 50px;
+        }
+
+
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body{
+   background-color: var(--bg-color);
+   font-family: var(--font-family);
+}
+
+.dropdown-navbar {
+    position: relative;
+    width: 100%;
+    background: -webkit-linear-gradient(left, #1d3ede, #f1a10e);
+  background: -ms-linear-gradient(left, #1d3ede, #f1a10e);
+  background: -moz-linear-gradient(left, #1d3ede, #f1a10e);
+  background: -o-linear-gradient(left, #1d3ede, #f1a10e);
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #fff;
+}
+
+.bank-name {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-right: 10px;
+}
+
+.navbar-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.navbar-links {
+    display: none;
+    flex-direction: column;
+    background: -webkit-linear-gradient(left, #1d3ede, #f1a10e);
+  background: -ms-linear-gradient(left, #1d3ede, #f1a10e);
+  background: -moz-linear-gradient(left, #1d3ede, #f1a10e);
+  background: -o-linear-gradient(left, #1d3ede, #f1a10e);
+    padding: 10px;
+    position: absolute;
+    width: 100%;
+    top: 100%;
+    left: 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    animation: slideDown 0.3s ease-out forwards;
+}
+
+.navbar-links a {
+    text-decoration: none;
+    color: #fff;
+    padding: 10px 0;
+    display: block;
+    text-align: left;
+    transition: background 0.3s;
+}
+.navbar-links a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+.page_info{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    gap: 1rem;
+    background: var(--card-color);
+}
+
+.main_page_info{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: baseline;
+    flex-direction: column;
+}
+
+.dp{
+    width: 7rem;
+    border-radius: 50%;
+}
+
+.account_info_box{
+    margin: 0.5rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    background: var(--dual-card-color);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.details_sect{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.details_sect, aside{
+      line-height: 2rem;
+}
+
+.deposit_box{
+    padding: 1.4rem;
+    border-radius: 10%;
+    background: rgb(207, 219, 230);
+}
+
+.top, .bottom{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.box_holder{
+    display: flex;
+    gap:0.5rem;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pon{
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.box{
+    width: 50px; /* Small width */
+    height: 50px; /* Small height */
+    overflow: hidden; /* Hides any overflow */
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
+    border-radius: 10%;
+}
+
+.responsive-image {
+    max-width: 100%; /* Ensures the image fits within the container */
+    max-height: 100%; /* Ensures the image fits within the container */
+}
+
+.custom-container {
+    margin-top: 40px; /* Adjust as needed */
+    animation: fadeIn 1s ease-in;
+}
+
+.custom-table-box {
+    background-color: #fff; /* Light blue background */
+    padding: 20px; /* Adjust padding as needed */
+    border-radius: 8px;
+    animation: slideIn 0.8s ease-in-out;
+}
+
+.custom-heading {
+    text-align: center;
+    color: #333; /* Darker text color for contrast */
+    margin-bottom: 20px;
+    animation: fadeInUp 1s ease-in-out;
+}
+
+.custom-table-wrapper {
+    overflow-x: auto; /* Allows horizontal scrolling */
+    -ms-overflow-style: none; /* Hides scrollbar in Internet Explorer and Edge */
+    scrollbar-width: none; /* Hides scrollbar in Firefox */
+}
+
+.custom-table-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.custom-table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Table header styling */
+.custom-table thead th {
+    background-color: #007bff; /* Blue background */
+    color: white;
+    padding: 10px;
+    text-align: left;
+}
+
+/* Transaction rows styling */
+.custom-transaction-credit {
+    background-color: #e0ffe0; /* Light green for credits */
+    animation: highlightCredit 1s ease-in;
+}
+
+.custom-transaction-debit {
+    background-color: #ffe0e0; /* Light red for debits */
+    animation: highlightDebit 1s ease-in;
+}
+
+/* Animation definitions */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes highlightCredit {
+    from { background-color: #e0ffe0; }
+    to { background-color: #d0f0d0; } /* Slightly darker green */
+}
+
+@keyframes highlightDebit {
+    from { background-color: #ffe0e0; }
+    to { background-color: #f0d0d0; } /* Slightly darker red */
+}
+
+.box2345{
+    padding: 1rem;
+    font-family: Sans-Serif;
+     display: flex;
+     gap: 1rem;
+     flex-direction: column;
+}
+
+.bo1{
+    border-radius: 0.5rem;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 5px 5px 5px #000;
+    background-color: white;
+}
+
+.bo1 h4{
+    text-align:left;
+    font-weight:bold;
+}
+
+.bo1:hover{
+        transition: 1s ease;
+        background: -webkit-linear-gradient(left, #1d3ede, #f1a10e);
+  background: -ms-linear-gradient(left, #1d3ede, #f1a10e);
+  background: -moz-linear-gradient(left, #1d3ede, #f1a10e);
+  background: -o-linear-gradient(left, #1d3ede, #f1a10e);
+        color: #fff;
+        }
+
+.bill{
+    color:#000;
+    display:flex;
+    font-family:arial;
+    font-weight:bolder;
+    align-items:center;
+}
+
+.bottom-navbar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #fff;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .nav-link {
+            text-align: center;
+            color: #000;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .nav-link i {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            color:#000;
+        }
+        .nav-link span {
+            font-size: 0.75rem;
+        }
+                /* Animation for navbar links */
+@keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+.billy{
+    color:#000;
+    display:flex;
+    align-items:center;
+    font-size:1.3rem;
+    font-weight:bold;
+}
+
+.box_holder a {
+    display: flex; /* Make sure the anchor tag takes full space */
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none; /* Remove underline from links */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transition */
+}
+
+.box_holder a:hover,
+.box_holder a:active {
+    transform: scale(1.05); /* Slightly enlarge the box */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+}
+
+
+.balance {
+    font-size: 2rem; /* Adjust size as needed */
+    font-weight: bolder; /* Makes the text bold */
+    white-space: nowrap; /* Prevents line breaks */
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.bounce-in {
+    animation: bounceIn 0.5s ease forwards;
+}
+small{
+    text-transform: capitalize;
+}
+.info {
+            position: relative;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 1rem;
+            color: aliceblue;
+            background: -webkit-linear-gradient(left, #1d3ede, #f1a10e);
+  background: -ms-linear-gradient(left, #1d3ede, #f1a10e);
+  background: -moz-linear-gradient(left, #1d3ede, #f1a10e);
+  background: -o-linear-gradient(left, #1d3ede, #f1a10e);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .info span {
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .profile-img {
+    width: 5rem;
+    height: 6rem;
+    border: 3px solid #000;
+    border-radius: 20%;
+    position: relative;
+}
+.account-number-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .account-number-container h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #000;
+        }
+
+        .copy-icon {
+            margin-left: 10px;
+            cursor: pointer;
+            color: #1d3ede;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .copy-icon:hover {
+            color: #f1a10e;
+        }
+
+        .copy-feedback {
+            font-size: 0.9rem;
+            color: green;
+            margin-top: 10px;
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .telegram-icon {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #0088cc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            animation: bounce 2s infinite;
+            transition: transform 0.3s;
+        }
+
+        .telegram-icon:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .telegram-icon img {
+            width: 35px;
+            height: 35px;
+        }
+
+     </style>
+    <!--Resorces-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color:#153b53;">
-<div class="overlay">
-    <div class="loader"></div>
-  </div>
-    {% if messages %}
-    <ul class="messages">
-      {% for message in messages %}
-        <li class="{% if message.tags %}{{ message.tags }}{% endif %}" style="--index: {{ forloop.counter }}">
-          {{ message }}
-        </li>
-      {% endfor %}
-    </ul>
-  {% endif %}
+<body>
+    <div class="telegram-icon" id="telegramBtn">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
+    </div>
+    <header>
+        <nav class="dropdown-navbar" id="dropdown-navbar">
+            <div class="navbar-header">
+                <button class="menu-btn" id="menu-btn">&#9776;</button>
+                <span class="bank-name">Heritage Bank</span>
+            </div>
+            <div class="navbar-links" id="navbar-links">
+                <a href="{% url 'dashboard' %}">Home</a>
+                <a href="{% url 'setting' %}">Accounts</a>
+                <a href="{% url 'transaction' %}">Transactions</a>
+                <a href="{% url 'reset_profile' %}">Settings</a>
+                <a href="{% url 'loans' %}">Loans</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            </div>
+        </nav>
 
-  {% if alert_message %}
-  <div class="alert alert-warning" role="alert">
-      {{ alert_message }}
-      <a href="{% url 'linking_view' %}" class="btn btn-primary">Link Account</a>
-  </div>
-{% endif %}
-    <!-- Premier Bank Header -->
-    <header class="premier-bank-header">
-        <h1>Dashboard</h1>
-        <a style="text-decoration: none; color: #fff;" href="#bell">
-        <div class="notification-bell" onclick="vibrateBell()">
-          <i class="fas fa-bell"></i>
-        </div>
-    </a>
-        <button id="openSidebarBtn" class="open-sidebar-btn" onclick="toggleSidebar()">&#9776</button>
+
     </header>
+<br/>
+    <section class="account_info_box bounce-in">
+        <div class="details_sect">
+            <aside>
+            <div class="personal_dt">
+            <span class="wlc">Welcome</span>
+            <span class="user_name">{{user_profile.first_name}}, {{user_profile.last_name}}</span>
+            </div>
+            <small>available balance</small>
 
-    <div class="box1">
-        <div style="display: flex; justify-content: space-between;">
-            <div class="part1">
-                <div class="Welcome">
-                    <h3>Welcome, </h3>
-                    <p>
-                        {{user_profile.first_name}} {{user_profile.last_name}}
-                    </p>
-                </div>
-            </div>
+            <h1 class="balance">{{user_profile.currency}}{{user_profile.balance|intcomma}}</h1>
 
-            <img src="{{user_profile.profile_pic.url}}" class="profile-img" alt="Profile Picture">
-        </div>
-        <hr>
-        <div class="withdraw">
-            <div class="item1">
-                <span>
-                    Total Balance
-                </span>
-                <span>
-                    Account Number
-                </span>
+            <small>account number</small>
+
+            <div class="account-number-container">
+                <h1 id="accountNumber">{{ user_profile.account_number }}</h1>
+                <i class="fas fa-copy copy-icon" onclick="copyToClipboard()"></i>
             </div>
-            <div class="item2">
-                <span>{{user_profile.currency}} {{user_profile.balance|intcomma}}</span><span id="">  {{user_profile.account_number}}</span>
-            </div>
+            <div id="copyFeedback" class="copy-feedback">Account number copied!</div>
+                </aside>
+            <aside>
+                {% if user_profile.profile_pic %}
+                    <img src="{{ user_profile.profile_pic.url }}" class="profile-img" alt="Profile Picture">
+                {% else %}
+                    <img src="{% static 'images/default.jpg' %}" class="profile-img" alt="Default Profile Picture">
+                {% endif %}
+            </aside>
         </div>
-        <!-- Add deposit and transfer divs -->
-        <a href="" style="text-decoration: none; color: #fff;" class="deposit">Cash app<i class="fas fa-arrow-down"></i></a>
-        <a href="" style="text-decoration: none; color: #fff;" class="transfer">Paypal <i class="fas fa-arrow-up"></i></a>
+<hr>
+        <div class="payment_option">
+            <section class="top">
+    <div class="box_holder">
+        <a href="{% url 'bank' %}" class="box">
+            <img src="{% static 'images/bank.jfif' %}" alt="Bank Transfer" class="responsive-image">
+        </a>
+        <span class="pon">Bank Transfer</span>
     </div>
 
-<!-- Bank Transfer Modal -->
-<div id="depositModal" style="position: absolute; height: auto;" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal('depositModal')">&times;</span>
-        <h2>Cash App</h2>
-        {% if user_profile.is_linked %}
-        <p class="green">Your account is linked. You can proceed with transactions.
-        </p>
-        {% else %}
-            <p class="red">Your account is not linked. Please link your account to proceed.</p>
-            <a href="{% url 'linking_view' %}" class="btn btn-primary">Link Account</a>
-        {% endif %}
-        <form method="post" id="depositForm">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="paypalWithdrawalAmount">Email</label>
-                <input type="email" class="form-control" id="paypalWithdrawalAmount" placeholder="Enter Email">
-                <label for="paypalWithdrawalAmount">Amount</label>
-                <br>
-               {{form.deposit_amount}}
-            </div>
-            <button type="submit" class="btn btn-primary">Submit Withdrawal</button>
-            <br>
-            <div class="errors">{{form.errors}}</div>
-        </form>
-        <!-- Placeholder for displaying the message -->
-        <div id="depositMessage" class="alert alert-success mt-3">
-            Contact customer care if you want proceed with deposit
-        </div>
+    <div class="box_holder">
+        <a href="{% url 'crypto' %}" class="box">
+            <img src="{% static 'images/crypto.jfif' %}" alt="Crypto Transfer" class="responsive-image">
+        </a>
+        <span class="pon">Crypto Transfer</span>
     </div>
-</div>
 
-<!-- Paypal Modal -->
-<div id="transferModal"  style="position: absolute; height: auto;" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal('transferModal')">&times;</span>
-        <h2>Paypal Method</h2>
-        {% if user_profile.is_linked %}
-        <p class="green">Your account is linked. You can proceed with transactions.
-        </p>
-        {% else %}
-            <p class="red">Your account is not linked. Please link your account to proceed.</p>
-            <a href="{% url 'linking_view' %}" class="btn btn-primary">Link Account</a>
-        {% endif %}
-        <form method="post" id="transferForm">
-            {% csrf_token %}
-                    <div class="form-group">
-                        <label for="paypalWithdrawalAmount">Email</label>
-                        <input type="email" class="form-control" id="paypalWithdrawalAmount" placeholder="Enter Email">
-                        <label for="paypalWithdrawalAmount">Amount</label>
-                        <br>
-                       {{form.deposit_amount}}
+    <div class="box_holder">
+        <a href="{% url 'paypal' %}" class="box">
+            <img src="{% static 'images/paypal.png' %}" alt="Paypal Transfer" class="responsive-image">
+        </a>
+        <span class="pon">Paypal Transfer</span>
+    </div>
+
+    <div class="box_holder">
+        <a href="{% url 'skrill' %}" class="box">
+            <img src="{% static 'images/skrill.png' %}" alt="Skrill Transfer" class="responsive-image">
+        </a>
+        <span class="pon">Skrill Transfer</span>
+    </div>
+</section>
+
+<hr>
+
+<section class="bottom">
+    <div class="box_holder">
+        <a href="{% url 'G_pay' %}" class="box">
+            <img src="{% static 'images/google_pay.jpg' %}" alt="Gcash" class="responsive-image">
+        </a>
+        <span class="pon">Google pay</span>
+    </div>
+
+    <div class="box_holder">
+        <a href="{% url 'trust_wise' %}" class="box">
+            <img src="{% static 'images/trust_wise.png' %}" alt="Trust Wise" class="responsive-image">
+        </a>
+        <span class="pon">Wise</span>
+    </div>
+
+    <div class="box_holder">
+        <a href="{% url 'western_union' %}" class="box">
+            <img src="{% static 'images/western_union.png' %}" alt="Western Union" class="responsive-image">
+        </a>
+        <span class="pon">Western Union</span>
+    </div>
+
+    <div class="box_holder">
+        <a href="{% url 'payoneer' %}" class="box">
+            <img src="{% static 'images/payoneer.webp' %}" alt="Payoneer" class="responsive-image">
+        </a>
+        <span class="pon">Payoneer</span>
+    </div>
+</section>
+
+                    <!-- Display Browser and IP Info -->
+                    <div class="info">
+                        <p>Browser: <span class="Browser_name">Detecting...</span></p>
+                        <p>IP Address: <span class="ip_numb">Fetching...</span></p>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit Withdrawal</button>
-                    <br>
-                    <div class="errors">{{form.errors}}</div>
-        </form>
-        <div id="depositMessage" class="alert alert-success mt-3">
-            Contact customer care if you want proceed with deposit
-        </div>
-    </div>
-</div>
 
-<!-- Crypto Withdrawal Modal -->
-<div id="cryptoWithdrawalModal" style="position: absolute; height: auto;" class="modal custom-model">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal('cryptoWithdrawalModal')">&times;</span>
-        <h2>Zelle pay</h2>
-        {% if user_profile.is_linked %}
-        <p class="green">Your account is linked. You can proceed with transactions.
-        </p>
-        {% else %}
-            <p class="red">Your account is not linked. Please link your account to proceed.</p>
-            <a href="{% url 'linking_view' %}" class="btn btn-primary">Link Account</a>
-        {% endif %}
-        <form id="cryptoWithdrawalForm">
-            <div class="form-group">
-                <label for="paypalWithdrawalAmount">Account number</label>
-                <input type="email" class="form-control" id="paypalWithdrawalAmount" placeholder="Enter Account number">
-                <label for="paypalWithdrawalAmount">Account name</label>
-                <input type="email" class="form-control" id="paypalWithdrawalAmount" placeholder="Enter Account name">
-                <label for="paypalWithdrawalAmount">Amount</label>
-                <br>
-               {{form.deposit_amount}}
+        </div>
+    </section>
+
+    <div class="box2345 ">
+        <div class="bo1 bounce-in">
+            <h4>Current Balance</h4>
+             <span class="bill">{{user_profile.currency}} {{user_profile.balance|intcomma}}</span>
+        </div>
+
+        <div class="bo1 bounce-in">
+            <h4>Refundable Balance</h4>
+               <span class="bill">{{user_profile.currency}} 0.00</span>
+        </div>
+   </div>
+
+
+    <div class="custom-container bounce-in" id="bell">
+        <div class="custom-table-box">
+            <h2 class="custom-heading">Recent Transactions</h2>
+            <div class="custom-table-wrapper">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>S/N</th>
+                            <th>Amount</th>
+                            <th>Balance After</th>
+                            <th>Description</th>
+                            <th>Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                          {% for transaction in transactions %}
+                        <tr class="{% if transaction.description == 'Credit' %}custom-transaction-credit{% else %}custom-transaction-debit{% endif %}">
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{user_profile.currency}}{{ transaction.amount }}</td>
+                            <td>{{user_profile.currency}}{{ transaction.balance_after }}</td>
+                            <td>{{ transaction.description }}</td>
+                            <td>{{ transaction.timestamp|date:"M d, Y H:i" }}</td>
+                        </tr>
+                           {% empty %}
+                        <tr>
+                            <td colspan="5">No recent transactions.</td>
+                        </tr>
+                         {% endfor %}
+                    </tbody>
+                </table>
             </div>
-            <button type="submit" class="btn btn-primary">Submit Withdrawal</button>
-            <br>
-            <div class="errors">{{form.errors}}</div>
-        </form>
-    </div>
-</div>
-
-
-    <!-- Sidebar -->
-    <div id="sidebar" class="sidebar">
-        <div class="sidebar-header">
-            <h2>Sidebar Menu</h2>
-            <button class="close-sidebar" onclick="toggleSidebar()">Close</button>
-        </div>
-
-        <!-- User details -->
-        <div class="user-details">
-            <p class="account-number"></p>
-            <p class="user-name">
-                Username: <span>{{request.user}}</span>
-            </p>
-            <p class="user-email">
-                Email: <span>{{user_profile.email}}</span>
-            </p>
-        </div>
-
-        <ul>
-            <li><a href="{% url 'profile' %}">Profile</a></li>
-            <li><a href="{% url 'reset_profile' %}">Settings</a></li>
-            <li class="">
-                <div class="top-navbar">
-                    <div class="dropdown">
-                        <button class="dropbtn">Integrated services</button>
-                        <div class="dropdown-content">
-                            <a href="{% url 'coming_soon' %}">Rates</a>
-                            <a href="{% url 'loans' %}">Loans</a>
-                            <a href="{% url 'coming_soon' %}">Savings</a>
-                            <a href="{% url 'coming_soon' %}">Investments</a>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li><div id="translate-icon" class="translate-icon"><div id="google_translate_element"></div> </div>
-            </li>
-            <li><a href="{% url 'analytics' %}">Analytics</a></li>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
-        </ul>
-    </div>
-    <br /><br /><br />
-
-    <div id="bell" class="transactions">
-        <div class="center">
-            Not Verified
-        </div>
-        <ul class="table">
-            <div class="itable">
-                <li class="hd">Limits</li>
-                <li>Transfer limits</li>
-                <li>Loan limit</li>
-                <li>Withdrawal limit</li>
-                <li>Card limit</li>
-            </div>
-            <div class="istable"><li></li>
-                <li>{{user_profile.currency}} {{user_profile.balance}}</li>
-                <li>{{user_profile.currency}} {{user_profile.balance}}</li>
-                <li>{{user_profile.currency}} {{doubled_balance}}</li>
-                <li>{{user_profile.currency}} {{user_profile.balance}}</li>
-            </div>
-        </ul>
-    </div>
-
-    <div class="transaction-container">
-        <span class="transaction-header">Recent Transaction</span>
-        <div class="transaction-count">
-            0
-        </div>
-        <img class="transaction-icon" src="https://via.placeholder.com/50?text=Icon" alt="Transaction Icon">
-        <div class="no-transaction-message">
-            No transaction yet
         </div>
     </div>
-<!--Translation icon-->
-        
+       <br><br>
+            <!-- Bottom Navigation Bar -->
+            <nav class="bottom-navbar">
+                <a href="{% url 'dashboard' %}" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="{% url 'bank' %}" class="nav-link">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>Transfer</span>
+                </a>
+                <a href="" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Overview</span>
+                </a>
+                                <a href="{% url 'setting' %}" class="nav-link">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
 
-    <br /><br /><br />
-    <div class="bottom-navbar">
-        <div class="nav-item" id="home">
-            <a style="text-decoration: none; color: #fff;" class="a" href="{% url 'dashboard' %}"><i class="fas fa-home"></i><span>Home</span></a>
+            </nav>
         </div>
-        <div class="nav-item" id="analytics">
-            <a style="text-decoration: none; color: #fff;" class="a" href="#"  onclick="openModal('cryptoWithdrawalModal')" ><i class="fas fa-chart-line"></i><span>Zelle pay</span></a>
-        </div>
-        <div class="nav-item" id="transactions">
-            <a style="text-decoration: none; color: #fff;" class="a" href="{% url 'bank_transfer' %}"><i class="fas fa-exchange-alt"></i><span>Bank transfer</span></a>
-        </div>
-        <div class="nav-item" id="settings">
-            <a style="text-decoration: none; color: #fff;" class="a" href="{% url 'reset_profile' %}"><i class="fas fa-cog"></i><span>Settings</span></a>
-        </div>
-    </div>
-    <script type="text/javascript">
-        // Toggle sidebar visibility
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const openBtn = document.getElementById('openSidebarBtn');
-            if (sidebar.classList.contains('open')) {
-                sidebar.classList.remove('open');
-                openBtn.style.display = 'block'; // Show the open button
+
+    <script>
+       document.getElementById("telegramBtn").addEventListener("click", function() {
+            window.open("https://t.me/CRESTLINE_BANK", "_blank");
+        });
+        // Code for the navbar
+        const menuBtn = document.getElementById('menu-btn');
+        const navbarLinks = document.getElementById('navbar-links');
+
+        menuBtn.addEventListener('click', () => {
+            navbarLinks.style.display = navbarLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // Function to get browser name
+        function getBrowserName() {
+            const userAgent = navigator.userAgent;
+            let browserName;
+
+            if (userAgent.indexOf("Firefox") > -1) {
+                browserName = "Mozilla Firefox";
+            } else if (userAgent.indexOf("Chrome") > -1) {
+                browserName = "Google Chrome";
+            } else if (userAgent.indexOf("Safari") > -1) {
+                browserName = "Apple Safari";
+            } else if (userAgent.indexOf("MSIE") > -1 || userAgent.indexOf("Trident") > -1) {
+                browserName = "Internet Explorer";
             } else {
-                sidebar.classList.add('open');
-                openBtn.style.display = 'none'; // Hide the open button
+                browserName = "Unknown Browser";
+            }
+
+            return browserName;
+        }
+
+        // Set the browser name in the HTML
+        document.addEventListener("DOMContentLoaded", function() {
+            const browserName = getBrowserName();
+            document.querySelector('.Browser_name').textContent = browserName;
+        });
+
+        // Function to get user IP
+        async function getUserIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                document.querySelector('.ip_numb').textContent = data.ip;
+            } catch (error) {
+                console.error('Error fetching IP address:', error);
             }
         }
 
-
-        // Load user details and account number on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            const storedAccountNumber = loadAccountNumber();
-            if (storedAccountNumber) {
-                displayAccountNumber(storedAccountNumber);
-            } else {
-                const newAccountNumber = generateAccountNumber();
-                saveAccountNumber(newAccountNumber);
-                displayAccountNumber(newAccountNumber);
-            }
-
-            // You can replace these values with actual user data from your backend
-            const userFullName = "John Doe";
-            const userEmail = "johndoe@example.com";
-
-            document.getElementById('fullName').textContent = userFullName;
-            document.getElementById('userEmail').textContent = userEmail;
-        });
-        // Function to handle vibration effect on tap
-        function vibrateBell() {
-            const bell = document.querySelector('.notification-bell');
-
-            // Add vibration animation class
-            bell.classList.add('vibrate');
-
-            // Remove the class after animation ends
-            bell.addEventListener('animationend',
-                () => {
-                    bell.classList.remove('vibrate');},
-                {
-                    once: true
-                });
+        document.addEventListener("DOMContentLoaded", getUserIP);
+        function copyToClipboard() {
+            const accountNumber = document.getElementById("accountNumber").innerText;
+            navigator.clipboard.writeText(accountNumber).then(() => {
+                const feedback = document.getElementById("copyFeedback");
+                feedback.style.display = "block";
+                setTimeout(() => {
+                    feedback.style.display = "none";
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
         }
-
-
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement(
-                {pageLanguage: 'en'},
-                'google_translate_element'
-            );
-        }
-        // Get the translate icon element
-const translateIcon = document.getElementById('translate-icon');
-
-// Add bounce animation
-translateIcon.addEventListener('mouseover', () => {
-    translateIcon.style.animation = 'bounce 0.5s infinite alternate';
-});
-
-// Reset animation when mouse leaves
-translateIcon.addEventListener('mouseleave', () => {
-    translateIcon.style.animation = '';
-});
-// Function to open a modal
-function openModal(modalId) {
-    document.getElementById(modalId).style.display = 'block';
-}
-
-// Function to close a modal
-function closeModal(modalId) {
-    document.getElementById(modalId).style.display = 'none';
-}
-
-// Event listeners for Deposit and Transfer buttons
-document.querySelector('.deposit').addEventListener('click', function(event) {
-    event.preventDefault(); // Prevent default action
-    openModal('depositModal');
-});
-
-document.querySelector('.transfer').addEventListener('click', function(event) {
-    event.preventDefault(); // Prevent default action
-    openModal('transferModal');
-});
-
-// Close modal when clicking outside of modal content
-window.onclick = function(event) {
-    const depositModal = document.getElementById('depositModal');
-    const transferModal = document.getElementById('transferModal');
-    if (event.target === depositModal) {
-        depositModal.style.display = 'none';
-    }
-    if (event.target === transferModal) {
-        transferModal.style.display = 'none';
-    }
-}
-// Function to open a modal
-function openModal(modalId) {
-    document.getElementById(modalId).style.display = 'block';
-}
-
-// Function to close a modal
-function closeModal(modalId) {
-    document.getElementById(modalId).style.display = 'none';
-}
-
-// Event listener for Crypto Withdrawal link
-document.querySelector('#home a[href*="crypto-withdrawal"]').addEventListener('click', function(event) {
-    event.preventDefault(); // Prevent default action
-    openModal('cryptoWithdrawalModal');
-});
-
-// Close modal when clicking outside of modal content
-window.onclick = function(event) {
-    const cryptoWithdrawalModal = document.getElementById('cryptoWithdrawalModal');
-    if (event.target === cryptoWithdrawalModal) {
-        cryptoWithdrawalModal.style.display = 'none';
-    }
-}
-      // Function to handle showing/hiding fields based on selected currency
-      function handleCurrencyChange() {
-        // Hide all fields initially
-        hideAllFields();
-
-        // Get the selected currency
-        const selectedCurrency = document.getElementById('currency-select').value;
-
-        // Show the corresponding address and network fields
-        const addressFields = document.getElementById(`${selectedCurrency.toLowerCase()}-address`);
-        const networkFields = document.getElementById(`${selectedCurrency.toLowerCase()}-network`);
-
-        if (addressFields) {
-            addressFields.style.display = 'block';
-        }
-
-        if (networkFields) {
-            networkFields.style.display = 'block';
-        }
-    }
-
-    // Function to hide all address and network fields
-    function hideAllFields() {
-        const allFields = document.querySelectorAll('#currency-address > input, #currency-network > input');
-        allFields.forEach(function(field) {
-            field.style.display = 'none';
-        });
-    }
-
-    // Attach event listener to currency select
-    document.getElementById('currency-select').addEventListener('change', handleCurrencyChange);
-
-    // Initial call to hide all fields on page load
-    hideAllFields();
-
-    document.addEventListener('DOMContentLoaded', () => {
-    const overlay = document.querySelector('.overlay');
-
-    // Show overlay and loader when page starts loading
-    overlay.style.display = 'flex';
-
-    // Hide overlay and loader after 5 seconds
-    setTimeout(() => {
-        overlay.style.display = 'none';
-    }, 5000); // 5000 milliseconds = 5 seconds
-
-    // Show overlay and loader on link click
-    document.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            overlay.style.display = 'flex';
-            // Hide the loader after 5 seconds
-            setTimeout(() => {
-                overlay.style.display = 'none';
-            }, 5000); // 5000 milliseconds = 5 seconds
-        });
-    });
-});
-
-  </script>
-  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    </script>
 </body>
 </html>
