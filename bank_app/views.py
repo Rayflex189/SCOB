@@ -162,7 +162,7 @@ def reset_profile(request):
             form = UserProfileForm(request.POST,request.FILES, instance=request.user.userprofile)
             if form.is_valid():
                 form.save()
-                return redirect('otp')  # Redirect to the same page after successful update
+                return redirect('dashboard')  # Redirect to the same page after successful update
             else:
                 form = UserProfileForm(instance=request.user.userprofile)
 
