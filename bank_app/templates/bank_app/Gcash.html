@@ -1,19 +1,18 @@
+
 {% load static %}
 {% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heritage Bank - G cash Transfer</title>
-    <link rel="icon" href="{% static 'images/web_logo.jpg' %}" type="image/x-icon">
-    <link rel="stylesheet" href="{% static 'css/dash.css'}" >
- 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* Basic Styling */
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Heritage Bank - G Cash Transfer</title>
+  <link rel="icon" href="{% static 'images/web_logo.jpg' %}" type="image/x-icon" />
+  <link rel="stylesheet" href="{% static 'css/dash.css' %}" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+            /* Basic Styling */
         body {
             font-family: Arial, sans-serif;
             background-color: #06A3DA;
@@ -363,132 +362,126 @@ animation: vibrate 0.5s ease-in-out; /* Apply the vibrating animation */
             width: 35px;
             height: 35px;
         }
-</style>
+  </style>
 </head>
 <body>
-    
-    <header class="bank-header">
-        <h1>G Cash Transfer</h1>
-        <div class="notification-bell" onclick="toggleSidebar()">
-            <i class="fas fa-bell"></i>
-        </div>
-        <div class="open-sidebar-btn" onclick="toggleSidebar()">
-            <i class="fas fa-bars"></i>
-        </div>
-    </header>
-
-    <!-- Sidebar -->
-    <div id="sidebar" class="sidebar">
-        <div class="sidebar-header">
-            <h2>Account Menu</h2>
-            <button onclick="toggleSidebar()">Close</button>
-        </div>
-        <div class="user-details">
-            <p>Username: <strong>{{ request.user }}</strong></p>
-            <p>Email: <strong>{{ user_profile.email }}</strong></p>
-        </div>
-        <ul>
-            <li><a href="{% url 'profile' %}">Profile</a></li>
-            <li><a href="{% url 'reset_profile' %}">Settings</a></li>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
-        </ul>
+  <header class="bank-header">
+    <h1>G Cash Transfer</h1>
+    <div class="notification-bell" onclick="toggleSidebar()">
+      <i class="fas fa-bell"></i>
     </div>
-           <!-- Marquee for Stock Market -->
-    <div class="marquee">
-        <div class="marquee-content" id="stockMarquee">
-            Loading stock market data...
-        </div>
+    <div class="open-sidebar-btn" onclick="toggleSidebar()">
+      <i class="fas fa-bars"></i>
     </div>
-    <!-- Main Content -->
-    <div class="main-content">
-        <div class="transfer-header">G Cash Payment</div>
-        <div class="">
+  </header>
 
+  <!-- Sidebar -->
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <h2>Account Menu</h2>
+      <button type="button" onclick="toggleSidebar()">Close</button>
+    </div>
+    <div class="user-details">
+      <p>Username: <strong>{{ request.user }}</strong></p>
+      <p>Email: <strong>{{ user_profile.email }}</strong></p>
+    </div>
+    <ul>
+      <li><a href="{% url 'profile' %}">Profile</a></li>
+      <li><a href="{% url 'reset_profile' %}">Settings</a></li>
+      <li><a href="{% url 'logout' %}">Logout</a></li>
+    </ul>
+  </div>
 
+  <!-- Marquee -->
+  <div class="marquee">
+    <div class="marquee-content" id="stockMarquee">
+      Loading stock market data...
+    </div>
+  </div>
 
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="transfer-header">G Cash Payment</div>
     <div class="form-container">
-        <h1>Heritage Pay</h1>
-        <!-- Animated Balance -->
-        <div class="animated-balance" id="animatedBalance">
-            Loading available balance...
+      <h1>Heritage Pay</h1>
+      <div class="animated-balance" id="animatedBalance">Loading available balance...</div>
+
+      <!-- Google Pay Payment Form -->
+      <form method="post">
+        {% csrf_token %}
+
+        <!-- Account Number -->
+        <div class="mb-3">
+          <label for="accountNumber" class="form-label">Account Number</label>
+          <input type="text" class="form-control" id="accountNumber" name="account_number" placeholder="Enter your account number" required>
         </div>
 
-<!-- Google Pay Payment Form -->
-<form method="post">
-    {% csrf_token %}
-
-    <!-- Account Number -->
-    <div class="mb-3">
-        <label for="accountNumber" class="form-label">Account Number</label>
-        <input type="text" class="form-control" id="accountNumber" name="account_number" placeholder="Enter your account number" required>
-    </div>
-
-    <!-- Amount -->
-    <div class="mb-3">
-        <label for="amount" class="form-label">Amount</label>
-        <div class="form-input-group">
+        <!-- Amount -->
+        <div class="mb-3">
+          <label for="amount" class="form-label">Amount</label>
+          <div class="form-input-group">
             {{ form.amount }}
+          </div>
         </div>
-    </div>
 
-    <!-- Description -->
-    <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <input type="text" class="form-control" id="description" name="description" placeholder="Enter payment description">
-    </div>
-
-    <button type="submit" class="btn btn-primary w-100">Pay via G Cash</button>
-             <div class="errors">{{form.errors}}</div>
-        </form>
-
-                    {% if user_profile.is_linked %}
-                <p class="text-success">Your account is activated. You can proceed with transactions.</p>
-            {% else %}
-                <p class="text-danger">Your account is not activated. Please purchase an activation pin.</p>
-                <a href="{% url 'linking_view' %}" class="btn btn-primary">Activate Account</a>
-            {% endif %}
-    </div>
+        <!-- Description -->
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <input type="text" class="form-control" id="description" name="description" placeholder="Enter payment description">
         </div>
+
+        <div class="errors">{{ form.errors }}</div>
+
+        <button type="submit" class="btn btn-primary w-100">Pay via G Cash</button>
+      </form>
+
+      {% if user_profile.is_linked %}
+        <p class="text-success">Your account is activated. You can proceed with transactions.</p>
+      {% else %}
+        <p class="text-danger">Your account is not activated. Please purchase an activation pin.</p>
+        <a href="{% url 'linking_view' %}" class="btn btn-primary">Activate Account</a>
+      {% endif %}
     </div>
+  </div>
 
+  <!-- Telegram Icon -->
+  <div id="telegramBtn" class="telegram-icon">
+    <img src="{% static 'images/telegram-icon.png' %}" alt="Telegram">
+  </div>
 
-    <script>
-               document.getElementById("telegramBtn").addEventListener("click", function() {
-            window.open("https://t.me/", "_blank");
-        });
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('open');
-        }
-         // Update available balance dynamically using Django variables
-      document.addEventListener("DOMContentLoaded", () => {
-          const balanceElement = document.getElementById("animatedBalance");
-          const userCurrency = "{{ user_profile.currency }}";
-          const userBalance = "{{ user_profile.balance|intcomma }}";
+  <script>
+    document.getElementById("telegramBtn").addEventListener("click", function () {
+      window.open("https://t.me/", "_blank");
+    });
 
-          // Update balance
-          balanceElement.textContent = `Current available balance (${userCurrency}): ${userBalance}`;
-      });
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('open');
+    }
 
-      // Mock API Data for stocks
-      const stockData = [
-          { symbol: "AAPL", price: 178.23 },
-          { symbol: "GOOGL", price: 123.45 },
-          { symbol: "AMZN", price: 99.12 },
-          { symbol: "TSLA", price: 246.78 }
-      ];
+    document.addEventListener("DOMContentLoaded", () => {
+      const balanceElement = document.getElementById("animatedBalance");
+      const userCurrency = "{{ user_profile.currency }}";
+      const userBalance = "{{ user_profile.balance|intcomma }}";
+      balanceElement.textContent = `Current available balance (${userCurrency}): ${userBalance}`;
+    });
 
-      // Update stock marquee dynamically
-      function updateStockMarquee() {
-          const marquee = document.getElementById("stockMarquee");
-          const stockText = stockData.map(stock => `${stock.symbol}: $${stock.price.toFixed(2)}`).join(" | ");
-          marquee.innerHTML = stockText;
-      }
+    const stockData = [
+      { symbol: "AAPL", price: 178.23 },
+      { symbol: "GOOGL", price: 123.45 },
+      { symbol: "AMZN", price: 99.12 },
+      { symbol: "TSLA", price: 246.78 }
+    ];
 
-      // Call functions after the DOM is loaded
-      document.addEventListener("DOMContentLoaded", () => {
-          setTimeout(updateStockMarquee, 1000);
-      });
-    </script>
+    function updateStockMarquee() {
+      const marquee = document.getElementById("stockMarquee");
+      const stockText = stockData.map(stock => `${stock.symbol}: $${stock.price.toFixed(2)}`).join(" | ");
+      marquee.innerHTML = stockText;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(updateStockMarquee, 1000);
+    });
+  </script>
 </body>
-</html>
+              </html>
