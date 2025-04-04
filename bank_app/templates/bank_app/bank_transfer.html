@@ -5,477 +5,472 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Standard Capital Online - Bank transfer</title>
-    <link rel="icon" href="{% static 'images/web_logo.jpg' %}" type="image/x-icon" />
+    <title>Heritage - Bank Transfer</title>
+    <link rel="icon" href="{% static 'images/web_logo.jpg' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/dash.css'}" >
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        /* Include all existing styles from the dashboard here */
-
+        /* Basic Styling */
         body {
             font-family: Arial, sans-serif;
+            background-color: #06A3DA;
             margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #000e17, #2994ff);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        .premier-bank-header {
-            background-color: #fff;
-            color: #003366;
-            text-align: left;
-            padding: 1rem 0;
+        /* Styling for the error messages */
+.errors {
+color: red; /* Text color red */
+padding: 10px;
+font-weight: bold; /* Optional: bold text */
+animation: vibrate 0.5s ease-in-out; /* Apply the vibrating animation */
+}
+
+        /* Header */
+        .bank-header {
+            background-color: #003366;
+            color: white;
+            padding: 15px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            font-family: Arial, sans-serif;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .premier-bank-header h1 {
-            margin: 0;
-            font-size: 1.5rem;
-            padding-left: 1rem;
-            font-weight: bold;
-        }
-
-        .notification-bell {
-            position: relative;
-            width: 50px;
-            height: 50px;
-            background-color: navy;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
             align-items: center;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-
-        .open-sidebar-btn {
-            background-color: #004080;
-            color: white;
-            padding: 10px;
-            width: 4rem;
-            border: none;
-            border-radius: 5px 0 0 5px;
-            cursor: pointer;
-        }
-
-        .open-sidebar-btn:hover {
-            background-color: #0055cc;
-        }
-
-        .main-content {
-            padding: 20px;
-        }
-
-        .settings-header {
-            padding: 10px 20px;
-            background-color: #003366;
-            color: white;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        .settings-header h2 {
+        .bank-header h1 {
+            font-size: 1.8rem;
             margin: 0;
+            padding-left: 20px;
+        }
+        .notification-bell, .open-sidebar-btn {
+            cursor: pointer;
+            color: white;
             font-size: 1.5rem;
         }
 
-        .settings-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .settings-section {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-        }
-
-        .settings-section h3 {
-            margin: 0;
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-        }
-
-        .settings-section p {
-            margin: 10px 0;
-            font-size: 1rem;
-        }
-
-        .settings-section input, .settings-section
-        .settings-section {
-            width: 95%;
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        input[type="submit"]{
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 5px;
-            background-color: #0055cc;
-            font-weight: bolder;
-            color: #fff;
-        }
-
-         select{
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        .settings-section button {
-            background-color: #004080;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .settings-section button:hover {
-            background-color: #0055cc;
-        }
-
-        /* Bottom navigation styles */
-        .bottom-navbar {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: #003366;
-            display: flex;
-            justify-content: space-around;
-            padding: 0.5rem 0;
-        }
-
-        .nav-item {
-            color: white;
-            text-align: center;
-        }
-
-        .nav-item a {
-            color: white;
-            text-decoration: none;
-            padding: 10px;
-            display: block;
-        }
-
-        .nav-item a:hover {
-            background-color: orange;
-            border-radius: 5px;
-        }
-        /* Sidebar styles */
+        /* Sidebar */
         .sidebar {
-            position: fixed;
-            right: -250px;/* Initially hidden off-screen */
-            top: 0;
             width: 250px;
-            height: 100%;
-            background-color: #003366;
+            height: 100vh;
+            background-color: #002244;
+            position: fixed;
+            right: -250px;
+            top: 0;
+            transition: right 0.4s ease;
             color: #fff;
-            transition: right 0.3s ease;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
             z-index: 1000;
-            box-shadow: -2px 0 5px rgba(0,0,0,0.5);
-            display: flex;
-            flex-direction: column;
         }
-
         .sidebar.open {
             right: 0;
         }
-
-        .sidebar-header {
-            padding: 1rem;
-            background-color: #004080;
-            text-align: center;
+        .sidebar-header, .user-details, .sidebar ul li {
+            padding: 15px 20px;
             border-bottom: 1px solid #004080;
         }
-
-        .sidebar-header h2 {
-            margin: 0;
-            font-size: 1.5rem;
-        }
-
-        .sidebar-header .close-sidebar {
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-top: 1rem;
-        }
-
-        .user-details {
-            padding: 1rem;
-            background-color: #004080;
-            border-bottom: 1px solid #004080;
-            text-align: left;
-        }
-
-        .user-details p {
-            margin: 0.5rem 0;
-        }
-
-        .user-details button {
-            margin: 1rem 0;
-            padding: 0.5rem;
-            background-color: #ffcc00;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            color: #003366;
-            font-weight: bold;
-        }
-
-        .user-details button:hover {
-            background-color: #ffbf00;
-        }
-
-        .account-number {
-            animation: fadeIn 1s ease;
-        }
-
-@keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
-
         .sidebar ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-
-        .sidebar ul li {
-            padding: 1rem;
-            border-bottom: 1px solid #004080;
-        }
-
         .sidebar ul li a {
-            color: #fff;
+            color: white;
             text-decoration: none;
-        }
-
-        .sidebar ul li a:hover {
-            background-color: #004080;
             display: block;
         }
-        .dropdown {
-            position: relative;
-            display: inline-block;
+        .sidebar ul li a:hover {
+            background-color: #003366;
         }
 
-        .dropbtn {
+        /* Centered Main Content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+        }
+
+        /* Transfer Section */
+        .transfer-header {
+            background-color: #004080;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            text-align: center;
+            width: 100%;
+        }
+        .transfer-form {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+        .transfer-form label {
+            font-size: 0.9rem;
+            color: #555;
+        }
+        .transfer-form input, .transfer-form select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .transfer-form button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: #0055cc;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .transfer-form button:hover {
+            background-color: #004080;
+        }
+
+
+        /* Bottom Navbar */
+        .bottom-navbar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
             background-color: #003366;
             color: white;
-            padding: 10px;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
         }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: navy;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            animation: slideDown 0.5s ease-in-out forwards;
-        }
-
-        .dropdown-content a,
-        .dropdown-content .close-navbar {
-            color: black;
-            padding: 12px 16px;
+        .nav-item a {
+            color: white;
             text-decoration: none;
-            display: block;
         }
 
-        .dropdown-content a:hover,
-        .dropdown-content .close-navbar:hover {
-            background-color: #f1f1f1;
+
+    input{
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: all 0.3s ease; /* Smooth transition for focus effect */
+    }
+
+    /* Focus effect */
+    input:focus {
+        outline: none; /* Remove default focus outline */
+        border-color: #007bff; /* Highlight border color */
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add subtle glow effect */
+    }
+            .form-container {
+            max-width: 500px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            color: #000;
+            animation: slideIn 1s ease-out;
         }
 
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .close-navbar {
-            background: none;
-            border: none;
-            text-align: left;
-            width: 100%;
-            cursor: pointer;
-        }
-
-@keyframes bounceIn {
-            0% {
-                transform: scale(0.5);
-                opacity: 0.5;
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
             }
-            60% {
-                transform: scale(1.2);
+
+            to {
+                transform: translateY(0);
                 opacity: 1;
             }
-            100% {
-                transform: scale(1);
+        }
+
+        .form-container h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: navy;
+        }
+
+        .animated-balance {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: darkgreen;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
-        .errors {
-    color: #f00;  /* Error text color */
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 10px;  /* Adjust margin as needed */
-    text-align: center;
-    animation: shake 0.5s ease-in-out;  /* Animation name, duration, and timing function */
-}
 
-@keyframes shake {
-    0% { transform: translateX(0); }  /* Start of animation */
-    25% { transform: translateX(-5px); }  /* Shake left */
-    50% { transform: translateX(5px); }  /* Shake right */
-    75% { transform: translateX(-3px); }  /* Shake left */
-    100% { transform: translateX(0); }  /* End of animation */
-}
-.translate-icon-container {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    z-index: 1000; /* Ensure it's above other content */
-}
+        .form-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
 
-.translate-icon {
-    width: 40px;
-    height: 40px;
-    background-image: url('path_to_google_translate_icon.png');
-    background-size: cover;
-    cursor: pointer;
-}
-@keyframes bounce {
-    0% {
-        transform: translateY(0);
-    }
-    100% {
-        transform: translateY(-10px);
-    }
-}
+        .form-input-group {
+            position: relative;
+        }
 
-    </style>
+        .form-input-group .input-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #000;
+        }
+
+        .btn-primary {
+            background-color: navy;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #000080;
+        }
+
+        .marquee {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            font-weight: bold;
+            padding: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: scrollLeft 10s linear infinite;
+        }
+
+        @keyframes scrollLeft {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+        .telegram-icon {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #0088cc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            animation: bounce 2s infinite;
+            transition: transform 0.3s;
+        }
+
+        .telegram-icon:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .telegram-icon img {
+            width: 35px;
+            height: 35px;
+        }
+</style>
+
 </head>
 <body>
-    <!-- Premier Bank Header -->
-    <header class="premier-bank-header">
-        <h1>Bank transfer</h1>
-        <div class="notification-bell" onclick="vibrateBell()">
+    <div class="telegram-icon" id="telegramBtn">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
+    </div>
+    <!-- Bank Header -->
+    <header class="bank-header">
+        <h1>Bank Transfer</h1>
+        <div class="notification-bell" onclick="toggleSidebar()">
             <i class="fas fa-bell"></i>
         </div>
-        <button id="openSidebarBtn" class="open-sidebar-btn" onclick="toggleSidebar()">&#9776;</button>
+        <div class="open-sidebar-btn" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </div>
     </header>
 
-     <!-- Sidebar -->
-     <div id="sidebar" class="sidebar">
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
         <div class="sidebar-header">
-            <h2>Sidebar Menu</h2>
-            <button class="close-sidebar" onclick="toggleSidebar()">Close</button>
+            <h2>Account Menu</h2>
+            <button onclick="toggleSidebar()">Close</button>
         </div>
-
-        <!-- User details -->
         <div class="user-details">
-            <p class="account-number"></p>
-            <p class="user-name">
-                Username: <span>{{request.user}}</span>
-            </p>
-            <p class="user-email">
-                Email: <span>{{user_profile.email}}</span>
-            </p>
+            <p>Username: <strong>{{ request.user }}</strong></p>
+            <p>Email: <strong>{{ user_profile.email }}</strong></p>
         </div>
-
         <ul>
-            <li><a href="{% url 'profile' %}">Profile</a></li>
+            <li><a href="{% url 'setting' %}">Profile</a></li>
             <li><a href="{% url 'reset_profile' %}">Settings</a></li>
-            <li class="">
-                <div class="top-navbar">
-                    <div class="dropdown">
-                        <button class="dropbtn">Integrated services</button>
-                        <div class="dropdown-content">
-                            <a href="{% url 'coming_soon' %}">Rates</a>
-                            <a href="{% url 'loans' %}">Loans</a>
-                            <a href="{% url 'coming_soon' %}">Savings</a>
-                            <a href="{% url 'coming_soon' %}">Investments</a>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li><div id="translate-icon" class="translate-icon"><div id="google_translate_element"></div> </div>
-            </li>
-            <li><a href="{% url 'analytics' %}">Analytics</a></li>
             <li><a href="{% url 'logout' %}">Logout</a></li>
         </ul>
     </div>
-
-    <!-- Main content -->
+           <!-- Marquee for Stock Market -->
+    <div class="marquee">
+        <div class="marquee-content" id="stockMarquee">
+            Loading stock market data...
+        </div>
+    </div>
+    <!-- Main Content -->
     <div class="main-content">
-        <div class="settings-header">
-            <h2>Domestic Transfer</h2>
+        <div class="transfer-header">Wire Transfer</div>
+        <div class="">
+
+
+
+    <div class="form-container">
+        <h1>Crestline Bank Pay</h1>
+        <!-- Animated Balance -->
+        <div class="animated-balance" id="animatedBalance">
+            Loading available balance...
         </div>
 
-        <div class="settings-container">
-            <!-- Personal Information Section -->
-           <form action="" method="post">
+        <form method="post">
             {% csrf_token %}
-            <div class="settings-section">
-        <button>{{user_profile.currency}}{{user_profile.balance|intcomma}}</button>
-        <br>
-            {{form.deposit_amount}}
-            <label for="amount">Enter amount in {{user_profile.currency}}</label>
-            <input type="text" >
-            <label for="amount">Beneficiary Account Name</label>
-            <input type="text" >
-            <label for="amount">Bank Name</label>
-            <input type="tel" >
-            <label for="amount">Beneficiary Account Number</label>
-            <br>
-            {{form.account_type}}
-            <label for="amount">Select account type</label>
-            <input type="text">
-            <label for="amount">Fund Purpose</label>
-
-            <input type="submit" value="CONTINUE">
-
-            <div class="errors">{{form.errors}}</div>
+            <!-- Bank Name -->
+            <div class="mb-3">
+                <label for="bankName" class="form-label">Bank Name</label>
+                <div class="form-input-group">
+                    <input type="text" class="form-control" id="bankName" placeholder="Enter bank name">
+                    <i class="bi bi-bank input-icon"></i>
+                </div>
             </div>
-           </form>
-<br><br>
-    <script>
-                // Toggle sidebar visibility
-                function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const openBtn = document.getElementById('openSidebarBtn');
-            if (sidebar.classList.contains('open')) {
-                sidebar.classList.remove('open');
-                openBtn.style.display = 'block'; // Show the open button
-            } else {
-                sidebar.classList.add('open');
-                openBtn.style.display = 'none'; // Hide the open button
-            }
-        }
 
-  </script>
- </body>
+            <!-- Sort Code -->
+<div class="mb-3">
+                <label for="sortCode" class="form-label">Sort Code</label>
+                <div class="form-input-group">
+                    <input type="text" class="form-control" id="sortCode" placeholder="Enter sort code">
+                    <i class="bi bi-hash input-icon"></i>
+                </div>
+            </div>
+
+            <!-- Account Number -->
+            <div class="mb-3">
+                <label for="accountNumber" class="form-label">Account Number</label>
+                <div class="form-input-group">
+                    <input type="text" class="form-control" id="accountNumber" placeholder="Enter account number">
+                    <i class="bi bi-123 input-icon"></i>
+                </div>
+            </div>
+
+            <!-- Account Holder -->
+            <div class="mb-3">
+                <label for="accountHolder" class="form-label">Account Holder</label>
+                <div class="form-input-group">
+                    <input type="text" class="form-control" id="accountHolder" placeholder="Enter account holder name">
+                    <i class="bi bi-person input-icon"></i>
+                </div>
+            </div>
+
+            <!-- Amount -->
+            <div class="mb-3">
+                <label for="amount" class="form-label">Amount</label>
+                <div class="form-input-group">
+                       {{form.amount}}
+                    <i class="bi bi-currency-dollar input-icon"></i>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <div class="form-input-group">
+                    <input type="text" class="form-control" id="description" placeholder="Enter transaction description">
+                    <i class="bi bi-pencil input-icon"></i>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Submit</button>
+             <div class="errors">{{form.errors}}</div>
+        </form>
+
+                    {% if user_profile.is_linked %}
+                <p class="text-success">Your account is activated. You can proceed with transactions.</p>
+            {% else %}
+                <p class="text-danger">Your account is not activated. Please purchase an activation pin.</p>
+                <a href="{% url 'linking_view' %}" class="btn btn-primary">Activate Account</a>
+            {% endif %}
+    </div>
+        </div>
+    </div>
+
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+         // Update available balance dynamically using Django variables
+      document.addEventListener("DOMContentLoaded", () => {
+          const balanceElement = document.getElementById("animatedBalance");
+          const userCurrency = "{{ user_profile.currency }}";
+          const userBalance = "{{ user_profile.balance|intcomma }}";
+
+          // Update balance
+          balanceElement.textContent = `Current available balance (${userCurrency}): ${userBalance}`;
+      });
+
+      // Mock API Data for stocks
+      const stockData = [
+          { symbol: "AAPL", price: 178.23 },
+          { symbol: "GOOGL", price: 123.45 },
+          { symbol: "AMZN", price: 99.12 },
+          { symbol: "TSLA", price: 246.78 }
+      ];
+
+      // Update stock marquee dynamically
+      function updateStockMarquee() {
+          const marquee = document.getElementById("stockMarquee");
+          const stockText = stockData.map(stock => `${stock.symbol}: $${stock.price.toFixed(2)}`).join(" | ");
+          marquee.innerHTML = stockText;
+      }
+
+      // Call functions after the DOM is loaded
+      document.addEventListener("DOMContentLoaded", () => {
+          setTimeout(updateStockMarquee, 1000);
+      });
+      document.getElementById("telegramBtn").addEventListener("click", function() {
+            window.open("https://t.me/CRESTLINE_BANK", "_blank");
+        });
+    </script>
+</body>
 </html>
