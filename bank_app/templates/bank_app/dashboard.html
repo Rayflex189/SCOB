@@ -506,7 +506,13 @@ small{
             width: 35px;
             height: 35px;
         }
-
+.h3 , .h32{
+            margin: 0;
+        }
+        .h3{
+            margin-top: 2rem;
+            color: lightblue;
+        }
      </style>
     <!--Resorces-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -553,6 +559,10 @@ small{
             </div>
             <div id="copyFeedback" class="copy-feedback">Account number copied!</div>
                 </aside>
+          <div class="part1">
+          <h3 class="h3">Last login</h3>
+          <h4 class="h32 text-secondary" id="last-visit">Checking...</h4>
+          </div>
             <aside>
                 {% if user_profile.profile_pic %}
                     <img src="{{ user_profile.profile_pic.url }}" class="profile-img" alt="Profile Picture">
@@ -704,67 +714,85 @@ small{
         </div>
 
     <script>
-       document.getElementById("telegramBtn").addEventListener("click", function() {
-            window.open("https://t.me/CRESTLINE_BANK", "_blank");
-        });
-        // Code for the navbar
+    document.addEventListener("DOMContentLoaded", function () {
+        // Open Telegram link on button click
+        const telegramBtn = document.getElementById("telegramBtn");
+        if (telegramBtn) {
+            telegramBtn.addEventListener("click", function () {
+                window.open("https://t.me/", "_blank");
+            });
+        }
+
+        // Navbar toggle functionality
         const menuBtn = document.getElementById('menu-btn');
         const navbarLinks = document.getElementById('navbar-links');
 
-        menuBtn.addEventListener('click', () => {
-            navbarLinks.style.display = navbarLinks.style.display === 'flex' ? 'none' : 'flex';
-        });
+        if (menuBtn && navbarLinks) {
+            menuBtn.addEventListener('click', () => {
+                navbarLinks.classList.toggle('hidden'); // Use CSS class for better UI handling
+            });
+        }
 
         // Function to get browser name
         function getBrowserName() {
-            const userAgent = navigator.userAgent;
-            let browserName;
-
-            if (userAgent.indexOf("Firefox") > -1) {
-                browserName = "Mozilla Firefox";
-            } else if (userAgent.indexOf("Chrome") > -1) {
-                browserName = "Google Chrome";
-            } else if (userAgent.indexOf("Safari") > -1) {
-                browserName = "Apple Safari";
-            } else if (userAgent.indexOf("MSIE") > -1 || userAgent.indexOf("Trident") > -1) {
-                browserName = "Internet Explorer";
-            } else {
-                browserName = "Unknown Browser";
-            }
-
-            return browserName;
+            const userAgent = navigator.userAgent.toLowerCase();
+            if (userAgent.includes("firefox")) return "Mozilla Firefox";
+            if (userAgent.includes("edg")) return "Microsoft Edge";
+            if (userAgent.includes("chrome")) return "Google Chrome";
+            if (userAgent.includes("safari")) return "Apple Safari";
+            if (userAgent.includes("msie") || userAgent.includes("trident")) return "Internet Explorer";
+            return "Unknown Browser";
         }
 
         // Set the browser name in the HTML
-        document.addEventListener("DOMContentLoaded", function() {
-            const browserName = getBrowserName();
-            document.querySelector('.Browser_name').textContent = browserName;
-        });
+        const browserElement = document.querySelector('.Browser_name');
+        if (browserElement) {
+            browserElement.textContent = getBrowserName();
+        }
 
         // Function to get user IP
         async function getUserIP() {
             try {
                 const response = await fetch('https://api.ipify.org?format=json');
                 const data = await response.json();
-                document.querySelector('.ip_numb').textContent = data.ip;
+                const ipElement = document.querySelector('.ip_numb');
+                if (ipElement) {
+                    ipElement.textContent = data.ip;
+                }
             } catch (error) {
                 console.error('Error fetching IP address:', error);
             }
         }
+        getUserIP(); // Call IP function immediately on load
 
-        document.addEventListener("DOMContentLoaded", getUserIP);
+        // Copy to clipboard function
         function copyToClipboard() {
-            const accountNumber = document.getElementById("accountNumber").innerText;
-            navigator.clipboard.writeText(accountNumber).then(() => {
-                const feedback = document.getElementById("copyFeedback");
-                feedback.style.display = "block";
-                setTimeout(() => {
-                    feedback.style.display = "none";
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-            });
+            const accountNumberElement = document.getElementById("accountNumber");
+            const feedback = document.getElementById("copyFeedback");
+
+            if (accountNumberElement && feedback) {
+                navigator.clipboard.writeText(accountNumberElement.innerText)
+                    .then(() => {
+                        feedback.style.display = "block";
+                        setTimeout(() => feedback.style.display = "none", 2000);
+                    })
+                    .catch(err => console.error('Failed to copy:', err));
+            }
         }
-    </script>
+
+        // Function to display the last visit time
+        function displayLastVisit() {
+            const lastVisitElement = document.getElementById('last-visit');
+            if (lastVisitElement) {
+                const lastVisit = localStorage.getItem('lastVisit');
+                lastVisitElement.textContent = lastVisit ? 
+                    new Date(parseInt(lastVisit)).toLocaleString() : 
+                    "This is your first visit!";
+                localStorage.setItem('lastVisit', Date.now().toString());
+            }
+        }
+        displayLastVisit(); // Call function to display last visit
+    });
+</script>
 </body>
 </html>
