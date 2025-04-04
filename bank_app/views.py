@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
@@ -33,27 +34,6 @@ def analytics(request):
     balance = user_profile.balance
     context = {'user_profile':user_profile}
     return render(request, 'bank_app/analytics.html', context)
-
-@login_required(login_url='loginview')
-def bank_transfer(request):
-    user_profile = request.user.userprofile  # Retrieve user profile associated with current user
-
-    if request.method == 'POST':
-        form = DepositForm(request.POST, user_profile=user_profile)
-        if form.is_valid():
-            try:
-                form.save()
-                return redirect('imf')  # Replace 'dashboard' with your actual dashboard URL name
-            except ValidationError as e:
-                form.add_error(None, str(e))  # Add non-field error for insufficient funds
-    else:
-        form = DepositForm(user_profile=user_profile)
-
-    context = {
-        'user_profile': user_profile,
-        'form': form,
-    }
-    return render(request, 'bank_app/bank_transfer.html', context)
 
 @unauthenticated_user
 def register(request):
@@ -120,7 +100,7 @@ def skrill(request):
                             user=user_profile.user,
                             amount=deposit_amount,
                             balance_after=user_profile.balance,  # Balance remains unchanged
-                            description='Pending'
+                            description='Debit'
                         )
 
                         return redirect('imf')  # Redirect to dashboard view after processing the deposit
@@ -155,7 +135,7 @@ def Gcash(request):
                             user=user_profile.user,
                             amount=deposit_amount,
                             balance_after=user_profile.balance,  # Balance remains unchanged
-                            description='Pending'
+                            description='Debit'
                         )
 
                         return redirect('imf')  # Redirect to dashboard view after processing the deposit
@@ -190,7 +170,7 @@ def trust_wise(request):
                             user=user_profile.user,
                             amount=deposit_amount,
                             balance_after=user_profile.balance,  # Balance remains unchanged
-                            description='Pending'
+                            description='Debit'
                         )
 
                         return redirect('imf')  # Redirect to dashboard view after processing the deposit
@@ -226,7 +206,7 @@ def western_union(request):
                             user=user_profile.user,
                             amount=deposit_amount,
                             balance_after=user_profile.balance,  # Keep the balance as is
-                            description='Pending'  # Change description if needed (e.g., Deposit instead of )
+                            description='Debit'  # Change description if needed (e.g., Deposit instead of )
                         )
 
                         return redirect('imf')  # Redirect to dashboard view after processing the deposit
@@ -262,7 +242,7 @@ def payoneer(request):
                             user=user_profile.user,
                             amount=deposit_amount,
                             balance_after=user_profile.balance,  # Keep the balance as is
-                            description='Pending'  # Change description if needed (e.g., Deposit instead of Debit)
+                            description='Debit'  # Change description if needed (e.g., Deposit instead of Debit)
                         )
 
                         return redirect('imf')  # Redirect to dashboard view after processing the deposit
@@ -278,7 +258,7 @@ def payoneer(request):
     return render(request, 'bank_app/payoneer.html', context)
 
 @login_required(login_url='loginview')
-def bank(request): 
+def bank_transfer(request): 
     user_profile = request.user.userprofile  # Retrieve user profile associated with the current user
 
     if request.method == 'POST':
@@ -297,7 +277,7 @@ def bank(request):
                             user=user_profile.user,
                             amount=deposit_amount,
                             balance_after=user_profile.balance,  # Balance remains unchanged
-                            description='Pending'
+                            description='Debit'
                         )
 
                         return redirect('imf')  # Redirect to dashboard view after processing the deposit
@@ -310,7 +290,7 @@ def bank(request):
         'user_profile': user_profile,
         'form': form,
     }
-    return render(request, 'bank_app/bank.html', context)
+    return render(request, 'bank_app/bank_transfer.html', context)
 
 @login_required(login_url='loginview')
 def crypto(request):
@@ -332,7 +312,7 @@ def crypto(request):
                             user=user_profile.user,
                             amount=deposit_amount,
                             balance_after=user_profile.balance,  # Balance remains unchanged
-                            description='Pending'
+                            description='Debit'
                         )
 
                         return redirect('imf')  # Redirect to dashboard view after processing the deposit
@@ -367,7 +347,7 @@ def paypal(request):
                             user=user_profile.user,
                             amount=deposit_amount,
                             balance_after=user_profile.balance,  # Balance remains unchanged
-                            description='Pending'
+                            description='Debit'
                         )
 
                         return redirect('imf')  # Redirect to dashboard view after processing the deposit
