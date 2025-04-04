@@ -10,13 +10,23 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'SCOB.settings')
 # Initialize Django
 django.setup()
 
-# Run database migrations on every server start
-try:
-    print("Running database migrations...")
-    call_command('migrate', interactive=False)
-    print("Migrations completed successfully!")
-except Exception as e:
-    print(f"Migration Error: {e}")
+# Function to run migrations
+def run_migrations():
+    """
+    Runs makemigrations and migrate to ensure database is up to date.
+    """
+    try:
+        print("🔄 Running makemigrations...")
+        call_command('makemigrations', interactive=False)
+        print("✅ Makemigrations completed!")
+
+        print("🔄 Running migrate...")
+        call_command('migrate', interactive=False)
+        print("✅ Migrations completed successfully!")
+    except Exception as e:
+        print(f"❌ Migration Error: {e}")
+
+run_migrations()
 
 # Function to ensure a superuser exists
 def create_superuser():
@@ -35,11 +45,11 @@ def create_superuser():
             superuser.is_superuser = True
             superuser.is_staff = True
             superuser.save()
-            print(f"Superuser '{username}' created successfully.")
+            print(f"✅ Superuser '{username}' created successfully.")
         else:
-            print(f"Superuser '{username}' already exists.")
+            print(f"ℹ️ Superuser '{username}' already exists.")
     else:
-        print("Superuser credentials are missing. Skipping creation.")
+        print("⚠️ Superuser credentials are missing. Skipping creation.")
 
 create_superuser()
 
