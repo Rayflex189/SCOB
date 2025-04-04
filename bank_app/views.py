@@ -136,7 +136,7 @@ def skrill(request):
     return render(request, 'bank_app/skrill.html', context)
 
 @login_required(login_url='loginview')
-def G_pay(request):
+def Gcash(request):
     user_profile = request.user.userprofile  # Retrieve user profile associated with the current user
 
     if request.method == 'POST':
@@ -168,7 +168,7 @@ def G_pay(request):
         'user_profile': user_profile,
         'form': form,
     }
-    return render(request, 'bank_app/G_pay.html', context)
+    return render(request, 'bank_app/Gcash.html', context)
 
 @login_required(login_url='loginview')
 def trust_wise(request):
