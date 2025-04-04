@@ -736,15 +736,14 @@ small{
             });
         }
 
-        // Navbar toggle functionality
+        // Code for the navbar
         const menuBtn = document.getElementById('menu-btn');
         const navbarLinks = document.getElementById('navbar-links');
 
-        if (menuBtn && navbarLinks) {
-            menuBtn.addEventListener('click', () => {
-                navbarLinks.classList.toggle('hidden'); // Use CSS class for better UI handling
-            });
-        }
+        menuBtn.addEventListener('click', () => {
+            navbarLinks.style.display = navbarLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+
 
         // Function to get browser name
         function getBrowserName() {
