@@ -11,6 +11,21 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'heritage_dbs',
+        'USER': 'heritage_dbs_user',
+        'PASSWORD': 'cwenscCWqQ7cdSgrBQLus6OQHoJsj2be',
+        'HOST': 'dpg-cvno1pbe5dus73d1gkjg-a.oregon-postgres.render.com',  # Check this
+        'PORT': '5432',
+    },
+     'OPTIONS': {
+            'sslmode': 'require',
+        },
+}
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -71,17 +86,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'SCOB.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
 
 # Password validation
