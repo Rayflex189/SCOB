@@ -1,0 +1,829 @@
+.transaction-credit { color: green; }
+.transaction-debit { color: red; }
+:root {
+--primary-color: #295f6c;
+--secondary-color: #0a039c;
+--highlight-color: #b28d07;
+--rare-color:#798487;
+--container-bg-color: #fdfdfd;
+--hero-font:"Sofadi One", system-ui;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sofadi+One&display=swap');
+
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Dark overlay */
+    z-index: 9998; /* Below the loader */
+    display: none; /* Initially hidden */
+}
+
+.loader {
+    width: fit-content;
+    font-weight: bold;
+    font-family: monospace;
+    font-size: 30px;
+    background: radial-gradient(circle closest-side, #000 94%, #0000) right/calc(200% - 1em) 100%;
+    animation: l24 1s infinite alternate linear;
+    position: fixed;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust position */
+    z-index: 9999; /* On top of overlay */
+}
+
+.loader::before {
+    content: "Loading...";
+    line-height: 1em;
+    color: #0000;
+    background: inherit;
+    background-image: radial-gradient(circle closest-side, #fff 94%, #000);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+
+html, body {
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+scroll-behavior: smooth;
+color: #132b45;
+font-family: var(--hero-font);
+overflow-x: hidden;
+background-color: #eae8e8;
+}
+.premier-bank-header {
+background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+color: #fff;
+text-align: left;
+padding: 1rem 0;
+display: flex;
+align-items: center;
+justify-content: space-between;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.premier-bank-header h1 {
+margin: 0;
+font-size: 1.5rem;
+padding-left: 1rem;
+font-weight: bold;
+}
+
+.icon_links {
+text-decoration: none;
+color: var(--container-bg-color);
+}
+
+.logo_box, .icon_box {
+display: flex;
+align-items: center;
+}
+
+.icon_box {
+gap: 1rem;
+margin: 0.5rem;
+}
+
+.open-sidebar-btn {
+background-color: white;
+color: var(--secondary-color);
+padding: 10px;
+width: 4rem;
+font-weight: bolder;
+border: none;
+border-radius: 0 5px 5px 0;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+.open-sidebar-btn:hover {
+background-color: var(--rare-color);
+color: #fff;
+}
+
+/* SIDEBAR */
+.sidebar {
+position: fixed;
+right: -250px;
+top: 0;
+width: 250px;
+height: 100%;
+background-color: var(--primary-color);
+color: #fff;
+transition: right 0.3s ease;
+z-index: 1000;
+box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+display: flex;
+flex-direction: column;
+}
+
+.sidebar.open {
+right: 0;
+}
+
+.sidebar-header {
+padding: 1rem;
+background-color: var(--primary-color);
+text-align: center;
+border-bottom: 1px solid var(--secondary-color);
+}
+
+.sidebar-header .close-sidebar {
+background: none;
+border: none;
+color: #fff;
+font-size: 1rem;
+cursor: pointer;
+margin-top: 1rem;
+}
+
+.user-details {
+padding: 1rem;
+background-color: var(--secondary-color);
+border-bottom: 1px solid var(--secondary-color);
+text-align: left;
+}
+
+.user-details p {
+margin: 0.5rem 0;
+}
+
+.user-details button {
+margin: 1rem 0;
+padding: 0.5rem;
+background-color: #ffcc00;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+color: var(--primary-color);
+font-weight: bold;
+transition: background-color 0.3s ease;
+}
+
+.user-details button:hover {
+background-color: #ffbf00;
+}
+
+.account-number {
+animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+from {
+opacity: 0;
+}
+to {
+opacity: 1;
+}
+}
+
+.sidebar ul {
+list-style: none;
+padding: 0;
+margin: 0;
+}
+
+.sidebar ul li {
+padding: 1rem;
+border-bottom: 1px solid var(--secondary-color);
+}
+
+.sidebar ul li a {
+color: #fff;
+text-decoration: none;
+}
+
+.sidebar ul li a:hover {
+background-color: var(--secondary-color);
+display: block;
+}
+
+/* DROP DOWN BUTTON IN SIDE NAV BAR */
+.dropbtn {
+background-color: var(--primary-color);
+color: white;
+padding: 10px;
+font-size: 16px;
+border: none;
+cursor: pointer;
+}
+
+.dropdown-content {
+display: none;
+position: absolute;
+background-color: var(--primary-color);
+min-width: 160px;
+box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+z-index: 1;
+animation: slideDown 0.5s ease-in-out forwards;
+}
+
+.dropdown-content a,
+.dropdown-content .close-navbar {
+color: black;
+padding: 12px 16px;
+text-decoration: none;
+display: block;
+}
+
+.dropdown-content a:hover,
+.dropdown-content .close-navbar:hover {
+background-color: aliceblue;
+}
+
+.dropdown:hover .dropdown-content {
+display: block;
+}
+
+.close-navbar {
+background: none;
+border: none;
+text-align: left;
+width: 100%;
+padding: 1rem;
+cursor: pointer;
+}
+
+/* DASHBOARD BOX */
+.item1, .item2 {
+display: flex;
+justify-content: space-between;
+align-items: center;
+line-height: 2rem;
+}
+
+.box1 {
+padding: 10px;
+border-radius: 1rem;
+font-family: Sans-Serif;
+background: linear-gradient(to left, var(--secondary-color), var(--primary-color));
+color: #fff;
+margin: 1rem;
+box-shadow: 5px 5px 5px #000;
+position: relative;
+}
+
+.inner_deeper {
+display: flex;
+gap: 2.5rem;
+padding:1rem;
+align-items: center;
+justify-content: space-between;
+}
+
+.withdraw {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+section {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.part2 {
+width: 2rem;
+background: linear-gradient(to right, #000e17, var(--highlight-color));
+border-radius: 0.5rem;
+font-size: 2rem;
+color: #dbdbda;
+}
+
+/* Styles for deposit and transfer divs */
+.deposit, .transfer {
+position: absolute;
+width: 37%;
+padding: 1rem;
+text-align: center;
+border-radius: 0.5rem;
+box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+color: #000;
+font-weight: bold;
+text-decoration: none;
+display: flex;
+flex-direction: column;
+gap: 1rem;
+justify-content: center;
+align-items: center;
+}
+
+.deposit {
+bottom: -70px;
+left: 20px;
+background-color: #eae8e8;
+}
+
+.custom_dp {
+width: 100%;
+background-color: var(--highlight-color);
+border: #08b647;
+}
+
+.custom_active {
+background-color: var(--highlight-color);
+margin-left: 1rem;
+border: #08b647;
+margin-right: 1rem;
+}
+
+.custom_tf {
+width: 100%;
+background-color: #1557ea;
+}
+
+.transfer {
+bottom: -70px;
+right: 20px;
+background-color: #eae8e8;
+}
+
+.deposit .fa-arrow-down,
+.transfer .fa-arrow-up {
+margin-left: 10px;
+}
+
+.profile-img {
+width: 4rem;
+height: 4rem;
+border: 3px solid #000e17;
+border-radius: 50%;
+position: relative;
+}
+
+.part1 {
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.Welcome {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+
+.fa-plus {
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 1rem;
+margin-top: 4rem;
+margin-bottom: 1rem;
+border-radius: 1rem;
+background: #000e17;
+}
+
+/* Container for the table with background color */
+.table-box {
+background-color: #fff; /* lightblue as defined in CSS variables */
+border-radius: 0.5rem;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+overflow-x: auto; /* Ensure horizontal scrolling if needed */
+}
+
+/* Ensure the table has enough padding on mobile */
+.table-responsive {
+overflow-x: auto; /* Enables horizontal scrolling on small screens */
+}
+
+.table-box h2 {
+margin-bottom: 1rem;
+color: var(--primary-color);
+}
+
+.table th, .table td {
+text-align: center;
+vertical-align: middle;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+background-color: lightblue;
+}
+
+/*************
+TRANSFER POPUP
+*************/
+
+/* Popup Container */
+.payment-popup {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.5);
+display: none;
+align-items: center;
+justify-content: center;
+z-index: 1000;
+animation: bounceIn 0.5s ease-out;
+}
+
+.popup-content {
+background: #fff;
+padding: 2rem;
+border-radius: 0.5rem;
+width: 90%;
+max-width: 500px;
+text-align: center;
+position: relative;
+}
+
+.close-popup {
+position: absolute;
+top: 10px;
+right: 10px;
+background: none;
+border: none;
+font-size: 1.5rem;
+cursor: pointer;
+color: #000;
+}
+
+.payment-options {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+gap: 1rem;
+}
+
+.payment-option {
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 1rem;
+background-color: #f8f9fa;
+border-radius: 0.5rem;
+width: 120px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.payment-option i {
+font-size: 2rem;
+margin-bottom: 0.5rem;
+}
+
+.payment-option span {
+font-size: 0.9rem;
+color: #333;
+}
+
+/* Animations */
+@keyframes bounceIn {
+0% {
+transform: scale(0.5);
+opacity: 0;
+}
+50% {
+opacity: 1;
+transform: scale(1.1);
+}
+100% {
+opacity: 1;
+transform: scale(1);
+}
+}
+
+@keyframes shrinkOut {
+0% {
+transform: scale(1);
+opacity: 1;
+}
+100% {
+transform: scale(0.5);
+opacity: 0;
+}
+}
+
+/* Show and Hide Animations */
+.payment-popup.show {
+display: flex;
+}
+
+.payment-popup.hide {
+display: none;
+animation: shrinkOut 0.5s ease-out;
+}
+
+/* Popup Container */
+.info-popup {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.5);
+display: none; /* Initially hidden */
+align-items: center;
+justify-content: center;
+z-index: 1000;
+}
+
+.popup-content {
+background: #fff;
+padding: 2rem;
+border-radius: 0.5rem;
+width: 90%;
+max-width: 600px;
+text-align: center;
+position: relative;
+}
+
+.close-popup {
+position: absolute;
+top: 10px;
+right: 10px;
+background: none;
+border: none;
+font-size: 1.5rem;
+cursor: pointer;
+color: #000;
+}
+
+h2 {
+color: var(--primary-color);
+}
+
+.info-text {
+color: #333;
+line-height: 1.6;
+}
+
+/* Animations */
+@keyframes bounceIn {
+0% {
+transform: scale(0.5);
+opacity: 0;
+}
+50% {
+opacity: 1;
+transform: scale(1.1);
+}
+100% {
+opacity: 1;
+transform: scale(1);
+}
+}
+
+@keyframes shrinkOut {
+0% {
+transform: scale(1);
+opacity: 1;
+}
+100% {
+transform: scale(0.5);
+opacity: 0;
+}
+}
+
+.info-popup.show {
+display: flex; /* Display the popup */
+animation: bounceIn 0.5s ease-out;
+}
+
+.info-popup.hide {
+animation: shrinkOut 0.5s ease-out;
+}
+
+/* Popup Container */
+.crypto-popup {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.5);
+display: none; /* Initially hidden */
+align-items: center;
+justify-content: center;
+z-index: 1000;
+}
+
+.popup-content {
+background: #fff;
+padding: 2rem;
+border-radius: 0.5rem;
+width: 90%;
+max-width: 600px;
+text-align: center;
+position: relative;
+}
+
+.close-popup {
+position: absolute;
+top: 10px;
+right: 10px;
+background: none;
+border: none;
+font-size: 1.5rem;
+cursor: pointer;
+color: #000;
+}
+
+.crypto-addresses {
+margin: 1rem 0;
+}
+
+.crypto-addresses .address {
+margin: 1rem 0;
+}
+
+.crypto-addresses h4 {
+margin-bottom: 0.5rem;
+}
+
+.crypto-addresses p {
+font-size: 0.9rem;
+word-wrap: break-word;
+}
+
+/* Animations */
+@keyframes bounceIn {
+0% {
+transform: scale(0.5);
+opacity: 0;
+}
+50% {
+opacity: 1;
+transform: scale(1.1);
+}
+100% {
+opacity: 1;
+transform: scale(1);
+}
+}
+
+@keyframes shrinkOut {
+0% {
+transform: scale(1);
+opacity: 1;
+}
+100% {
+transform: scale(0.5);
+opacity: 0;
+}
+}
+
+.crypto-popup.show {
+display: flex; /* Display the popup */
+animation: bounceIn 0.5s ease-out;
+}
+
+.crypto-popup.hide {
+animation: shrinkOut 0.5s ease-out;
+}
+
+/* General Popup Styles */
+.payment-popup {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.5);
+display: none; /* Initially hidden */
+align-items: center;
+justify-content: center;
+z-index: 1000;
+}
+
+.payment-popup.show {
+display: flex;
+animation: bounceIn 0.5s ease-out;
+}
+
+.payment-popup.hide {
+animation: shrinkOut 0.5s ease-out;
+}
+
+.popup-content {
+background: #fff;
+padding: 2rem;
+border-radius: 0.5rem;
+width: 90%;
+max-width: 500px;
+position: relative;
+}
+
+.close-popup {
+position: absolute;
+top: 10px;
+right: 10px;
+border: none;
+background: none;
+font-size: 1.5rem;
+cursor: pointer;
+}
+
+.payment-option {
+display: flex;
+align-items: center;
+padding: 1rem;
+cursor: pointer;
+border-bottom: 1px solid #ddd;
+}
+
+.payment-option i {
+font-size: 2rem;
+margin-right: 1rem;
+}
+
+.payment-option span {
+font-size: 1.2rem;
+}
+
+/* Animation Keyframes */
+@keyframes bounceIn {
+0% {
+transform: scale(0.5);
+opacity: 0;
+}
+100% {
+transform: scale(1);
+opacity: 1;
+}
+}
+
+@keyframes shrinkOut {
+0% {
+transform: scale(1);
+opacity: 1;
+}
+100% {
+transform: scale(0.5);
+opacity: 0;
+}
+}
+
+.green {
+color: green;
+}
+
+.red{
+color: red;
+}
+
+input {
+width: 100%;
+padding: 10px;
+border: 2px solid #ccc;
+border-radius: 5px;
+outline: none;
+font-size: 16px;
+transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Styling for the error messages */
+.errors {
+color: red; /* Text color red */
+background-color: #fdd; /* Light red background to highlight the error area */
+padding: 10px;
+border: 1px solid red; /* Optional: red border */
+border-radius: 4px; /* Optional: rounded corners */
+font-weight: bold; /* Optional: bold text */
+animation: vibrate 0.5s ease-in-out; /* Apply the vibrating animation */
+}
+
+/* Keyframes for the vibrating effect */
+@keyframes vibrate {
+0% { transform: translateX(0); }
+25% { transform: translateX(-2px); }
+50% { transform: translateX(2px); }
+75% { transform: translateX(-2px); }
+100% { transform: translateX(2px); }
+}
+
+
+input:focus {
+border-color: #007bff; /* Change border color on focus */
+box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Add shadow on focus */
+animation: pulse 0.6s ease-in-out infinite; /* Apply animation */
+}
+
+@keyframes pulse {
+0% {
+transform: scale(1);
+opacity: 1;
+}
+50% {
+transform: scale(1.05);
+opacity: 0.7;
+}
+100% {
+transform: scale(1);
+opacity: 1;
+}
+}
+  
