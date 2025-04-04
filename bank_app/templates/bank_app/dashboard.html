@@ -521,6 +521,10 @@ small{
          colour:#0a039c;
          font-size:0.8erem;
        }
+       .part01{
+         display:flex;
+         justify-content:space-between;
+       }
      </style>
     <!--Resorces-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -576,7 +580,7 @@ small{
                     <img src="{% static 'images/default.jpg' %}" class="profile-img" alt="Default Profile Picture">
                 {% endif %}
                      <div class="part01">
-        <p class="para">Country</p> :<p class="para1">{{user_profile.country}}</p>
+        <p>Country</p> :<p>{{user_profile.country}}</p>
                      </div>
             </aside>
         </div>
