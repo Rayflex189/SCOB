@@ -10,19 +10,19 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'SCOB.settings')
 # Initialize Django
 django.setup()
 
-# Function to run migrations
+# Function to force migrations
 def run_migrations():
     """
-    Runs makemigrations and migrate to ensure database is up to date.
+    Runs makemigrations and migrate to ensure database schema is up to date.
     """
     try:
-        print("🔄 Running makemigrations...")
-        call_command('makemigrations', interactive=False)
+        print("🔄 Running makemigrations for all apps...")
+        call_command('makemigrations', '--noinput')  # Force making migrations for all apps
         print("✅ Makemigrations completed!")
 
         print("🔄 Running migrate...")
-        call_command('migrate', interactive=False)
-        print("✅ Migrations completed successfully!")
+        call_command('migrate', '--noinput')  # Apply migrations
+        print("✅ Migrations applied successfully!")
     except Exception as e:
         print(f"❌ Migration Error: {e}")
 
