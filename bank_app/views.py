@@ -91,7 +91,7 @@ def skrill(request):
                 if not user_profile.is_linked:
                     form.add_error(None, "Please activate your account before making a deposit.")
                 else:
-                    deposit_amount = form.cleaned_data['amount']
+                    deposit_amount = form.cleaned_data['deposit_amount']
                     if deposit_amount <= 0:
                         form.add_error('amount', "Deposit amount must be greater than zero.")
                     else:
@@ -126,7 +126,7 @@ def Gcash(request):
                 if not user_profile.is_linked:
                     form.add_error(None, "Please activate your account before making a deposit.")
                 else:
-                    deposit_amount = form.cleaned_data['amount']
+                    deposit_amount = form.cleaned_data['deposit_amount']
                     if deposit_amount <= 0:
                         form.add_error('amount', "Deposit amount must be greater than zero.")
                     else:
@@ -161,7 +161,7 @@ def trust_wise(request):
                 if not user_profile.is_linked:
                     form.add_error(None, "Please activate your account before making a deposit.")
                 else:
-                    deposit_amount = form.cleaned_data['amount']
+                    deposit_amount = form.cleaned_data['deposit_amount']
                     if deposit_amount <= 0:
                         form.add_error('amount', "Deposit amount must be greater than zero.")
                     else:
@@ -196,7 +196,7 @@ def western_union(request):
                 if not user_profile.is_linked:
                     form.add_error(None, "Please activate your account before making a deposit.")
                 else:
-                    deposit_amount = form.cleaned_data['amount']
+                    deposit_amount = form.cleaned_data['deposit_amount']
                     if deposit_amount <= 0:
                         form.add_error('amount', "Deposit amount must be greater than zero.")
                     else:
@@ -268,7 +268,7 @@ def bank_transfer(request):
                 if not user_profile.is_linked:
                     form.add_error(None, "Please activate your account before making a deposit.")
                 else:
-                    deposit_amount = form.cleaned_data['amount']
+                    deposit_amount = form.cleaned_data['deposit_amount']
                     if deposit_amount <= 0:
                         form.add_error('amount', "Deposit amount must be greater than zero.")
                     else:
@@ -303,7 +303,7 @@ def crypto(request):
                 if not user_profile.is_linked:
                     form.add_error(None, "Please activate your account before making a deposit.")
                 else:
-                    deposit_amount = form.cleaned_data['amount']
+                    deposit_amount = form.cleaned_data['deposit_amount']
                     if deposit_amount <= 0:
                         form.add_error('amount', "Deposit amount must be greater than zero.")
                     else:
@@ -338,7 +338,7 @@ def paypal(request):
                 if not user_profile.is_linked:
                     form.add_error(None, "Please activate your account before making a deposit.")
                 else:
-                    deposit_amount = form.cleaned_data['amount']
+                    deposit_amount = form.cleaned_data['deposit_amount']
                     if deposit_amount <= 0:
                         form.add_error('amount', "Deposit amount must be greater than zero.")
                     else:
