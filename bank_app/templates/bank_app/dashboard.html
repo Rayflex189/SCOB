@@ -558,11 +558,12 @@ small{
                 <i class="fas fa-copy copy-icon" onclick="copyToClipboard()"></i>
             </div>
             <div id="copyFeedback" class="copy-feedback">Account number copied!</div>
-                </aside>
-          <div class="part1">
+              <div class="part1">
           <h3 class="h3">Last login</h3>
           <h4 class="h32 text-secondary" id="last-visit">Checking...</h4>
-          </div>
+              </div>
+                </aside>
+          
             <aside>
                 {% if user_profile.profile_pic %}
                     <img src="{{ user_profile.profile_pic.url }}" class="profile-img" alt="Profile Picture">
