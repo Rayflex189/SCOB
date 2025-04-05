@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
-# Exit on error
+# Exit on any error
 set -o errexit
 
-# Modify this line as needed for your package manager (pip, poetry, etc.)
+# Install dependencies
 pip install -r requirements.txt
 
-# Convert static asset files
+# Collect static files
 python manage.py collectstatic --no-input
 
-# Apply any outstanding database migrations
-python manage.py migrate
+# Create any new migrations based on model changes
+python manage.py makemigrations
+
+# Apply migrations
+python manage.py migrate --no-input
+
+# Optional: Start the app server (uncomment and adjust if needed)
+# gunicorn project_name.wsgi:application
