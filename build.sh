@@ -8,11 +8,14 @@ pip install -r requirements.txt
 # Collect static files
 python manage.py collectstatic --no-input
 
-# Create any new migrations based on model changes
+# Create new migration files for model changes
 python manage.py makemigrations
 
-# Apply migrations
+# Fake apply migration for bank_app to avoid "table already exists" error
+python manage.py migrate bank_app --fake
+
+# Apply all outstanding real migrations
 python manage.py migrate --no-input
 
-# Optional: Start the app server (uncomment and adjust if needed)
+# Optional: Start the server (uncomment and set your project name)
 # gunicorn project_name.wsgi:application
