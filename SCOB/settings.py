@@ -14,6 +14,9 @@ SUPERUSER_EMAIL = "admin@example.com"
 SUPERUSER_PASSWORD = "securepassword123"
 from pathlib import Path
 import dj_database_url
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 DATABASES = {
     'default': {
