@@ -1,5 +1,7 @@
 {% load humanize %}
 {% load static %}
+{% load cloudinary %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -582,11 +584,12 @@ small{
                 </aside>
           
             <aside>
-                {% if user_profile.profile_pic %}
-                    <img src="{{ user_profile.profile_pic.url }}" class="profile-img" alt="Profile Picture">
-                {% else %}
-                    <img src="{% static 'images/default.jpg' %}" class="profile-img" alt="Default Profile Picture">
-                {% endif %}
+                
+{% if user_profile.profile_pic %}
+    <img src="{{ user_profile.profile_pic.url }}" class="profile-img" alt="Profile Picture">
+{% else %}
+    <img src="{% static 'images/default.jpg' %}" class="profile-img" alt="Default Profile Picture">
+{% endif %}
                      <div class="part01">
         <span class="ct">Country : <br>{{user_profile.country}}</span>
                      </div>
