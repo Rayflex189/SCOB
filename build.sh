@@ -12,7 +12,7 @@ python manage.py collectstatic --no-input
 python manage.py makemigrations
 
 # Fake apply migration for bank_app to avoid "table already exists" error
-python manage.py migrate bank_app --fake
+#python manage.py migrate bank_app --fake
 
 # Apply all outstanding real migrations
 python manage.py migrate --no-input
