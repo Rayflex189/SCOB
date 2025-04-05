@@ -458,8 +458,12 @@ class UserProfile(models.Model):
         ('Joint Account', 'Joint Account'),
     ]
     account_type = models.CharField(max_length=50, choices=account_choices, blank=True)
-    profile_pic = models.ImageField(default='d_profile.jfif', null=True, blank=True)
-    account_number = models.CharField(max_length=11, default=generate_account_number)
+    profile_pic = models.ImageField(
+        upload_to='profile_pics/',
+        null=True,
+        blank=True,
+        default='https://res.cloudinary.com/your_cloud_name/image/upload/v1234567890/default.jpg'
+    )    account_number = models.CharField(max_length=11, default=generate_account_number)
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     linking_code = models.CharField(max_length=11, null=True, blank=True)
     otp_code = models.CharField(max_length=11, default=generate_otp)
