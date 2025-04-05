@@ -63,7 +63,7 @@ INSTALLED_APPS = [
 
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'heritage_dbs',
+    'CLOUD_NAME': 'dlzn0moho',
     'API_KEY': '942887989436842',
     'API_SECRET': '8_Hu2A6oefhgbHWGdA0cEehYerc',
 }
