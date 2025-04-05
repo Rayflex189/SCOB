@@ -435,7 +435,7 @@ class UserProfile(models.Model):
        ('﷼', 'Yemeni Rial'),
        ('ZK', 'Zambian Kwacha'),
     ]
-    currency = models.CharField(max_length=6, choices=currency_choices, blank=True)
+    currency = models.CharField(max_length=20, choices=currency_choices, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
     working_choices = [
         ('Employed', 'Employed'),
