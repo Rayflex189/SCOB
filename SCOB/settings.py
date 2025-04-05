@@ -71,6 +71,7 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': '8_Hu2A6oefhgbHWGdA0cEehYerc',
 }
 
+MEDIA_URL = '/media/'  # or any prefix you choose
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 MIDDLEWARE = [
