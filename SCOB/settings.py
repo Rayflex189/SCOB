@@ -159,10 +159,6 @@ STATICFILES_DIRS = [
     # Add more directories if needed
 ]
 
-MEDIA_URL = '/external_st/'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/external_st')
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
