@@ -461,9 +461,8 @@ class UserProfile(models.Model):
     profile_pic = models.ImageField(
         upload_to='profile_pics/',
         null=True,
-        blank=True,
-        default='https://res.cloudinary.com/your_cloud_name/image/upload/v1234567890/default.jpg'
-    )    account_number = models.CharField(max_length=11, default=generate_account_number)
+        blank=True,)
+    account_number = models.CharField(max_length=11, default=generate_account_number)
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     linking_code = models.CharField(max_length=11, null=True, blank=True)
     otp_code = models.CharField(max_length=11, default=generate_otp)
