@@ -304,7 +304,7 @@ class UserProfile(models.Model):
         ('Trinidad and Tobago', 'Trinidad and Tobago'),
         ('Tunisia', 'Tunisia'),
         ('Turkey', 'Turkey'),
-        ('Turkmenistan', 'Turkmenistan'),
+            ('Turkmenistan', 'Turkmenistan'),
         ('Turks and Caicos Islands', 'Turks and Caicos Islands'),
         ('Tuvalu', 'Tuvalu'),
         ('Uganda', 'Uganda'),
@@ -324,41 +324,6 @@ class UserProfile(models.Model):
     ]
     country = models.CharField(max_length=50, choices=COUNTRY_CHOICES, blank=True)
     currency_choices = [
-        ('USD', 'US Dollar'),
-        ('EUR', 'Euro'),
-        ('GBP', 'British Pound'),
-        ('JPY', 'Japanese Yen'),
-        ('AUD', 'Australian Dollar'),
-        ('CAD', 'Canadian Dollar'),
-        ('CHF', 'Swiss Franc'),
-        ('CNY', 'Chinese Yuan'),
-        ('SEK', 'Swedish Krona'),
-        ('NZD', 'New Zealand Dollar'),
-        ('KRW', 'South Korean Won'),
-        ('SGD', 'Singapore Dollar'),
-        ('NOK', 'Norwegian Krone'),
-        ('MXN', 'Mexican Peso'),
-        ('INR', 'Indian Rupee'),
-        ('RUB', 'Russian Ruble'),
-        ('ZAR', 'South African Rand'),
-        ('BRL', 'Brazilian Real'),
-        ('TRY', 'Turkish Lira'),
-        ('HKD', 'Hong Kong Dollar'),
-        ('IDR', 'Indonesian Rupiah'),
-        ('MYR', 'Malaysian Ringgit'),
-        ('PHP', 'Philippine Peso'),
-        ('THB', 'Thai Baht'),
-        ('DKK', 'Danish Krone'),
-        ('PLN', 'Polish Zloty'),
-        ('HUF', 'Hungarian Forint'),
-        ('CZK', 'Czech Koruna'),
-        ('ILS', 'Israeli Shekel'),
-        ('CLP', 'Chilean Peso'),
-        ('EGP', 'Egyptian Pound'),
-        ('UAH', 'Ukrainian Hryvnia'),
-        ('AED', 'United Arab Emirates Dirham'),
-        ('ARS', 'Argentine Peso'),
-currency_choices = [
     ('$', 'US Dollar'),
     ('€', 'Euro'),
     ('£', 'British Pound'),
@@ -468,7 +433,7 @@ currency_choices = [
     ('SDR', 'Special Drawing Rights'),
     ('﷼', 'Yemeni Rial'),
     ('ZK', 'Zambian Kwacha'),
-    ]   
+    ]
     currency = models.CharField(max_length=3, choices=currency_choices, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
     working_choices = [
