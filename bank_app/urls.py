@@ -21,7 +21,6 @@ urlpatterns = [
     path('aml/', views.aml, name='aml'),
     path('tac/', views.tac, name='tac'),
     path('vat/', views.vat, name='vat'),
-    path('pending/', views.pending, name='pending')
     path('pending/', views.pending, name='pending'),
     path('profile/', views.profile, name='profile'),
     path('loans/', views.loans, name='loans'),
