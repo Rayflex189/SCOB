@@ -5,9 +5,6 @@ set -o errexit
 # Install dependencies
 pip install -r requirements.txt
 
-# Remove previous migration files except __init__.py
-find bank_app/migrations/ -type f ! -name '__init__.py' -delete
-
 # Make fresh migrations
 python manage.py makemigrations
 
