@@ -48,3 +48,4 @@ virtualenv==20.29.1
 whitenoise==6.8.2
 cloudinary
 django-cloudinary-storage
+python-decouple
