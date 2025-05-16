@@ -29,12 +29,11 @@ cloudinary.config(
 
 DATABASES = {
     'default': dj_database_url.parse(
-        'postgres://postgres:8K6brYhGTjBg59TY@db.plwjvpsceexklfuxcuqh.supabase.co:5432/postgres',
+        config('DATABASE_URL'),
         conn_max_age=600,
         ssl_require=True
     )
-}
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+}# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
