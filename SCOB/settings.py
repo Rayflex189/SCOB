@@ -14,7 +14,6 @@ SUPERUSER_EMAIL = "admin@example.com"
 SUPERUSER_PASSWORD = "securepassword123"
 from pathlib import Path
 import dj_database_url
-from decouple import config
 
 import cloudinary
 import cloudinary.uploader
@@ -29,11 +28,12 @@ cloudinary.config(
 
 DATABASES = {
     'default': dj_database_url.parse(
-        config('DATABASE_URL'),
+        'postgresql://postgres:8K6brYhGTjBg59TY@db.plwjvpsceexklfuxcuqh.supabase.co:5432/postgres',
         conn_max_age=600,
         ssl_require=True
     )
-}# Build paths inside the project like this: BASE_DIR / 'subdir'.
+}
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
