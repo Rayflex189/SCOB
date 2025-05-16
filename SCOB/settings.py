@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+print("DATABASE_URL =", config("DATABASE_URL"))
 SUPERUSER_USERNAME = "admin"
 SUPERUSER_EMAIL = "admin@example.com"
 SUPERUSER_PASSWORD = "securepassword123"
