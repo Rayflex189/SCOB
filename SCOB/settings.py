@@ -14,6 +14,7 @@ SUPERUSER_EMAIL = "admin@example.com"
 SUPERUSER_PASSWORD = "securepassword123"
 from pathlib import Path
 import dj_database_url
+from decouple import config
 
 import cloudinary
 import cloudinary.uploader
@@ -26,17 +27,11 @@ cloudinary.config(
 )
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'heritage_dbs',
-        'USER': 'heritage_dbs_user',
-        'PASSWORD': 'cwenscCWqQ7cdSgrBQLus6OQHoJsj2be',
-        'HOST': 'dpg-cvno1pbe5dus73d1gkjg-a.oregon-postgres.render.com',  # Check this
-        'PORT': '5432',
-    },
-     'OPTIONS': {
-            'sslmode': 'require',
-        },
+    'default': dj_database_url.parse(
+        config('DATABASE_URL'),
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
