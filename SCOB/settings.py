@@ -32,7 +32,7 @@ cloudinary.config(
     api_secret="8_Hu2A6oefhgbHWGdA0cEehYerc"
 )
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 DATABASES = {
     'default': {
