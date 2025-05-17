@@ -9,12 +9,11 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-import os
-print("DATABASE_URL =", os.environ.get("DATABASE_URL"))
 
 SUPERUSER_USERNAME = "admin"
 SUPERUSER_EMAIL = "admin@example.com"
 SUPERUSER_PASSWORD = "securepassword123"
+import os
 from pathlib import Path
 import dj_database_url
 
@@ -22,12 +21,14 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
+
 cloudinary.config(
     cloud_name="dlzn0moho",
     api_key="942887989436842",
     api_secret="8_Hu2A6oefhgbHWGdA0cEehYerc"
 )
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 DATABASES = {
     'default': {
@@ -35,7 +36,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
+
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -156,7 +158,6 @@ if not DEBUG:
     # Use WhiteNoise storage for production
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Additional locations of static files
 STATICFILES_DIRS = [
