@@ -19,10 +19,12 @@ from pathlib import Path
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+from django.db import connection
 
 if "DATABASE_URL" in os.environ:
     del os.environ["DATABASE_URL"]
-
+    
+print("Using DB engine:", connection.settings_dict['ENGINE'])
 
 cloudinary.config(
     cloud_name="dlzn0moho",
