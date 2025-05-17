@@ -9,7 +9,7 @@ pip install -r requirements.txt
 python manage.py makemigrations
 
 # Apply migrations with fake initial if tables already exist
-python manage.py migrate --fake-initial
+python manage.py migrate 
 
 # Collect static files
 python manage.py collectstatic --no-input
