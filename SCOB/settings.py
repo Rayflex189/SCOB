@@ -20,10 +20,15 @@ cloudinary.config(
     api_secret="8_Hu2A6oefhgbHWGdA0cEehYerc"
 )
 
-# Database
+raw_db_url = config('DATABASE_URL', default='sqlite:///db.sqlite3')
+
+# Ensure it's a string, not bytes
+if isinstance(raw_db_url, bytes):
+    raw_db_url = raw_db_url.decode('utf-8')
+
 DATABASES = {
     'default': dj_database_url.parse(
-        config('DATABASE_URL', default='sqlite:///db.sqlite3'),
+        raw_db_url,
         conn_max_age=600
     )
 }
