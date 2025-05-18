@@ -2,7 +2,10 @@
   "$schema": "https://railway.com/railway.schema.json",
   "build": {
     "builder": "NIXPACKS",
-    "buildCommand": "pip install -r requirements.txt && python manage.py makemigrations && python manage.py migrate --noinput && python manage.py collectstatic --no-input"
+    "buildCommand": "pip install -r requirements.txt && python manage.py collectstatic --no-input"
+  },
+  "start": {
+    "cmd": "gunicorn SCOB.wsgi:application --bind 0.0.0.0:$PORT"
   },
   "deploy": {
     "runtime": "V2",
