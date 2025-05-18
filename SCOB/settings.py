@@ -18,13 +18,12 @@ from pathlib import Path
 
 import cloudinary
 import cloudinary.uploader
-import cloudinary.api
-from django.db import connection
+import cloudinary.api
+import dj_database_url
 
-if "DATABASE_URL" in os.environ:
-    del os.environ["DATABASE_URL"]
-    
-print("Using DB engine:", connection.settings_dict['ENGINE'])
+DATABASES = {
+    'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
+}
 
 cloudinary.config(
     cloud_name="dlzn0moho",
@@ -33,14 +32,6 @@ cloudinary.config(
 )
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 
 
 # Quick-start development settings - unsuitable for production
