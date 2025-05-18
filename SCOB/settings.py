@@ -22,9 +22,13 @@ cloudinary.config(
 
 raw_db_url = config('DATABASE_URL', default='sqlite:///db.sqlite3')
 
-# Ensure it's a string, not bytes
+# Decode if it's in bytes
 if isinstance(raw_db_url, bytes):
     raw_db_url = raw_db_url.decode('utf-8')
+
+# Remove byte string prefix if it was stringified
+if isinstance(raw_db_url, str) and raw_db_url.startswith(("b'", 'b\"')):
+    raw_db_url = raw_db_url[2:-1]
 
 DATABASES = {
     'default': dj_database_url.parse(
