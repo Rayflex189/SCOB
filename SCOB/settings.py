@@ -17,13 +17,17 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 import dj_database_url
-import os
-
-DATABASE_URL = os.getenv("DATABASE_URL")
+from decouple import config, Csv
+import dj_database_url
 
 DATABASES = {
-    'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600, ssl_require=True)
+    'default': dj_database_url.parse(
+        config('DATABASE_URL', default='sqlite:///db.sqlite3'),
+        conn_max_age=600
+    )
 }
+
+DATABASES['default']['OPTIONS'] = {'sslmode': 'require'}
 
 cloudinary.config(
     cloud_name="dlzn0moho",
