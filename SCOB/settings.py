@@ -10,19 +10,19 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
-SUPERUSER_USERNAME = "admin"
-SUPERUSER_EMAIL = "admin@example.com"
-SUPERUSER_PASSWORD = "securepassword123"
-import os
+
 from pathlib import Path
 
 import cloudinary
 import cloudinary.uploader
-import cloudinary.api
+import cloudinary.api
 import dj_database_url
+import os
+
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
+    'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600, ssl_require=True)
 }
 
 cloudinary.config(
