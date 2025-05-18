@@ -9,7 +9,6 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 import dj_database_url
-from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,29 +19,18 @@ cloudinary.config(
     api_secret="8_Hu2A6oefhgbHWGdA0cEehYerc"
 )
 
-# Get raw DATABASE_URL
-raw_db_url = config('DATABASE_URL', default='sqlite:///db.sqlite3')
 
-# Force decode if it's a byte string
-if isinstance(raw_db_url, bytes):
-    raw_db_url = raw_db_url.decode('utf-8')
-
-# Ensure it's a proper string (remove any `b''` wrapper if somehow in string form)
-if raw_db_url.startswith("b'") or raw_db_url.startswith('b"'):
-    raw_db_url = raw_db_url[2:-1]
-
-# Parse the database
 DATABASES = {
     'default': dj_database_url.parse(
-        raw_db_url,
+        'postgresql://postgres:p21oF2QmvdQM6byp@db.plwjvpsceexklfuxcuqh.supabase.co:5432/postgres',
         conn_max_age=600
     )
 }
 
-# Add SSL mode if using postgres
+# Add SSL mode if using Postgres
 if 'postgres' in DATABASES['default']['ENGINE']:
     DATABASES['default']['OPTIONS'] = {'sslmode': 'require'}
-
+    
 # SECURITY
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-1fw)(+*&**t4_r@=-a%9)hstji&^ueabvfx)4=csjoafvzhnwg')
 DEBUG = config('DEBUG', default=False, cast=bool)
