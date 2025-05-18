@@ -13,23 +13,25 @@ from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Cloudinary configuration
+# Cloudinary config
 cloudinary.config(
     cloud_name="dlzn0moho",
     api_key="942887989436842",
     api_secret="8_Hu2A6oefhgbHWGdA0cEehYerc"
 )
 
+# Get raw DATABASE_URL
 raw_db_url = config('DATABASE_URL', default='sqlite:///db.sqlite3')
 
-# Decode if it's in bytes
+# Force decode if it's a byte string
 if isinstance(raw_db_url, bytes):
     raw_db_url = raw_db_url.decode('utf-8')
 
-# Remove byte string prefix if it was stringified
-if isinstance(raw_db_url, str) and raw_db_url.startswith(("b'", 'b\"')):
+# Ensure it's a proper string (remove any `b''` wrapper if somehow in string form)
+if raw_db_url.startswith("b'") or raw_db_url.startswith('b"'):
     raw_db_url = raw_db_url[2:-1]
 
+# Parse the database
 DATABASES = {
     'default': dj_database_url.parse(
         raw_db_url,
@@ -37,7 +39,7 @@ DATABASES = {
     )
 }
 
-# Add SSL requirement for external PostgreSQL services (like Supabase)
+# Add SSL mode if using postgres
 if 'postgres' in DATABASES['default']['ENGINE']:
     DATABASES['default']['OPTIONS'] = {'sslmode': 'require'}
 
