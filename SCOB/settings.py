@@ -9,6 +9,7 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 import dj_database_url
+from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
