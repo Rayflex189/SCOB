@@ -15,4 +15,4 @@ RUN /app/build.sh
 EXPOSE 8000
 
 # Run migrations & start server at container start time
-CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+CMD ["sh", "-c", "echo DATABASE_URL=$DATABASE_URL && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
