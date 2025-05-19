@@ -47,8 +47,13 @@ if 'postgres' in DATABASES['default']['ENGINE']:
 # SECURITY
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-1fw)(+*&**t4_r@=-a%9)hstji&^ueabvfx)4=csjoafvzhnwg')
 DEBUG = config('DEBUG', default=False, cast=bool)
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    "heritagebank-production.up.railway.app",
+]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://heritagebank-production.up.railway.app",
+]
 # Installed apps
 INSTALLED_APPS = [
     'django.contrib.admin',
