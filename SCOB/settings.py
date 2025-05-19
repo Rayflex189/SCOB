@@ -18,6 +18,8 @@ import cloudinary.uploader
 import cloudinary.api
 import dj_database_url
 from decouple import config
+import dj_database_url
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -29,9 +31,10 @@ cloudinary.config(
 )
 
 
+
 DATABASES = {
     'default': dj_database_url.parse(
-        'postgresql://postgres.plwjvpsceexklfuxcuqh:p21oF2QmvdQM6byp@aws-0-us-west-1.pooler.supabase.com:6543/postgres',
+        os.environ.get("DATABASE_URL"),
         conn_max_age=600
     )
 }
