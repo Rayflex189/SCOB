@@ -11,8 +11,11 @@ COPY . .
 RUN chmod +x /app/build.sh
 RUN /app/build.sh
 
+# Make the entrypoint script executable
+RUN chmod +x /app/entrypoint.sh
+
 # Expose Django port
 EXPOSE 8000
 
-# Run migrations & start server at container start time
-CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+# Use entrypoint.sh to run commands
+CMD ["/app/entrypoint.sh"]
