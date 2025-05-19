@@ -32,12 +32,17 @@ cloudinary.config(
 
 
 
+db_url = os.environ.get("DATABASE_URL")
+if isinstance(db_url, bytes):
+    db_url = db_url.decode("utf-8")
+
 DATABASES = {
     'default': dj_database_url.parse(
-        os.environ.get("DATABASE_URL"),
+        db_url,
         conn_max_age=600
     )
-}
+                                              }
+
 # Add SSL mode if using Postgres
 if 'postgres' in DATABASES['default']['ENGINE']:
     DATABASES['default']['OPTIONS'] = {'sslmode': 'require'}
