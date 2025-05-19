@@ -30,18 +30,15 @@ cloudinary.config(
     api_secret="8_Hu2A6oefhgbHWGdA0cEehYerc"
 )
 
+from decouple import config
 
-
-db_url = os.environ.get("DATABASE_URL")
+db_url = config('DATABASE_URL', default=None)
 if isinstance(db_url, bytes):
     db_url = db_url.decode("utf-8")
 
 DATABASES = {
-    'default': dj_database_url.parse(
-        db_url,
-        conn_max_age=600
-    )
-                                              }
+    'default': dj_database_url.parse(db_url, conn_max_age=600)
+}
 
 # Add SSL mode if using Postgres
 if 'postgres' in DATABASES['default']['ENGINE']:
