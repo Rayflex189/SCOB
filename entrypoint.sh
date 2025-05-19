@@ -2,6 +2,10 @@
 
 set -e  # Exit on error
 
+echo "🔄 Running makemigrations..."
+python manage.py makemigrations --noinput
+echo "✅ Makemigrations completed!"
+
 echo "🔄 Running database migrations..."
 python manage.py migrate --noinput
 echo "✅ Migrations applied!"
