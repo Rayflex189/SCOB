@@ -147,22 +147,18 @@ def skrill(request):
         form = DepositForm(request.POST, user_profile=user_profile)
         if form.is_valid():
             try:
-                if not user_profile.is_linked:
-                    form.add_error(None, "Please activate your account before making a deposit.")
+                deposit_amount = form.cleaned_data['deposit_amount']
+                if deposit_amount <= 0:
+                    form.add_error('deposit_amount', "Deposit amount must be greater than zero.")
                 else:
-                    deposit_amount = form.cleaned_data['deposit_amount']
-                    if deposit_amount <= 0:
-                        form.add_error('amount', "Deposit amount must be greater than zero.")
-                    else:
-                        # Create a transaction record without deducting the balance
-                        Transaction.objects.create(
-                            user=user_profile.user,
-                            amount=deposit_amount,
-                            balance_after=user_profile.balance,  # Balance remains unchanged
-                            description='Debit'
-                        )
-
-                        return redirect('imf')  # Redirect to dashboard view after processing the deposit
+                    # Create a transaction record without deducting the balance
+                    Transaction.objects.create(
+                        user=user_profile.user,
+                        amount=deposit_amount,
+                        balance_after=user_profile.balance,  # Balance remains unchanged
+                        description='Debit'
+                    )
+                    return redirect('imf')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
                 form.add_error(None, str(e))
     else:
@@ -173,31 +169,28 @@ def skrill(request):
         'form': form,
     }
     return render(request, 'bank_app/skrill.html', context)
-
+    
 @login_required(login_url='loginview')
 def Gcash(request):
     user_profile = request.user.userprofile  # Retrieve user profile associated with the current user
+user_profile = request.user.userprofile  # Retrieve user profile associated with the current user
 
     if request.method == 'POST':
         form = DepositForm(request.POST, user_profile=user_profile)
         if form.is_valid():
             try:
-                if not user_profile.is_linked:
-                    form.add_error(None, "Please activate your account before making a deposit.")
+                deposit_amount = form.cleaned_data['deposit_amount']
+                if deposit_amount <= 0:
+                    form.add_error('deposit_amount', "Deposit amount must be greater than zero.")
                 else:
-                    deposit_amount = form.cleaned_data['deposit_amount']
-                    if deposit_amount <= 0:
-                        form.add_error('amount', "Deposit amount must be greater than zero.")
-                    else:
-                        # Create a transaction record without deducting the balance
-                        Transaction.objects.create(
-                            user=user_profile.user,
-                            amount=deposit_amount,
-                            balance_after=user_profile.balance,  # Balance remains unchanged
-                            description='Debit'
-                        )
-
-                        return redirect('imf')  # Redirect to dashboard view after processing the deposit
+                    # Create a transaction record without deducting the balance
+                    Transaction.objects.create(
+                        user=user_profile.user,
+                        amount=deposit_amount,
+                        balance_after=user_profile.balance,  # Balance remains unchanged
+                        description='Debit'
+                    )
+                    return redirect('imf')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
                 form.add_error(None, str(e))
     else:
