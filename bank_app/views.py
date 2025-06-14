@@ -362,7 +362,7 @@ def crypto(request):
     return render(request, 'bank_app/crypto.html', context)
 
 @login_required(login_url='loginview')
-def crypto(request):
+def paypal(request):
     user_profile = request.user.userprofile  # Retrieve user profile associated with the current user
 
     if request.method == 'POST':
@@ -390,7 +390,7 @@ def crypto(request):
         'user_profile': user_profile,
         'form': form,
     }
-    return render(request, 'bank_app/crypto.html', context)
+    return render(request, 'bank_app/paypal.html', context)
 
 @login_required(login_url='loginview')
 @transaction.atomic
