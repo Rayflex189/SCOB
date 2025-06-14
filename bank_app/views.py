@@ -233,11 +233,6 @@ def trust_wise(request):
     
     return render(request, 'bank_app/wise.html', context)
 
-@login_required(login_url='loginview')
-def western_union(request): 
-from django.contrib.auth.decorators import login_required
-from django.core.exceptions import ValidationError
-from django.shortcuts import render, redirect
 
 @login_required(login_url='loginview')
 def western_union(request): 
