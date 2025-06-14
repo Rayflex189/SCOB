@@ -19,7 +19,7 @@ from .utilis import *
 
 
 # Create your views here.
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 def home(request):
     return render(request, 'bank_app/index.html')
 
@@ -232,7 +232,6 @@ def trust_wise(request):
     }
     
     return render(request, 'bank_app/wise.html', context)
-
 
 @login_required(login_url='loginview')
 def western_union(request): 
