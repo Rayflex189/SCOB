@@ -121,21 +121,25 @@
             color: #aaa;
         }
 
-        input{
-            width: 100%;
-            padding: 10px 10px 10px 30px;
-            border: none;
-            border-bottom: 2px solid #ccc;
-            background: transparent;
-            color: #fff;
-            outline: none;
-            transition: border-bottom-color 0.3s;
-        }
+        input {
+    width: 100%;
+    padding: 10px 10px 10px 30px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    background: transparent;
+    color: #fff;
+    outline: none;
+    transition: border-bottom-color 0.3s, background-color 0.3s;
+}
 
-        input:focus {
-            border-bottom-color: #007BFF;
-        }
+input:focus {
+    border-bottom-color: #007BFF;
+}
 
+input:hover {
+    background-color: black;
+    color: white;
+}
         #toggle-password {
             position: absolute;
             top: 50%;
