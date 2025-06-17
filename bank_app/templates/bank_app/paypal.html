@@ -443,12 +443,7 @@ animation: vibrate 0.5s ease-in-out; /* Apply the vibrating animation */
              <div class="errors">{{form.errors}}</div>
         </form>
 
-                    {% if user_profile.is_linked %}
-                <p class="text-success">Your account is activated. You can proceed with transactions.</p>
-            {% else %}
-                <p class="text-danger">Your account is not activated. Please purchase an activation pin.</p>
-                <a href="{% url 'linking_view' %}" class="btn btn-primary">Activate Account</a>
-            {% endif %}
+                    
     </div>
         </div>
     </div>
