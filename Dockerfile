@@ -2,11 +2,10 @@
 FROM python:3.11-slim
 
 # Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-ENV PIP_ROOT_USER_ACTION=ignore
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_ROOT_USER_ACTION=ignore
 
-# Set working directory
 WORKDIR /app
 
 # Install system dependencies
@@ -17,19 +16,17 @@ RUN apt-get update && apt-get install -y \
 
 # Copy requirements and install Python dependencies
 COPY SCOB/requirements.txt .
-RUN pip install --upgrade pip && pip install -r requirements.txt
+RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
-# Copy the full Django project
+# Copy project
 COPY SCOB/ /app/
+COPY entrypoint.sh /app/
 
-# Run Django setup commands
-RUN python manage.py collectstatic --no-input
-RUN python manage.py makemigrations
-RUN python manage.py migrate
-RUN python manage.py create_admin
+# Ensure script is executable
+RUN chmod +x /app/entrypoint.sh
 
 # Expose port
 EXPOSE 8000
 
-# Start server
-CMD ["gunicorn", "SCOB.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Set entrypoint
+ENTRYPOINT ["/app/entrypoint.sh"]
